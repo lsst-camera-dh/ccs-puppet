@@ -1,0 +1,82 @@
+timezone::timezone: 'UTC'
+timezone::hwutc: true
+
+## FIXME
+pkgarchive: '/root'
+
+ccs_packages::packages:
+  - epel-release
+  - git
+  - rsync
+  - emacs
+  - chrony
+  - nano
+  - ntp
+  - screen
+  - sysstat
+  - unzip
+  - kernel-headers
+  - kernel-devel
+  - clustershell
+  - maven
+  - attr
+  - parallel
+  - gcc
+  - devtoolset-8
+  - dkms
+  - usbutils
+  - nfs-utils
+  - autofs
+  - firewalld
+  - fail2ban
+
+ccs_sudoers:
+  - gmorris
+  - marshall
+  - tonyj
+  - turri
+
+ccs_users::groups:
+  'lsstadm':
+    ensure: present
+    gid: 24000
+
+ccs_users::users:
+  'ccs':
+    ensure: present
+    uid: 23000
+    groups:
+      - 'dialout'
+      - 'lsstadm'
+    comment: 'CCS Operator Account'
+    managehome: true
+  'dh':
+    ensure: present
+    uid: 23001
+    groups:
+      - 'dialout'
+      - 'lsstadm'
+    comment: 'LSST Data Handling Account'
+    managehome: true
+
+
+## TODO store permissions etc, as with users.
+ccs_dirs::etc: '/etc/ccs'
+ccs_dirs::opt: '/opt/lsst'
+ccs_dirs::ccs: '/opt/lsst/ccs'
+ccs_dirs::adm: '/opt/lsst/ccsadm'
+ccs_dirs::log: '/var/log/ccs'
+
+ccs_canbus::module: 'advSocketCAN'
+ccs_canbus::version: '1.0.1.0'
+
+ccs_vldrive::module: 'versaapi'
+ccs_vldrive::version: '1.5.0'
+
+ccs_imanager::module: 'imanager'
+ccs_imanager::version: '1.5.0'
+
+
+## FIXME
+mailhost: 'localhost'
+ccs_monit::alert: 'root@localhost'

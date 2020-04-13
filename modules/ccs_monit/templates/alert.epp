@@ -1,0 +1,15 @@
+<%- | String $mailhost, String $alert | -%>
+# This file is managed by Puppet; changes may be overwritten
+set mailserver <%= $mailhost %>,
+               localhost
+set alert <%= $alert %> not on { instance, action } reminder 288
+
+set mail-format {
+  from:    Monit <monit@$HOST>
+  subject: monit alert -- $HOST $SERVICE $EVENT
+  message: $EVENT service $SERVICE
+                Date:        $DATE
+                Host:        $HOST
+                Action:      $ACTION
+                Description: $DESCRIPTION
+}

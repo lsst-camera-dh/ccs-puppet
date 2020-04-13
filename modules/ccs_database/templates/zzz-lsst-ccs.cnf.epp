@@ -1,0 +1,12 @@
+<%- | String $datadir, Boolean $scratch = false | -%>
+# This file is managed by Puppet; changes may be overwritten.
+[mysqld]
+datadir=<%= $datadir %>
+socket=<%= $datadir %>/mysql.sock
+innodb_buffer_pool_size=1G
+<% if $scratch == true { -%>
+tmpdir=/scratch/mysqltmp
+<% } -%>
+
+[client]
+socket=<%= $datadir %>/mysql.sock

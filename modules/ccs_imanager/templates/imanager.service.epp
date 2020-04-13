@@ -1,0 +1,9 @@
+<%- | String $exec | -%>
+# This file is managed by Puppet; changes may be overwritten.
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=<%= $exec %>
+
+[Install]
+WantedBy=multi-user.target

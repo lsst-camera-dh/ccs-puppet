@@ -1,0 +1,6 @@
+<%- | Array[String] $hosts | -%>
+<% $hosts.each |$host| { -%>
+check host <%= $host %> with address <%= $host %>
+  if failed ping4 count 3 with timeout 5 seconds then alert
+
+<% } -%>
