@@ -22,7 +22,7 @@ class ccs_main {
 
   include ccs_sudo
 
-  if ($facts['location'] == 'slac') and ($facts['native_gpfs'] != "true") {
+  if ($facts['location'] == 'slac') and ($facts['native_gpfs'] != 'true') {
     include ccs_autofs
   }
 
@@ -37,9 +37,9 @@ class ccs_main {
     }
 
     exec { 'Set graphical target':
-      path => ['/usr/sbin', '/usr/bin'],
+      path    => ['/usr/sbin', '/usr/bin'],
       command => 'systemctl set-default graphical.target',
-      unless => 'sh -c "systemctl get-default | grep -qF graphical.target"',
+      unless  => 'sh -c "systemctl get-default | grep -qF graphical.target"',
     }
 
     package { 'gnome-initial-setup':
@@ -54,7 +54,7 @@ class ccs_main {
   }
 
 
-  class { selinux:
+  class { 'selinux':
     mode => 'permissive',
   }
 
@@ -86,13 +86,13 @@ class ccs_main {
 
   include ccs_mrtg
 
-  if $hostname =~ /lsst-(dc0[1236]|ir2daq01)/ {
+  if $::hostname =~ /lsst-(dc0[1236]|ir2daq01)/ {
     class {'ccs_network':
       daq_interface => $facts['daq_interface'],
     }
   }
 
-  if $hostname =~ /-vw\d+/ {
+  if $::hostname =~ /-vw\d+/ {
     include ccs_autologin
   }
 
@@ -103,27 +103,27 @@ class ccs_main {
     }
   }
 
-  if $hostname =~ /(-fcs\d+|lsst-lion18)/ {
+  if $::hostname =~ /(-fcs\d+|lsst-lion18)/ {
     include ccs_canbus
   }
 
   ## FIXME what are the right hosts for this?
-  if $hostname =~ /lsst-lion(09|1[05])/ {
+  if $::hostname =~ /lsst-lion(09|1[05])/ {
     include ccs_vldrive
   }
 
   ## FIXME what are the right hosts for this?
-  if $hostname =~ /lsst-uno11/ {
+  if $::hostname =~ /lsst-uno11/ {
     include ccs_imanager
   }
 
   ## FIXME what are the right hosts for this?
-  if $hostname =~ /(lsst-un06|comcam-hcu03)/ {
+  if $::hostname =~ /(lsst-un06|comcam-hcu03)/ {
     include ccs_filter_changer
   }
 
 
-  if $hostname =~ /lsst-lion0[2-5]/ {
+  if $::hostname =~ /lsst-lion0[2-5]/ {
     $quadbox = true
   } else {
     $quadbox = false
@@ -137,7 +137,7 @@ class ccs_main {
   }
 
 
-  if $hostname == 'lsst-vw01' {
+  if $::hostname == 'lsst-vw01' {
     class { 'ccs_jdk11':
       install => true,
     }
@@ -147,7 +147,7 @@ class ccs_main {
   include ccs_sysctl
 
 
-  if $hostname =~ /lsst-(vw|it)01/ {
+  if $::hostname =~ /lsst-(vw|it)01/ {
     class { 'ccs_nvidia':
       install => true,
     }

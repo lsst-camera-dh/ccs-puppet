@@ -11,8 +11,8 @@ class ccs_jdk8 {
 
   ## FIXME use a local yum repository.
   exec { 'Install jdk8':
-    path => [ '/usr/bin' ],
-    unless => "rpm -q --quiet ${javapkg}",
+    path    => [ '/usr/bin' ],
+    unless  => "rpm -q --quiet ${javapkg}",
     command => "rpm -i ${jdkrpm}",
   }
 
@@ -22,10 +22,10 @@ class ccs_jdk8 {
   $cmds.each |$cmd| {
     $src = "/usr/bin/${cmd}"
     $dest = "/usr/java/jdk${javaver}/bin/${cmd}"
-    exec {"java alternative for $cmd":
-      path => ['/usr/sbin', '/usr/bin'],
+    exec {"java alternative for ${cmd}":
+      path    => ['/usr/sbin', '/usr/bin'],
       command => "sh -c \"update-alternatives --install ${src} ${cmd} ${dest} 1000 && update-alternatives --set ${cmd} ${dest}\"",
-      unless => "sh -c \"update-alternatives --display ${cmd} | grep -q 'currently points to '${dest}\""
+      unless  => "sh -c \"update-alternatives --display ${cmd} | grep -q 'currently points to '${dest}\""
     }
   }
 

@@ -13,7 +13,7 @@ class ccs_etc (String $dir = lookup('ccs_dirs::etc')) {
   $udp = 'udp_ccs.properties'
 
   file { "${dir}/${udp}":
-    ensure => file,
+    ensure  => file,
     content => epp("${title}/${udp}", {'hostname' => $trusted['certname']}),
   }
 

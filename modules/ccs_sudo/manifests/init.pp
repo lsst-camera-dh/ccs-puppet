@@ -17,7 +17,7 @@ class ccs_sudo {
   $sudoers.each |String $user| {
     sudo::conf { $user:
       priority => 50,
-      content  => "$user ALL=ALL",
+      content  => "${user} ALL=ALL",
     }
   }
 
@@ -35,9 +35,9 @@ class ccs_sudo {
   $file = 'ccs-sudoers-services'
 
   file { "/etc/cron.hourly/${file}":
-    source => "puppet:///modules/${title}/${file}",
     ensure => present,
-    mode => '0755',
+    source => "puppet:///modules/${title}/${file}",
+    mode   => '0755',
   }
 
 }

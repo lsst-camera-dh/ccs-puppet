@@ -13,21 +13,21 @@ class ccs_vldrive {
   $dest = "${module}-${version}"
 
   archive { '/tmp/vldrive.tar.xz':
-    ensure => present,
-    extract => true,
+    ensure       => present,
+    extract      => true,
     extract_path => '/usr/src',
-    source => "${pkgarchive}/${src}",
-    creates => "/usr/src/${dest}",
-    cleanup => true,
-    notify => Exec['dkms'],
+    source       => "${pkgarchive}/${src}",
+    creates      => "/usr/src/${dest}",
+    cleanup      => true,
+    notify       => Exec['dkms'],
   }
 
 
   ## TODO add a dkms helper script, or check forge.
   exec { 'dkms':
-    path => ['/usr/sbin', '/usr/bin'],
+    path    => ['/usr/sbin', '/usr/bin'],
     command => "sh -c \"dkms add -m ${module} -v ${version} && dkms build -m ${module} -v ${version} && dkms install -m ${module} -v ${version}\"",
-    unless => "sh -c \"dkms status | grep -q ^${module}\"",
+    unless  => "sh -c \"dkms status | grep -q ^${module}\"",
   }
 
 
@@ -53,7 +53,7 @@ class ccs_vldrive {
   file { "/usr/local/lib/${lib}":
     ensure => present,
     source => "/usr/src/${dest}/vl_${lib}",
-    mode => '0755',
+    mode   => '0755',
   }
 
 
@@ -62,7 +62,7 @@ class ccs_vldrive {
   $links.each|$link| {
     file { "/usr/local/lib/${link}":
       ensure => 'link',
-      target => "${lib}",
+      target => $lib,
     }
   }
 
@@ -74,9 +74,9 @@ class ccs_vldrive {
 
   ## FIXME
   exec { 'usermod ccs':
-    path => ['/usr/sbin', '/usr/bin'],    
+    path    => ['/usr/sbin', '/usr/bin'],
     command => 'usermod -a -G gpio ccs',
-    unless => 'sh -c "groups ccs | grep -q gpio"',
+    unless  => 'sh -c "groups ccs | grep -q gpio"',
   }
 
 
@@ -89,8 +89,8 @@ class ccs_vldrive {
   }
 
   exec { 'udevadm':
-    path => ['/usr/sbin', '/usr/bin'],
-    command => 'sh -c "udevadm control --reload-rules && udevadm trigger --type=devices --action=change"',
+    path        => ['/usr/sbin', '/usr/bin'],
+    command     => 'sh -c "udevadm control --reload-rules && udevadm trigger --type=devices --action=change"',
     refreshonly => true,
   }
 

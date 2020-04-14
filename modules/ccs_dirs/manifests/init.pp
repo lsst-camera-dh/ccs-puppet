@@ -1,25 +1,25 @@
 class ccs_dirs (String $etc, String $opt, String $ccs,
                 String $adm, String $log) {
 
-  file { "${etc}":
+  file { $etc:
     ensure => 'directory',
     owner  => 'root',
     group  => 'ccs',
     mode   => '2775',
   }
 
-  file { "${opt}":
+  file { $opt:
     ensure => directory
   }
 
-  file { ["${ccs}" , "${adm}"]:
+  file { [$ccs , $adm]:
     ensure => 'directory',
     owner  => 'ccs',
     group  => 'ccs',
     mode   => '0755',
   }
 
-  file { "${log}":
+  file { $log:
     ensure => 'directory',
     owner  => 'root',
     group  => 'ccs',
@@ -57,7 +57,7 @@ class ccs_dirs (String $etc, String $opt, String $ccs,
   if $facts['mounted_scratch'] == 'true' {
     file { '/scratch':
       ensure => directory,
-      mode => '1777',
+      mode   => '1777',
     }
   }
 

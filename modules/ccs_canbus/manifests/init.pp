@@ -14,21 +14,21 @@ class ccs_canbus {
   $dest = "${lmodule}-${version}"
 
   archive { '/tmp/canbus.tar.xz':
-    ensure => present,
-    extract => true,
+    ensure       => present,
+    extract      => true,
     extract_path => '/usr/src',
-    source => "${pkgarchive}/${src}",
-    creates => "/usr/src/${dest}",
-    cleanup => true,
-    notify => Exec['dkms'],
+    source       => "${pkgarchive}/${src}",
+    creates      => "/usr/src/${dest}",
+    cleanup      => true,
+    notify       => Exec['dkms'],
   }
 
 
   ## TODO add a dkms helper script, or check forge.
   exec { 'dkms':
-    path => ['/usr/sbin', '/usr/bin'],
+    path    => ['/usr/sbin', '/usr/bin'],
     command => "sh -c \"dkms add -m ${lmodule} -v ${version} && dkms build -m ${lmodule} -v ${version} && dkms install -m ${lmodule} -v ${version}\"",
-    unless => "sh -c \"dkms status | grep -q ^${lmodule}\"",
+    unless  => "sh -c \"dkms status | grep -q ^${lmodule}\"",
   }
 
 
@@ -42,17 +42,17 @@ class ccs_canbus {
 
   $exec = '/usr/local/libexec/canbus-init'
 
-  file { "${exec}":
+  file { $exec:
     ensure => present,
     source => "puppet:///modules/${title}/${basename($exec)}",
-    mode => '0755',
+    mode   => '0755',
   }
 
 
   $service = 'canbus.service'
 
   file { "/etc/systemd/system/${service}":
-    ensure => file,
+    ensure  => file,
     content => epp("${title}/${service}.epp", {'exec' => $exec}),
   }
 

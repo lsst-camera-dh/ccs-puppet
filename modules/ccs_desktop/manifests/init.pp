@@ -13,9 +13,9 @@ class ccs_desktop {
             '/usr/share/icons/lsst_appicon.png']
 
   $files.each |String $file| {
-    file { "${file}":
-      source => "puppet:///modules/${title}/${basename($file)}",
+    file { $file:
       ensure => present,
+      source => "puppet:///modules/${title}/${basename($file)}",
     }
   }
 
@@ -41,7 +41,7 @@ class ccs_desktop {
         }
       }
       file { "/usr/share/applications/lsst.ccs.${app}.${version}.desktop":
-        ensure => file,
+        ensure  => file,
         content => epp("${title}/lsst.ccs.APP.VERSION.desktop.epp",
                        {version => $version, app => $app,
                          desc => $desc, terminal => $terminal} ),

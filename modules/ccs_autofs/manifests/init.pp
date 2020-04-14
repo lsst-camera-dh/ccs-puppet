@@ -3,8 +3,8 @@ class ccs_autofs {
   ## Not strictly necessary since nfs paths are also pruned,
   ## but this may avoid some hangs when the server does not respond.
   exec { 'Exclude gpfs from updatedb.conf':
-    path => [ '/usr/bin' ],
-    unless => 'grep -q "PRUNEPATHS.*/gpfs " /etc/updatedb.conf',
+    path    => [ '/usr/bin' ],
+    unless  => 'grep -q "PRUNEPATHS.*/gpfs " /etc/updatedb.conf',
     command => 'sed -i "s|^\(PRUNEPATHS = \"\)|\1/gpfs |" /etc/updatedb.conf',
   }
 
@@ -40,9 +40,9 @@ class ccs_autofs {
   $file = 'gpfs.autofs'
 
   file { "/etc/auto.master.d/${file}":
-    ensure => file,
+    ensure  => file,
     content => epp("${title}/${file}.epp", {'options' => $options}),
-    notify => Service['autofs'],
+    notify  => Service['autofs'],
   }
 
 

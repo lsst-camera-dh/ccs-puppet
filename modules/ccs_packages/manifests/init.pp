@@ -33,8 +33,8 @@ class ccs_packages ( Array[String] $packages ) {
   if $facts['role'] == 'desktop' {
     ## FIXME use a local yum repository.
     exec { 'Install zoom':
-      path => ['/usr/bin'],
-      unless => 'rpm -q zoom',
+      path    => ['/usr/bin'],
+      unless  => 'rpm -q zoom',
       command => "sh -c \"rpm -U ${pkgarchive}/zoom*.rpm\"",
     }
   }

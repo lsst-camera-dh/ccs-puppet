@@ -10,27 +10,27 @@ class ccs_mrtg {
   $snmp_community = $facts['snmp_community']
 
   $snmp_conf = '/etc/snmp/snmpd.conf'
-  
+
 
   ## Yuck. TODO just install the whole file in the normal puppet way.
   $snmp_patch = '/tmp/.snmpd.conf.diff'
-  file { "${snmp_patch}":
+  file { $snmp_patch:
     ensure => present,
-    mode => '0600',
+    mode   => '0600',
     source => "puppet:///modules/${title}/snmpd.conf.diff",
   }
 
   exec { 'snmpd.conf patch':
-    unless => "grep -q lsstROgroup ${snmp_conf}",
-    path => ['/usr/bin'],
+    unless  => "grep -q lsstROgroup ${snmp_conf}",
+    path    => ['/usr/bin'],
     command => "sh -c 'patch -p0 -b -z.ORIG -d / < ${snmp_patch}'",
-    notify => Service['snmpd'],
+    notify  => Service['snmpd'],
   }
 
   file_line { 'snmpd.conf com2sec':
-    path  => "${snmp_conf}",
-    line  => "com2sec  local       localhost         ${snmp_community}",
-    match => '^com2sec *local *',
+    path   => $snmp_conf,
+    line   => "com2sec  local       localhost         ${snmp_community}",
+    match  => '^com2sec *local *',
     notify => Service['snmpd'],
   }
 
@@ -42,11 +42,11 @@ class ccs_mrtg {
 
 
   $mrtg_user = 'mrtg'
-  $mrtg_group = "${mrtg_user}"
+  $mrtg_group = $mrtg_user
 
-  user { "${mrtg_user}":
-    ensure => present,
-    comment => 'MRTG logging account',
+  user { $mrtg_user:
+    ensure     => present,
+    comment    => 'MRTG logging account',
     managehome => true,
   }
 
@@ -68,21 +68,21 @@ class ccs_mrtg {
   ## Not perfect, but to quieten AVCs.
   $contexts = {
     "${mrtg_dir}(/.*)?" => 'mrtg_var_lib_t',
-    regsubst("${mrtg_cfg}", /\./, "\.")     => 'mrtg_etc_t',
-    regsubst("${mrtg_lock}", /\./, "\.")    => 'mrtg_lock_t',
-    regsubst("${mrtg_log}", /\./, "\.")     => 'mrtg_log_t',
-    regsubst("${mrtg_pid}", /\./, "\.")     => 'mrtg_var_run_t',
-    regsubst("${mrtg_sysinfo}", /\./, "\.") => 'bin_t',
+    regsubst($mrtg_cfg, /\./, '\.')     => 'mrtg_etc_t',
+    regsubst($mrtg_lock, /\./, '\.')    => 'mrtg_lock_t',
+    regsubst($mrtg_log, /\./, '\.')     => 'mrtg_log_t',
+    regsubst($mrtg_pid, /\./, '\.')     => 'mrtg_var_run_t',
+    regsubst($mrtg_sysinfo, /\./, '\.') => 'bin_t',
   }
   $contexts.each|$key, $value| {
-    selinux::fcontext { "${key}":
-      seltype => "${value}",
+    selinux::fcontext { $key:
+      seltype => $value,
     }
   }
 
   ## To prevent complaints about monitoring free space in /tmp and /var
   $mrtg_module = 'lsst-mrtg'
-  selinux::module{ "${mrtg_module}":
+  selinux::module{ $mrtg_module:
     ensure    => 'present',
     source_te => "puppet:///modules/${title}/${mrtg_module}.te",
     builder   => 'simple'
@@ -94,38 +94,38 @@ class ccs_mrtg {
   ## TODO better to just install the whole thing.
   $service = '/etc/systemd/system/mrtg.service'
   exec { 'Create mrtg.service':
-    path => ['/usr/bin'],
+    path    => ['/usr/bin'],
     command => "sh -c \"sed -e '/^\[Service\]/a\
 User=${mrtg_user}\\\\n\
 Group=${mrtg_group}\\\\n\
 PIDFile=${mrtg_pid}' -e 's|^ExecStart.*|ExecStart=/usr/bin/mrtg --daemon ${mrtg_cfg} --lock-file ${mrtg_lock} --confcache-file ${mrtg_ok} --pid-file ${mrtg_pid} --logging ${mrtg_log}|' /usr/lib/systemd/system/mrtg.service > ${service}\"",
-    creates => "${service}",
+    creates => $service,
   }
 
 
-  file { ["${mrtg_dir}", "${mrtg_dir}/html"]:
+  file { [$mrtg_dir, "${mrtg_dir}/html"]:
     ensure => directory,
-    mode => '0755',
-    owner => "${mrtg_user}",
-    group => "${mrtg_group}",
+    mode   => '0755',
+    owner  => $mrtg_user,
+    group  => $mrtg_group,
   }
 
   ['icons', 'images', 'logs'].each |$dir| {
     file { "${mrtg_dir}/html/${dir}":
       ensure => directory,
-      mode => '0755',
-      owner => "${mrtg_user}",
-      group => "${mrtg_group}",
+      mode   => '0755',
+      owner  => $mrtg_user,
+      group  => $mrtg_group,
     }
   }
 
 
-  file { "${mrtg_sysinfo}":
+  file { $mrtg_sysinfo:
     ensure => present,
     source => "puppet:///modules/${title}/${basename($mrtg_sysinfo)}",
-    mode => '0755',
-    owner => "${mrtg_user}",
-    group => "${mrtg_group}",
+    mode   => '0755',
+    owner  => $mrtg_user,
+    group  => $mrtg_group,
   }
 
 
@@ -133,15 +133,15 @@ PIDFile=${mrtg_pid}' -e 's|^ExecStart.*|ExecStart=/usr/bin/mrtg --daemon ${mrtg_
   ## To restrict to "main" interface, eg: -if-filter='($if_ip =~ /^134/)'
   ## This is chatty on stderr.
   exec {"Create ${cfgfile}":
-    path => ['usr/sbin', '/usr/bin'],
+    path    => ['usr/sbin', '/usr/bin'],
     command => "cfgmaker --output=${cfgfile} -ifref=ip ${snmp_community}@localhost",
-    creates => "${cfgfile}",
-    umask => '0066',
-    user => 'root',
+    creates => $cfgfile,
+    umask   => '0066',
+    user    => 'root',
   }
 
 
-  $iface_name = "${facts['main_interface']}"
+  $iface_name = $facts['main_interface']
 
   $iface_ip = pick($facts['networking']['interfaces'][$iface_name][ip],
                    '127.0.0.1')
@@ -156,8 +156,8 @@ PIDFile=${mrtg_pid}' -e 's|^ExecStart.*|ExecStart=/usr/bin/mrtg --daemon ${mrtg_
     $iface_max = $iface_max1
   }
 
-  $mem_max = "${facts['memory']['system']['total_bytes']}"
-  $swap_max = "${facts['memory']['swap']['total_bytes']}"
+  $mem_max = $facts['memory']['system']['total_bytes']
+  $swap_max = $facts['memory']['swap']['total_bytes']
 
   ## Eg replace sda with vda for virtual machines.
   if $facts['disks']['sda'] {
@@ -186,29 +186,29 @@ PIDFile=${mrtg_pid}' -e 's|^ExecStart.*|ExecStart=/usr/bin/mrtg --daemon ${mrtg_
     ]
   }
 
-  if $hostname =~ /lsst-mcm/ {
+  if $::hostname =~ /lsst-mcm/ {
     $temp_ipmi = true
   } else {
     $temp_ipmi = false
   }
 
-  file { "${mrtg_cfg}":
-    ensure => file,
-    owner => "${mrtg_user}",
-    notify => Service['mrtg'],
+  file { $mrtg_cfg:
+    ensure  => file,
+    owner   => $mrtg_user,
+    notify  => Service['mrtg'],
     content => epp("${title}/${basename($mrtg_cfg)}",
                    {
-                     'mrtg_dir' => $mrtg_dir,
-                     'hostname' => $hostname, 
+                     'mrtg_dir'       => $mrtg_dir,
+                     'hostname'       => $::hostname,
                      'snmp_community' => $snmp_community,
-                     'iface_ip' => $iface_ip,
-                     'iface_name' => $iface_name,
-                     'iface_max' => $iface_max,
-                     'mem_max' => $mem_max, 
-                     'swap_max' => $swap_max,
-                     'sda' => $sda,
-                     'disks' => $disks_facts,
-                     'temp_ipmi' => $temp_ipmi,
+                     'iface_ip'       => $iface_ip,
+                     'iface_name'     => $iface_name,
+                     'iface_max'      => $iface_max,
+                     'mem_max'        => $mem_max,
+                     'swap_max'       => $swap_max,
+                     'sda'            => $sda,
+                     'disks'          => $disks_facts,
+                     'temp_ipmi'      => $temp_ipmi,
                    }),
   }
 
@@ -216,11 +216,11 @@ PIDFile=${mrtg_pid}' -e 's|^ExecStart.*|ExecStart=/usr/bin/mrtg --daemon ${mrtg_
   $htmlfile = "${mrtg_dir}/index.html"
 
   exec {"Create ${htmlfile}":
-    path => ['usr/sbin', '/usr/bin'],
-    command => "indexmaker --enumerate --compact --nolegend --prefix=html --title='MRTG Index Page for ${hostname}' --pageend='<p>Back to <a href=\"../index.html\">index</a>' ${mrtg_cfg} --output ${htmlfile}",
-    creates => "${htmlfile}",
-    user => "${mrtg_user}",
-    subscribe => File["${mrtg_cfg}"],
+    path      => ['usr/sbin', '/usr/bin'],
+    command   => "indexmaker --enumerate --compact --nolegend --prefix=html --title='MRTG Index Page for ${::hostname}' --pageend='<p>Back to <a href=\"../index.html\">index</a>' ${mrtg_cfg} --output ${htmlfile}",
+    creates   => $htmlfile,
+    user      => $mrtg_user,
+    subscribe => File[$mrtg_cfg],
   }
 
 

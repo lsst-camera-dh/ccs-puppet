@@ -9,8 +9,10 @@ class ccs_nvidia ( Boolean $install = true ) {
 
   $file = 'disable-nouveau.conf'
 
+  $file_ensure = $install ? { true => file, default => absent }
+
   file { "/etc/modprobe.d/${file}":
-    ensure => $install ? { true => file, default => absent },
+    ensure => $file_ensure,
     source => "puppet:///modules/${title}/${file}",
   }
 
@@ -19,17 +21,17 @@ class ccs_nvidia ( Boolean $install = true ) {
 
   if $install {
     exec { 'Blacklist nouveau':
-      path => [ '/usr/bin' ],
-      unless => "grep -q rdblacklist=nouveau ${grub}",
+      path    => [ '/usr/bin' ],
+      unless  => "grep -q rdblacklist=nouveau ${grub}",
       command => "sed -i '/^GRUB_CMDLINE_LINUX=/ s/\"\$/ rdblacklist=nouveau\"/' ${grub}",
-      notify => Exec['grub and dracut'],
+      notify  => Exec['grub and dracut'],
     }
   } else {
     exec { 'Unblacklist nouveau':
-      path => [ '/usr/bin' ],
-      onlyif => "grep -q rdblacklist=nouveau ${grub}",
+      path    => [ '/usr/bin' ],
+      onlyif  => "grep -q rdblacklist=nouveau ${grub}",
       command => "sed -i 's/ *rdblacklist=nouveau//' ${grub}",
-      notify => Exec['grub and dracut'],
+      notify  => Exec['grub and dracut'],
     }
   }
 
@@ -41,8 +43,8 @@ class ccs_nvidia ( Boolean $install = true ) {
   }
 
   exec { 'grub and dracut':
-    path => [ '/usr/sbin', '/usr/bin' ],
-    command => "sh -c 'grub2-mkconfig -o ${grubfile} && dracut -f'",
+    path        => [ '/usr/sbin', '/usr/bin' ],
+    command     => "sh -c 'grub2-mkconfig -o ${grubfile} && dracut -f'",
     refreshonly => true,
   }
 

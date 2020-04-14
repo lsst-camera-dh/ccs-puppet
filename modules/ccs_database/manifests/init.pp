@@ -9,11 +9,11 @@ class ccs_database ( Boolean $install = true ) {
 
   $datadir = '/home/mysql'
 
-  file { "${datadir}":
+  file { $datadir:
     ensure => directory,
-    owner => 'mysql',
-    group => 'mysql',
-    mode => '0755',
+    owner  => 'mysql',
+    group  => 'mysql',
+    mode   => '0755',
   }
 
 
@@ -24,9 +24,8 @@ class ccs_database ( Boolean $install = true ) {
   $file = 'zzz-lsst-ccs.cnf'
 
   file { "/etc/my.cnf.d/${file}":
-    ensure => file,
-    content => epp("${title}/${file}.epp",
-                   {'datadir' => $datadir, 'scratch' => $scratch}),
+    ensure  => file,
+    content => epp("${title}/${file}.epp", {'datadir' => $datadir, 'scratch' => $scratch}),
   }
 
 

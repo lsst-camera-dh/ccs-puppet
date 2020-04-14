@@ -11,9 +11,9 @@ class ccs_monit {
   ## Change check interval from 30s to 5m.
   ## TODO? add "read-only" to the allow line?
   file_line { 'Change monit interval':
-    path => '/etc/monitrc',
-    match => '^set daemon',
-    line => 'set daemon  300  # check services at 300 seconds intervals',
+    path   => '/etc/monitrc',
+    match  => '^set daemon',
+    line   => 'set daemon  300  # check services at 300 seconds intervals',
     notify => Service['monit']
   }
 
@@ -26,7 +26,7 @@ class ccs_monit {
 
   $alertfile = 'alert'
   file { "${monitd}/${alertfile}":
-    ensure => file,
+    ensure  => file,
     content => epp("${title}/${alertfile}.epp",
                    {'mailhost' => $mailhost, 'alert' => $alert}),
   }
@@ -65,17 +65,17 @@ class ccs_monit {
   ## Can also do IO rates.
   ## NB these must be listed in ccs_facts::mounted.sh
   $disks = {
-    'root' => '/',
-    'tmp' => '/tmp',
-    'home' => '/home',
-    'data' => '/data',
-    'opt' => '/opt',
-    'var' => '/var',
+    'root'    => '/',
+    'tmp'     => '/tmp',
+    'home'    => '/home',
+    'data'    => '/data',
+    'opt'     => '/opt',
+    'var'     => '/var',
     'scratch' => '/scratch',
   }
-  $disks2 = $disks.filter|$key,$value| { $facts["mounted_${key}"] == "true" }
+  $disks2 = $disks.filter|$key,$value| { $facts["mounted_${key}"] == 'true' }
   ## Yuck.
-  if $hostname =~ /lsst-ir2db01/ {
+  if $::hostname =~ /lsst-ir2db01/ {
     $disks3 = $disks2 + {'lsst-ir2db01' => '/lsst-ir2db01'}
   }
   else {
@@ -84,7 +84,7 @@ class ccs_monit {
 
   $disk = 'disks'
   file { "${monitd}/${disk}":
-    ensure => file,
+    ensure  => file,
     content => epp("${title}/${disk}.epp", {'disks' => $disks3}),
   }
 
@@ -100,7 +100,7 @@ class ccs_monit {
 
 
   ## Check gpfs capacity.
-  if $hostname =~ /lsst-it01/ {
+  if $::hostname =~ /lsst-it01/ {
     $gpfs = 'gpfs'
     file { "${monitd}/${gpfs}":
       ensure => present,
@@ -110,7 +110,7 @@ class ccs_monit {
 
 
   ## TODO move to hiera and use for eg clustershell too.
-  case $hostname {
+  case $::hostname {
     /lsst-it01/: {
       ## Excluding lions and unos, which often go up and down.
       $hosts = ['lsst-ir2daq01', 'lsst-ir2db01', 'lsst-mcm',
@@ -132,13 +132,13 @@ class ccs_monit {
   if $hosts {
     $hfile = 'hosts'
     file { "${monitd}/${hfile}":
-      ensure => file,
+      ensure  => file,
       content => epp("${title}/${hfile}.epp", {'hosts' => $hosts}),
     }
   }
 
 
-  if $hostname =~ /-mcm/ {
+  if $::hostname =~ /-mcm/ {
     $itemp = 'inlet-temp'
     file { "${monitd}/${itemp}":
       ensure => present,
@@ -149,7 +149,7 @@ class ccs_monit {
     file { "/usr/local/bin/${etemp}":
       ensure => present,
       source => "puppet:///modules/${title}/${etemp}",
-      mode => '0755',
+      mode   => '0755',
     }
   }
 
@@ -159,7 +159,7 @@ class ccs_monit {
     $main_interface = $facts['main_interface']
     $nfile = 'network'
     file { "${monitd}/${nfile}":
-      ensure => file,
+      ensure  => file,
       content => epp("${title}/${nfile}.epp",
                      {'interface' => $main_interface}),
     }
@@ -170,11 +170,11 @@ class ccs_monit {
   file { "/usr/local/bin/${netspeed}":
     ensure => present,
     source => "puppet:///modules/${title}/${netspeed}",
-    mode => '0755',
+    mode   => '0755',
   }
 
 
-  if $hostname !~ /-(uno|lion|hcu|aio|lt|vw|vi)\d/ {
+  if $::hostname !~ /-(uno|lion|hcu|aio|lt|vw|vi)\d/ {
 
     $hwraid = 'hwraid'
     file { "${monitd}/${hwraid}":
@@ -187,16 +187,16 @@ class ccs_monit {
     file { "/usr/local/bin/${hexe}":
       ensure => present,
       source => "puppet:///modules/${title}/${hexe}",
-      mode => '0755',
+      mode   => '0755',
     }
   }
 
 
   $service = '/etc/systemd/system/monit.service'
   exec { 'Create monit.service':
-    path => ['/usr/bin'],
+    path    => ['/usr/bin'],
     command => "sh -c \"sed 's|/usr/bin/monit|/usr/local/bin/monit|g' /usr/lib/systemd/system/monit.service > ${service}\"",
-    creates => "${service}",
+    creates => $service,
   }
 
 
@@ -207,7 +207,7 @@ class ccs_monit {
   file { "/usr/local/bin/${exe}":
     ensure => present,
     source => "${pkgarchive}/${exe}",
-    mode => '0755',
+    mode   => '0755',
   }
 
 
@@ -215,6 +215,6 @@ class ccs_monit {
     ensure => running,
     enable => true,
   }
-  
+
 
 }

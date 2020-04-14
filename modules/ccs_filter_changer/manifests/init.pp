@@ -10,8 +10,8 @@ class ccs_filter_changer {
   }
 
   exec { 'udevadm':
-    path => ['/usr/sbin', '/usr/bin'],
-    command => 'sh -c "udevadm control --reload-rules && udevadm trigger --type=devices --action=change"',
+    path        => ['/usr/sbin', '/usr/bin'],
+    command     => 'sh -c "udevadm control --reload-rules && udevadm trigger --type=devices --action=change"',
     refreshonly => true,
   }
 

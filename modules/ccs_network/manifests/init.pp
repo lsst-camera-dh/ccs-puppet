@@ -9,9 +9,9 @@ class ccs_network (String $daq_interface) {
   $file = '30-ethtool'
 
   file { "/etc/NetworkManager/dispatcher.d/${file}":
-    ensure => file,
+    ensure  => file,
     content => epp("${title}/${file}", {'interface' => $interface}),
-    mode => '0755',
+    mode    => '0755',
   }
 
 }

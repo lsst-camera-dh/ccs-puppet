@@ -5,7 +5,7 @@ class ccs_clustershell {
   $file = '/etc/clustershell/groups.d/local.cfg'
   $src = "${facts['location']}-local.cfg"
 
-  file { "${file}":
+  file { $file:
       ensure => present,
       source => "puppet:///modules/${title}/${src}",
     }

@@ -5,7 +5,7 @@ class ccs_firewall {
 
   if $facts['location'] == 'slac' {
     $file = 'trusted.xml'
-  
+
     file { "/etc/firewalld/zones/${file}":
       ensure => file,
       source => "puppet:///modules/${title}/${file}",
