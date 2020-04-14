@@ -1,0 +1,13 @@
+## External modules
+modules/archive
+modules/concat
+modules/debconf
+modules/efi
+modules/mysql
+modules/selinux
+modules/stdlib
+modules/sudo
+modules/timezone
+modules/translate
+modules/vcsrepo
+modules/yum
