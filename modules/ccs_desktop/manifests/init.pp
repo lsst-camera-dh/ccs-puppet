@@ -31,6 +31,7 @@ class ccs_desktop {
         'dev': {
           $desc = 'development'
         }
+        default: { }
       }
       case $app {
         'console': {
@@ -39,12 +40,17 @@ class ccs_desktop {
         'shell': {
           $terminal = true
         }
+        default: { }
       }
       file { "/usr/share/applications/lsst.ccs.${app}.${version}.desktop":
         ensure  => file,
         content => epp("${title}/lsst.ccs.APP.VERSION.desktop.epp",
-                       {version => $version, app => $app,
-                         desc => $desc, terminal => $terminal} ),
+                       {
+                         version  => $version,
+                         app      => $app,
+                         desc     => $desc,
+                         terminal => $terminal,
+                       }),
       }
     }
   }
