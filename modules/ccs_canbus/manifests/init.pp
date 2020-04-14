@@ -27,7 +27,11 @@ class ccs_canbus {
   ## TODO add a dkms helper script, or check forge.
   exec { 'dkms':
     path    => ['/usr/sbin', '/usr/bin'],
-    command => "sh -c \"dkms add -m ${lmodule} -v ${version} && dkms build -m ${lmodule} -v ${version} && dkms install -m ${lmodule} -v ${version}\"",
+    command => @("CMD"/L),
+      sh -c 'dkms add -m ${lmodule} -v ${version} && \
+      dkms build -m ${lmodule} -v ${version} && \
+      dkms install -m ${lmodule} -v ${version}'
+      | CMD
     unless  => "sh -c \"dkms status | grep -q ^${lmodule}\"",
   }
 

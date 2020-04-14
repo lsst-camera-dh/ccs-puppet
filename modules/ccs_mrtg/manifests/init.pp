@@ -95,10 +95,16 @@ class ccs_mrtg {
   $service = '/etc/systemd/system/mrtg.service'
   exec { 'Create mrtg.service':
     path    => ['/usr/bin'],
-    command => "sh -c \"sed -e '/^\[Service\]/a\
-User=${mrtg_user}\\\\n\
-Group=${mrtg_group}\\\\n\
-PIDFile=${mrtg_pid}' -e 's|^ExecStart.*|ExecStart=/usr/bin/mrtg --daemon ${mrtg_cfg} --lock-file ${mrtg_lock} --confcache-file ${mrtg_ok} --pid-file ${mrtg_pid} --logging ${mrtg_log}|' /usr/lib/systemd/system/mrtg.service > ${service}\"",
+    command => @("CMD"/L),
+      sh -c "sed -e '/^\[Service\]/a\\
+      User=${mrtg_user}\n\
+      Group=${mrtg_group}\n\
+      PIDFile=${mrtg_pid}' \
+      -e 's|^ExecStart.*|ExecStart=/usr/bin/mrtg --daemon ${mrtg_cfg} \
+      --lock-file ${mrtg_lock} --confcache-file ${mrtg_ok} \
+      --pid-file ${mrtg_pid} --logging ${mrtg_log}|' \
+      /usr/lib/systemd/system/mrtg.service > ${service}"
+      | CMD
     creates => $service,
   }
 
@@ -217,7 +223,12 @@ PIDFile=${mrtg_pid}' -e 's|^ExecStart.*|ExecStart=/usr/bin/mrtg --daemon ${mrtg_
 
   exec {"Create ${htmlfile}":
     path      => ['usr/sbin', '/usr/bin'],
-    command   => "indexmaker --enumerate --compact --nolegend --prefix=html --title='MRTG Index Page for ${::hostname}' --pageend='<p>Back to <a href=\"../index.html\">index</a>' ${mrtg_cfg} --output ${htmlfile}",
+    command   => @("CMD"/L),
+      indexmaker --enumerate --compact --nolegend --prefix=html \
+      --title='MRTG Index Page for ${::hostname}' \
+      --pageend='<p>Back to <a href="../index.html">index</a>' \
+      ${mrtg_cfg} --output ${htmlfile}
+      | CMD
     creates   => $htmlfile,
     user      => $mrtg_user,
     subscribe => File[$mrtg_cfg],

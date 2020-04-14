@@ -26,7 +26,11 @@ class ccs_vldrive {
   ## TODO add a dkms helper script, or check forge.
   exec { 'dkms':
     path    => ['/usr/sbin', '/usr/bin'],
-    command => "sh -c \"dkms add -m ${module} -v ${version} && dkms build -m ${module} -v ${version} && dkms install -m ${module} -v ${version}\"",
+    command => @("CMD"/L),
+      sh -c 'dkms add -m ${module} -v ${version} && \
+      dkms build -m ${module} -v ${version} && \
+      dkms install -m ${module} -v ${version}'
+      | CMD
     unless  => "sh -c \"dkms status | grep -q ^${module}\"",
   }
 
