@@ -1,4 +1,4 @@
-<%- | String $mrtg_dir, String $hostname, String $snmp_community, String $iface_ip, String $iface_name, String $iface_max, String $mem_max, String $swap_max, String $sda, Array $disks, Boolean $temp_ipmi = false | -%>
+<%- | String $mrtg_dir, String $hostname, String $snmp_community, String $iface_ip, String $iface_name, String $iface_max, Integer $mem_max, Integer $swap_max, String $sda, Array $disks, Boolean $temp_ipmi = false | -%>
 # -*- mode: conf -*-
 # This file is managed by Puppet; changes may be overwritten
 
