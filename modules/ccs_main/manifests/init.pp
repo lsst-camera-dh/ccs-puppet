@@ -12,9 +12,7 @@ class ccs_main {
 
   include ccs_packages
 
-  #notify { 'clustershell':
-  #  message => 'REMEMBER to customize /etc/clustershell/groups.d/local.cfg',
-  #}
+  include ccs_clustershell
 
   include ccs_users
 
