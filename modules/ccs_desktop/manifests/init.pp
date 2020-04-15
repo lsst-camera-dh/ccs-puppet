@@ -44,13 +44,14 @@ class ccs_desktop {
       }
       file { "/usr/share/applications/lsst.ccs.${app}.${version}.desktop":
         ensure  => file,
-        content => epp("${title}/lsst.ccs.APP.VERSION.desktop.epp",
-                       {
-                         version  => $version,
-                         app      => $app,
-                         desc     => $desc,
-                         terminal => $terminal,
-                       }),
+        content => epp(
+          "${title}/lsst.ccs.APP.VERSION.desktop.epp",
+          {
+            version  => $version,
+            app      => $app,
+            desc     => $desc,
+            terminal => $terminal,
+          }),
       }
     }
   }

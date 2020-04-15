@@ -48,8 +48,10 @@ class ccs_jdk11 ( Boolean $install = true ) {
 
   file { '/etc/ccs/ccs-console.app':
     ensure  => $ensure,
-    content => epp("${title}/ccs-console.epp",
-                   {'libdir' => "${jfxdest}/lib", 'jdkcss' => $jdkcss}),
+    content => epp(
+      "${title}/ccs-console.epp",
+      {'libdir' => "${jfxdest}/lib", 'jdkcss' => $jdkcss}
+    ),
   }
 
 

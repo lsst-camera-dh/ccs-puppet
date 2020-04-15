@@ -27,8 +27,10 @@ class ccs_monit {
   $alertfile = 'alert'
   file { "${monitd}/${alertfile}":
     ensure  => file,
-    content => epp("${title}/${alertfile}.epp",
-                   {'mailhost' => $mailhost, 'alert' => $alert}),
+    content => epp(
+      "${title}/${alertfile}.epp",
+      {'mailhost' => $mailhost, 'alert' => $alert}
+    ),
   }
 
 
@@ -160,8 +162,10 @@ class ccs_monit {
     $nfile = 'network'
     file { "${monitd}/${nfile}":
       ensure  => file,
-      content => epp("${title}/${nfile}.epp",
-                     {'interface' => $main_interface}),
+      content => epp(
+        "${title}/${nfile}.epp",
+        {'interface' => $main_interface}
+      ),
     }
   }
 

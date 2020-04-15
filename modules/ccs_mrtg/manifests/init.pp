@@ -149,8 +149,9 @@ class ccs_mrtg {
 
   $iface_name = $facts['main_interface']
 
-  $iface_ip = pick($facts['networking']['interfaces'][$iface_name][ip],
-                   '127.0.0.1')
+  $iface_ip = pick(
+    $facts['networking']['interfaces'][$iface_name][ip], '127.0.0.1'
+  )
 
   ## NB this uses $cfgfile.
   $ikey = "netspeed_${iface_ip}"
@@ -202,20 +203,21 @@ class ccs_mrtg {
     ensure  => file,
     owner   => $mrtg_user,
     notify  => Service['mrtg'],
-    content => epp("${title}/${basename($mrtg_cfg)}",
-                   {
-                     'mrtg_dir'       => $mrtg_dir,
-                     'hostname'       => $::hostname,
-                     'snmp_community' => $snmp_community,
-                     'iface_ip'       => $iface_ip,
-                     'iface_name'     => $iface_name,
-                     'iface_max'      => $iface_max,
-                     'mem_max'        => $mem_max,
-                     'swap_max'       => $swap_max,
-                     'sda'            => $sda,
-                     'disks'          => $disks_facts,
-                     'temp_ipmi'      => $temp_ipmi,
-                   }),
+    content => epp(
+      "${title}/${basename($mrtg_cfg)}",
+      {
+        'mrtg_dir'       => $mrtg_dir,
+        'hostname'       => $::hostname,
+        'snmp_community' => $snmp_community,
+        'iface_ip'       => $iface_ip,
+        'iface_name'     => $iface_name,
+        'iface_max'      => $iface_max,
+        'mem_max'        => $mem_max,
+        'swap_max'       => $swap_max,
+        'sda'            => $sda,
+        'disks'          => $disks_facts,
+        'temp_ipmi'      => $temp_ipmi,
+      }),
   }
 
 
