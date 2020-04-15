@@ -1,37 +1,10 @@
+## TODO
+## mysql module can create database 
+## Local yum repo
 class ccs_main {
 
-  ## TODO
-  ## mysql module can create database 
-  ## Local yum repo
-
-  include ccs_time
-
-  if $facts['location'] == 'slac' {
-    include ccs_chef
-  }
-
-  include ccs_packages
-
-  include ccs_clustershell
-
-  include ccs_home
-
-  include ccs_users
-
-  include ccs_dirs
-
-  include ccs_etc
-
-  include ccs_sudo
-
-  if ($facts['location'] == 'slac') and ($facts['native_gpfs'] != 'true') {
-    include ccs_autofs
-  }
-
-  include ccs_jdk8
-
-  if $facts['role'] =~ /(desktop|hcu)/ {
-    include ccs_graphical
+  class { 'selinux':
+    mode => 'permissive',
   }
 
   service {['initial-setup-graphical', 'initial-setup-text']:
@@ -39,35 +12,62 @@ class ccs_main {
     enable => false,
   }
 
-  class { 'selinux':
-    mode => 'permissive',
-  }
+  include ccs_time
 
   include ccs_firewall
 
   include ccs_fail2ban
 
-  include ccs_scripts
-
-  class { 'ccs_git':
-    ensure => present
-  }
-
-  include ccs_profile_d
-
-  include ccs_desktop
+  include ccs_home
 
   include ccs_root
 
+  include ccs_users
+
   if $facts['location'] == 'slac' {
+
+    include ccs_chef
+
+    if $facts['native_gpfs'] != 'true' {
+      include ccs_autofs        # mounts pkgarchive
+    }
+
     include ccs_kerberos
     include ccs_grub
     include ccs_ssh
   }
 
+  include ccs_packages          # needs pkgarchive
+
+  include ccs_clustershell
+
+  include ccs_dirs
+
+  include ccs_etc
+
+  class { 'ccs_git':
+    ensure => present,          # present or latest
+  }
+
+  include ccs_profile_d
+
+  include ccs_scripts
+
+  include ccs_sudo
+
+  include ccs_sysctl
+
+  include ccs_jdk8
+
+  include ccs_desktop
+
   include ccs_monit
 
   include ccs_mrtg
+
+  if $facts['role'] =~ /(desktop|hcu)/ {
+    include ccs_graphical
+  }
 
   if $::hostname =~ /lsst-(dc0[1236]|ir2daq01)/ {
     class {'ccs_network':
@@ -78,7 +78,6 @@ class ccs_main {
   if $::hostname =~ /-vw\d+/ {
     include ccs_autologin
   }
-
 
   if $facts['role'] == 'database' {
     class { 'ccs_database':
@@ -125,10 +124,6 @@ class ccs_main {
       install => true,
     }
   }
-
-
-  include ccs_sysctl
-
 
   if $::hostname =~ /lsst-(vw|it)01/ {
     class { 'ccs_nvidia':
