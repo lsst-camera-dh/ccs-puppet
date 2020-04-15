@@ -1,6 +1,11 @@
-class ccs_power ( Boolean $install = true, Boolean $quadbox = false ) {
-
-  $ensure = $install ? { true => 'file', default => 'absent' }
+## @summary
+##   Add (or remove) hcu shutdown utilities
+##
+## @param ensure
+##   String saying whether to install ('present') or remove ('absent').
+## @param quadbox
+##   Boolean true on quadbox hosts
+class ccs_power (String $ensure = 'absent', Boolean $quadbox = false) {
 
   file { '/etc/sudoers.d/poweroff':
     ensure => $ensure,

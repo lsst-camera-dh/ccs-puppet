@@ -96,14 +96,7 @@ class ccs_main {
     include ccs_filter_changer
   }
 
-
-  if $facts['role'] == 'hcu' {
-    class { 'ccs_power':
-      install => true,
-      quadbox => $ccs_power::quadbox,
-    }
-  }
-
+  include ccs_power
 
   include ccs_jdk11
 
