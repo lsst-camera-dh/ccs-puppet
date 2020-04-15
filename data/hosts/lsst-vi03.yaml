@@ -2,3 +2,4 @@
 #ccs_imanager::ensure: 'present'
 #ccs_vldrive::ensure: 'present'
 #ccs_power::quadbox: true
+#ccs_jdk11::ensure: 'present'
