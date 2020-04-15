@@ -82,7 +82,7 @@ class ccs_mrtg {
 
   ## To prevent complaints about monitoring free space in /tmp and /var
   $mrtg_module = 'lsst-mrtg'
-  selinux::module{ $mrtg_module:
+  selinux::module { $mrtg_module:
     ensure    => 'present',
     source_te => "puppet:///modules/${title}/${mrtg_module}.te",
     builder   => 'simple'
@@ -234,6 +234,11 @@ class ccs_mrtg {
     creates   => $htmlfile,
     user      => $mrtg_user,
     subscribe => File[$mrtg_cfg],
+  }
+
+
+  selinux::exec_restorecon { $mrtg_dir:
+    recurse => true,
   }
 
 
