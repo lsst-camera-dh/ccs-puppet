@@ -85,19 +85,11 @@ class ccs_main {
     }
   }
 
-  if $::hostname =~ /(-fcs\d+|lsst-lion18)/ {
-    include ccs_canbus
-  }
+  include ccs_canbus
 
-  ## FIXME what are the right hosts for this?
-  if $::hostname =~ /lsst-lion(09|1[05])/ {
-    include ccs_vldrive
-  }
+  include ccs_vldrive
 
-  ## FIXME what are the right hosts for this?
-  if $::hostname =~ /lsst-uno11/ {
-    include ccs_imanager
-  }
+  include ccs_imanager
 
   ## FIXME what are the right hosts for this?
   if $::hostname =~ /(lsst-un06|comcam-hcu03)/ {

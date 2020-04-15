@@ -1,0 +1,3 @@
+#ccs_canbus::ensure: 'present'
+#ccs_imanager::ensure: 'present'
+#ccs_vldrive::ensure: 'present'
