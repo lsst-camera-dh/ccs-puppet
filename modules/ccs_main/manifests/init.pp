@@ -107,12 +107,6 @@ class ccs_main {
 
   include ccs_jdk11
 
-
-  if $::hostname =~ /lsst-(vw|it)01/ {
-    class { 'ccs_nvidia':
-      install => true,
-    }
-  }
-
+  include ccs_nvidia
 
 }

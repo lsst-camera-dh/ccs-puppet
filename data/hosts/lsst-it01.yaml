@@ -1,2 +1,1 @@
-ccs_jdk11::ensure: 'present'
 ccs_nvidia::ensure: 'present'
