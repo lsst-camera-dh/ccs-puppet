@@ -28,31 +28,14 @@ class ccs_main {
 
   include ccs_jdk8
 
-  ## FIXME restrict by hostname.
-  ## FIXME test is wrong for servers if we have installed graphical stuff.
-  if $facts['rpm_gdm'] == 'true' {
-
-    service { 'gdm':
-      enable => true,
-    }
-
-    exec { 'Set graphical target':
-      path    => ['/usr/sbin', '/usr/bin'],
-      command => 'systemctl set-default graphical.target',
-      unless  => 'sh -c "systemctl get-default | grep -qF graphical.target"',
-    }
-
-    package { 'gnome-initial-setup':
-      ensure => purged,
-    }
+  if $facts['role'] =~ /(desktop|hcu)/ {
+    include ccs_graphical
   }
-
 
   service {['initial-setup-graphical', 'initial-setup-text']:
     ensure => 'stopped',
     enable => false,
   }
-
 
   class { 'selinux':
     mode => 'permissive',
