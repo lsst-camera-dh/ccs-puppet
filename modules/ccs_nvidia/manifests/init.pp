@@ -43,7 +43,7 @@ class ccs_nvidia (String $ensure = 'nothing') {
       }
       default: { }
     }
-      
+
 
     if $facts['efi'] {
       $grubfile = '/boot/efi/EFI/centos/grub.cfg'
