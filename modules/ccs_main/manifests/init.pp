@@ -97,16 +97,10 @@ class ccs_main {
   }
 
 
-  if $::hostname =~ /lsst-lion0[2-5]/ {
-    $quadbox = true
-  } else {
-    $quadbox = false
-  }
-
   if $facts['role'] == 'hcu' {
     class { 'ccs_power':
       install => true,
-      quadbox => $quadbox,
+      quadbox => $ccs_power::quadbox,
     }
   }
 
