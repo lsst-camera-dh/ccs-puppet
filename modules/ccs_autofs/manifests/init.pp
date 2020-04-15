@@ -1,5 +1,8 @@
 class ccs_autofs {
 
+  ensure_packages(['autofs', 'nfs-utils'])
+
+
   ## Not strictly necessary since nfs paths are also pruned,
   ## but this may avoid some hangs when the server does not respond.
   exec { 'Exclude gpfs from updatedb.conf':
