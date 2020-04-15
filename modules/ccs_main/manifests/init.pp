@@ -14,6 +14,8 @@ class ccs_main {
 
   include ccs_clustershell
 
+  include ccs_home
+
   include ccs_users
 
   include ccs_dirs
@@ -52,8 +54,6 @@ class ccs_main {
   }
 
   include ccs_profile_d
-
-  include ccs_home
 
   include ccs_desktop
 
