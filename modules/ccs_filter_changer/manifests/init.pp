@@ -1,17 +1,25 @@
-class ccs_filter_changer {
+## @summary
+##   Add (or remove) filter changer device links
+##
+## @param ensure
+##   String saying whether to install ('present') or remove ('absent').
+class ccs_filter_changer (String $ensure = 'absent') {
 
   ## Create /dev/{encoder,motor} symlinks for filter changer hcu.
   $file = '99-usb-serial.rules'
 
   file { "/etc/udev/rules.d/${file}":
-    ensure => present,
+    ensure => $ensure,
     source => "puppet:///modules/${title}/${file}",
-    notify => Exec['udevadm'],
+    notify => Exec['udevadm filter_changer'],
   }
 
-  exec { 'udevadm':
+  exec { 'udevadm filter_changer':
     path        => ['/usr/sbin', '/usr/bin'],
-    command     => 'sh -c "udevadm control --reload-rules && udevadm trigger --type=devices --action=change"',
+    command     => @("CMD"/L),
+      sh -c 'udevadm control --reload-rules && \
+      udevadm trigger --type=devices --action=change'
+      | CMD
     refreshonly => true,
   }
 

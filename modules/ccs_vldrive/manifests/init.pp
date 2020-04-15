@@ -109,15 +109,15 @@ class ccs_vldrive (String $ensure = 'nothing') {
     file { "/etc/udev/rules.d/${udev}":
       ensure => $ensure,
       source => "puppet:///modules/${title}/${udev}",
-      notify => Exec['udevadm'],
+      notify => Exec['udevadm vldrive'],
     }
 
-    exec { 'udevadm':
+    exec { 'udevadm vldrive':
       path        => ['/usr/sbin', '/usr/bin'],
       command     => @("CMD"/L),
-      sh -c 'udevadm control --reload-rules && \
-      udevadm trigger --type=devices --action=change'
-      | CMD
+        sh -c 'udevadm control --reload-rules && \
+        udevadm trigger --type=devices --action=change'
+        | CMD
       refreshonly => true,
     }
 

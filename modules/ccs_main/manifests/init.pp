@@ -91,10 +91,7 @@ class ccs_main {
 
   include ccs_imanager
 
-  ## FIXME what are the right hosts for this?
-  if $::hostname =~ /(lsst-un06|comcam-hcu03)/ {
-    include ccs_filter_changer
-  }
+  include ccs_filter_changer
 
   include ccs_power
 
