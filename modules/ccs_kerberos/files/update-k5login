@@ -1,4 +1,5 @@
 #!/bin/bash
+# This file is managed by Puppet; changes may be overwritten.
 getent netgroup u-lsst-ccs |
  sed -e 's/(-,//g' | sed -e 's/,)//g' | sed -e 's/^u-lsst-ccs *//' | tr ' ' '\n' | sed -e 's/$/@SLAC.STANFORD.EDU/' > /tmp/.k5login
 rsync --checksum /tmp/.k5login ~

@@ -1,3 +1,4 @@
 #!/bin/sh
+## This file is managed by Puppet; changes may be overwritten.
 
 /usr/local/libexec/poweroff reboot "$1"

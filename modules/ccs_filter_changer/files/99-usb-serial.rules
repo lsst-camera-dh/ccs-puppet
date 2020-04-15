@@ -1,2 +1,3 @@
+# This file is managed by Puppet; changes may be overwritten.
 SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", ATTRS{serial}=="DAXHPKR1", SYMLINK+="motor"
 SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", ATTRS{serial}=="DAXHP481", SYMLINK+="encoder"

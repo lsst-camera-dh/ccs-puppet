@@ -1,4 +1,5 @@
 #!/bin/bash
+### This file is managed by Puppet; changes may be overwritten.
 ### mrtg_sysinfo.bash
 ###
 ### *Creation: <Fri 28-Oct-2005 11:58:55 gmorris on kipac-dell5.Stanford.EDU>*

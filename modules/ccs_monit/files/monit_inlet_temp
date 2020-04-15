@@ -1,8 +1,9 @@
 #!/bin/bash
+## This file is managed by Puppet; changes may be overwritten.
 #
 #
 #---------------------------------------------------------------------------
-# Check the air inlet temperature.  If it is above the threshold return the 
+# Check the air inlet temperature.  If it is above the threshold return the
 # value.  Otherwise return 0.
 #---------------------------------------------------------------------------
 #---------------------------------------------------------------------------
@@ -17,7 +18,7 @@ EOF
 }
 
 # echo to send to stderr instead of stdout
-function echoerr { 
+function echoerr {
 printf "%s\n" "$*" >&2;
 }
 
@@ -44,17 +45,17 @@ PROG=${0##*/}
 PID=$$
 dir0=$PWD
 set -u
-if [ ! -d ${LOCKDIR} ] || [ ! -w ${LOCKDIR} ]; then 
+if [ ! -d ${LOCKDIR} ] || [ ! -w ${LOCKDIR} ]; then
     echoerr "${LOCKDIR} dir does not exist or is not writable"
     exit 1
 fi
 
 LOCKFILE=${LOCKDIR}/${PROG}.lock
-if ( set -o noclobber ; echoerr "$PID" > "$LOCKFILE") 2> /dev/null; 
+if ( set -o noclobber ; echoerr "$PID" > "$LOCKFILE") 2> /dev/null;
 then
     trap cleanexit INT TERM EXIT
 else
-    echoerr "Failed to acquire lockfile: $LOCKFILE." 
+    echoerr "Failed to acquire lockfile: $LOCKFILE."
     echoerr "Held by PID $(< $LOCKFILE)"
     echoerr "exiting"
     exit 1
@@ -77,6 +78,6 @@ fi
 trap - INT TERM EXIT
 rm -f $LOCKFILE
 cd $dir0
-echoerr exit at: $(date --utc '+%Y%m%d%H%M%S') 
+echoerr exit at: $(date --utc '+%Y%m%d%H%M%S')
 exit $retval
 

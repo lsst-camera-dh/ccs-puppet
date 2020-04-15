@@ -1,3 +1,5 @@
+# This file is managed by Puppet; changes may be overwritten.
+
 [DEFAULT]
 
 syslog_authpriv = /var/log/everything

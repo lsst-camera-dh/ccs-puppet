@@ -1,4 +1,5 @@
 #!/bin/bash
+## This file is managed by Puppet; changes may be overwritten.
 ##
 ## Create a sudoers file listing the services that the ccs user is
 ## allowed to restart (etc).

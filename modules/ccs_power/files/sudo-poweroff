@@ -1,3 +1,5 @@
+# This file is managed by Puppet; changes may be overwritten.
+
 Cmnd_Alias POWEROFF = \
 /usr/bin/systemctl reboot, \
 /usr/bin/systemctl poweroff

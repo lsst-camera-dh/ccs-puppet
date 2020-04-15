@@ -1,3 +1,5 @@
+## This file is managed by Puppet; changes may be overwritten.
+
 [ $UID -ge 1000 ] || return
 
 # Stop python OpenBLAS running amok.
