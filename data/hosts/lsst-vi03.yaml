@@ -11,6 +11,7 @@
 #ccs_nvidia::ensure: 'present'
 ccs_monit::uptime: false
 #ccs_monit::gpfs: true
+#ccs_monit::hwraid: true
 #ccs_monit::temp: true
 #ccs_monit::ping_hosts:
 #  - 'lsst-vi01'

@@ -173,13 +173,21 @@ class ccs_monit {
   }
 
 
-  ## TODO hiera/role.
-  if $::hostname !~ /-(uno|lion|hcu|aio|lt|vw|vi)\d/ {
+  $hwraid_default = $facts['role'] ? {
+    'desktop' => false,
+    'hcu'     => false,
+    'virt'    => false,
+    default   => true,
+  }
 
-    $hwraid = 'hwraid'
-    file { "${monitd}/${hwraid}":
+  $hwraid = lookup('ccs_monit::hwraid', Boolean, undef, $hwraid_default)
+
+  if $hwraid {
+
+    $hwraidf = 'hwraid'
+    file { "${monitd}/${hwraidf}":
       ensure => present,
-      source => "puppet:///modules/${title}/${hwraid}",
+      source => "puppet:///modules/${title}/${hwraidf}",
       notify => Service['monit'],
     }
 
