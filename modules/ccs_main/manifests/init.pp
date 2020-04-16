@@ -75,9 +75,7 @@ class ccs_main {
     }
   }
 
-  if $::hostname =~ /-vw\d+/ {
-    include ccs_autologin
-  }
+  include ccs_autologin
 
   include ccs_database
 
