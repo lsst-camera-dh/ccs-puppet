@@ -197,11 +197,7 @@ class ccs_mrtg {
     ]
   }
 
-  if $::hostname =~ /lsst-mcm/ {
-    $temp_ipmi = true
-  } else {
-    $temp_ipmi = false
-  }
+  $temp_ipmi = lookup('ccs_monit::temp', Boolean, undef, false)
 
   file { $mrtg_cfg:
     ensure  => file,
