@@ -22,12 +22,18 @@ class ccs_sudo {
   }
 
 
-  ## FIXME only add dh line at slac.
   $group = 'lsst-ccs'
+
+  $content1 = "%${group} ALL = (ccs) ALL"
+  if $facts['location'] == 'slac' {
+    $content2 = "\n%${group} ALL = (dh) ALL"
+  } else {
+    $content2 = ''
+  }
+
   sudo::conf { "group-${group}":
     priority => 10,
-    content  => "%${group} ALL = (ccs) ALL
-%${group} ALL = (dh) ALL",
+    content  => "${content1}${content2}",
   }
 
 
