@@ -1,1 +1,23 @@
 ccs_nvidia::ensure: 'present'
+
+## Excluding lions and unos, which often go up and down.
+## TODO dervice from clustershell config?
+ccs_monit::ping_hosts:
+  - 'lsst-ir2daq01'
+  - 'lsst-ir2db01'
+  - 'lsst-mcm'
+  - 'lsst-ss01'
+  - 'lsst-ss02'
+  - 'lsst-vs01'
+  - 'lsst-vw01'
+  - 'lsst-vw02'
+  - 'lsst-dc01'
+  - 'lsst-dc02'
+  - 'lsst-dc03'
+  - 'lsst-dc04'
+  - 'lsst-dc05'
+  - 'lsst-dc06'
+  - 'lsst-dc07'
+  - 'lsst-dc08'
+  - 'lsst-dc09'
+  - 'lsst-dc10'

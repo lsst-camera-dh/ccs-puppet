@@ -103,27 +103,9 @@ class ccs_monit {
   }
 
 
-  ## TODO move to hiera and use for eg clustershell too.
-  case $::hostname {
-    /lsst-it01/: {
-      ## Excluding lions and unos, which often go up and down.
-      $hosts = ['lsst-ir2daq01', 'lsst-ir2db01', 'lsst-mcm',
-                'lsst-ss01', 'lsst-ss02', 'lsst-vs01', 'lsst-vw01',
-                'lsst-vw02', 'lsst-dc01', 'lsst-dc02', 'lsst-dc03',
-                'lsst-dc04', 'lsst-dc05', 'lsst-dc06', 'lsst-dc07',
-                'lsst-dc08', 'lsst-dc09', 'lsst-dc10']
-    }
-    /comcam-fp01/: {
-      $hosts = ['comcam-db01', 'comcam-dc01', 'comcam-mcm',
-                'comcam-vw01', 'comcam-hcu03', 'comcam-lion01',
-                'comcam-lion02', 'comcam-lion03', 'pathfinder-lion01']
-    }
-    default: {
-      $hosts = false
-    }
-  }
+  $hosts = lookup('ccs_monit::ping_hosts', Array[String], undef, [])
 
-  if $hosts {
+  unless empty($hosts) {
     $hfile = 'hosts'
     file { "${monitd}/${hfile}":
       ensure  => file,

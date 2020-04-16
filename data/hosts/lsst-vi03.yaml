@@ -9,3 +9,6 @@
 #ccs_power::quadbox: true
 #ccs_jdk11::ensure: 'present'
 #ccs_nvidia::ensure: 'present'
+#ccs_monit::ping_hosts:
+#  - 'lsst-vi01'
+#  - 'lsst-vi02'
