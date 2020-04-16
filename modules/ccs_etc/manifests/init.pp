@@ -1,4 +1,10 @@
-class ccs_etc (String $dir = lookup('ccs_dirs::etc')) {
+## @summary
+##   Install /etc/ccs files.
+##
+## @param dir
+##   String giving the location of the /etc/ccs directory.
+
+class ccs_etc (String $dir) {
 
   $files = ['logging.properties', 'ccsGlobal.properties']
 

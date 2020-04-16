@@ -4,7 +4,8 @@ class ccs_git (Enum['present', 'latest'] $ensure = 'present') {
 
   $repos = ['release', 'dev-package-lists']
 
-  $dir = lookup('ccs_dirs::adm', String)
+  $dirs = lookup('ccs_dirs::dirs', Hash)
+  $dir = $dirs['ccsadm']['path']
 
   $repos.each | String $repo | {
     vcsrepo { "${dir}/${repo}":

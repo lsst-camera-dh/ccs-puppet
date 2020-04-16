@@ -1,34 +1,22 @@
-class ccs_dirs (String $etc, String $opt, String $ccs,
-                String $adm, String $log) {
+## @summary
+##   Create common ccs directories.
+##
+## @param dirs
+##   Hash, with each value a hash of file attributes
 
-  file { $etc:
-    ensure => 'directory',
-    owner  => 'root',
-    group  => 'ccs',
-    mode   => '2775',
+class ccs_dirs (Hash $dirs) {
+
+  $dirs.each | String $dir, Hash $attrs | {
+    file { $dir:
+      ensure => 'directory',
+      *      => $attrs,
+    }
   }
 
-  file { $opt:
-    ensure => directory
-  }
-
-  file { [$ccs , $adm]:
-    ensure => 'directory',
-    owner  => 'ccs',
-    group  => 'ccs',
-    mode   => '0755',
-  }
-
-  file { $log:
-    ensure => 'directory',
-    owner  => 'root',
-    group  => 'ccs',
-    mode   => '2777',
-  }
 
   file { '/lsst':
     ensure => 'link',
-    target => $opt,
+    target => $dirs['opt']['path'],
   }
 
 
