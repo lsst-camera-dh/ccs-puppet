@@ -185,7 +185,7 @@ class ccs_mrtg {
             '/data'].filter |$disk| { $facts['mountpoints'][$disk] }
 
   $disks_facts = $disks.map |$disk| {
-    $name = $disk == '/' ? { true => 'root', default => $disk[1,0] }
+    $name = $disk == '/' ? { true => 'root', default => $disk[1,-1] }
     [ $disk,
       $name,
       $facts['mountpoints'][$disk]['size_bytes'],

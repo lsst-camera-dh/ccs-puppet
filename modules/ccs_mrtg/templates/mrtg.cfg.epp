@@ -200,37 +200,37 @@ Colours[sda]: CYAN#00cccc,VIOLET#ff00ff,RED#FF0000,GREEN#00FF00
 <% $disks.each | $disk | { -%>
 
 
-Target[root]: `<%= $mrtg_dir %>/mrtg_sysinfo.bash <%= $disk[0] %>`
-Options[root]: gauge,growright,nobanner
-Title[root]: <%= capitalize($disk[1]) %> Partition Usage
-PageTop[root]: <h1><%= capitalize($disk[1]) %> Partition Usage</h1>
-MaxBytes[root]: <%= $disk[2] %>
-YLegend[root]: Disk Usage
-ShortLegend[root]: B
-kilo[root]: 1024
-LegendI[root]: Used:
-LegendO[root]: Free:
-Legend1[root]: Used Disk
-Legend2[root]: Free Disk
-Legend3[root]: 
-Legend4[root]: 
-Colours[root]: RED#FF0000,GREEN#00FF00,DARK GREEN#006600,VIOLET#ff00ff
+Target[<%= $disk[1] %>]: `<%= $mrtg_dir %>/mrtg_sysinfo.bash <%= $disk[0] %>`
+Options[<%= $disk[1] %>]: gauge,growright,nobanner
+Title[<%= $disk[1] %>]: <%= capitalize($disk[1]) %> Partition Usage
+PageTop[<%= $disk[1] %>]: <h1><%= capitalize($disk[1]) %> Partition Usage</h1>
+MaxBytes[<%= $disk[1] %>]: <%= $disk[2] %>
+YLegend[<%= $disk[1] %>]: Disk Usage
+ShortLegend[<%= $disk[1] %>]: B
+kilo[<%= $disk[1] %>]: 1024
+LegendI[<%= $disk[1] %>]: Used:
+LegendO[<%= $disk[1] %>]: Free:
+Legend1[<%= $disk[1] %>]: Used Disk
+Legend2[<%= $disk[1] %>]: Free Disk
+Legend3[<%= $disk[1] %>]: 
+Legend4[<%= $disk[1] %>]: 
+Colours[<%= $disk[1] %>]: RED#FF0000,GREEN#00FF00,DARK GREEN#006600,VIOLET#ff00ff
 
-Target[iroot]: `<%= $mrtg_dir %>/mrtg_sysinfo.bash i<%= $disk[0] %>`
-Options[iroot]: gauge,growright,nobanner
-Title[iroot]: <%= capitalize($disk[1]) %> Inode Usage
-PageTop[iroot]: <h1><%= capitalize($disk[1]) %> Inode Usage</h1>
-MaxBytes[iroot]: <%= $disk[3] %>
-YLegend[iroot]: Inode Usage
-ShortLegend[iroot]: I
-kilo[iroot]: 1000
-LegendI[iroot]: Used:
-LegendO[iroot]: Free:
-Legend1[iroot]: Used Inodes
-Legend2[iroot]: Free Inodes
-Legend3[iroot]: 
-Legend4[iroot]: 
-Colours[iroot]: RED#FF0000,GREEN#00FF00,DARK GREEN#006600,VIOLET#ff00ff
+Target[i<%= $disk[1] %>]: `<%= $mrtg_dir %>/mrtg_sysinfo.bash i<%= $disk[0] %>`
+Options[i<%= $disk[1] %>]: gauge,growright,nobanner
+Title[i<%= $disk[1] %>]: <%= capitalize($disk[1]) %> Inode Usage
+PageTop[i<%= $disk[1] %>]: <h1><%= capitalize($disk[1]) %> Inode Usage</h1>
+MaxBytes[i<%= $disk[1] %>]: <%= $disk[3] %>
+YLegend[i<%= $disk[1] %>]: Inode Usage
+ShortLegend[i<%= $disk[1] %>]: I
+kilo[i<%= $disk[1] %>]: 1000
+LegendI[i<%= $disk[1] %>]: Used:
+LegendO[i<%= $disk[1] %>]: Free:
+Legend1[i<%= $disk[1] %>]: Used Inodes
+Legend2[i<%= $disk[1] %>]: Free Inodes
+Legend3[i<%= $disk[1] %>]: 
+Legend4[i<%= $disk[1] %>]: 
+Colours[i<%= $disk[1] %>]: RED#FF0000,GREEN#00FF00,DARK GREEN#006600,VIOLET#ff00ff
 <% } -%>
 <% if $temp_ipmi { -%>
 
