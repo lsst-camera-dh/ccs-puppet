@@ -34,6 +34,13 @@ class ccs_monit {
   }
 
 
+  $config = 'config'
+  file { "${monitd}/${config}":
+    ensure => present,
+    source => "puppet:///modules/${title}/${config}",
+  }
+
+
   ## system:
   ## Note that the use of "per core" requires monit >= 5.26.
   ## As of 2019/09, the epel7 version is 5.25.
@@ -47,14 +54,14 @@ class ccs_monit {
   ## This could be suppressed with:
   ##  else if succeeded exec "/bin/false"
   ## but that means uptime is always in failed state.
-  ##
-  ## FIXME disable uptime alert on vi03/04.
-  $files = ['config', 'system']
-  $files.each |$file| {
-    file { "${monitd}/${file}":
-      ensure => present,
-      source => "puppet:///modules/${title}/${file}",
-    }
+
+  $system = 'system'
+
+  $uptime = lookup('ccs_monit::uptime', Boolean, undef, true)
+
+  file { "${monitd}/${system}":
+    ensure => present,
+    content => epp("${title}/${system}.epp", {'uptime' => $uptime}),
   }
 
 

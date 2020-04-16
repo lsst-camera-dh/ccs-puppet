@@ -9,6 +9,7 @@
 #ccs_power::quadbox: true
 #ccs_jdk11::ensure: 'present'
 #ccs_nvidia::ensure: 'present'
+ccs_monit::uptime: false
 #ccs_monit::gpfs: true
 #ccs_monit::temp: true
 #ccs_monit::ping_hosts:

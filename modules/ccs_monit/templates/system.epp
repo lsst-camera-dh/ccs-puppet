@@ -1,3 +1,4 @@
+<%- |Boolean $uptime| -%>
 # This file is managed by Puppet; changes may be overwritten.
 
 check system $HOST
@@ -6,4 +7,6 @@ check system $HOST
   if cpu usage > 95% for 3 cycles then alert
   if memory usage > 90% for 3 cycles then alert
   if swap usage > 75% for 3 cycles then alert
+<%- if $uptime { -%>
   if uptime < 15 minutes then alert
+<% } -%>
