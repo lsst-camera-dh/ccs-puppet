@@ -59,6 +59,8 @@ ccs_users::users:
     comment: 'LSST Data Handling Account'
     managehome: true
 
+## present or latest
+ccs_git::ensure: 'present'
 
 ## TODO store permissions etc, as with users.
 ccs_dirs::etc: '/etc/ccs'

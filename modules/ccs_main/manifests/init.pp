@@ -42,9 +42,7 @@ class ccs_main {
 
   include ccs_etc
 
-  class { 'ccs_git':
-    ensure => present,          # present or latest
-  }
+  include ccs_git
 
   include ccs_profile_d
 
