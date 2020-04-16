@@ -1,5 +1,7 @@
 ccs_nvidia::ensure: 'present'
 
+ccs_monit::gpfs: true
+
 ## Excluding lions and unos, which often go up and down.
 ## TODO dervice from clustershell config?
 ccs_monit::ping_hosts:

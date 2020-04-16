@@ -93,12 +93,14 @@ class ccs_monit {
   }
 
 
+  $gpfs = lookup('ccs_monit::gpfs', Boolean, undef, false)
+
   ## Check gpfs capacity.
-  if $::hostname =~ /lsst-it01/ {
-    $gpfs = 'gpfs'
-    file { "${monitd}/${gpfs}":
+  if $gpfs {
+    $gpfsf = 'gpfs'
+    file { "${monitd}/${gpfsf}":
       ensure => present,
-      source => "puppet:///modules/${title}/${gpfs}",
+      source => "puppet:///modules/${title}/${gpfsf}",
     }
   }
 
@@ -114,7 +116,9 @@ class ccs_monit {
   }
 
 
-  if $::hostname =~ /-mcm/ {
+  $temp = lookup('ccs_monit::temp', Boolean, undef, false)
+
+  if $temp {
     $itemp = 'inlet-temp'
     file { "${monitd}/${itemp}":
       ensure => present,
@@ -152,6 +156,7 @@ class ccs_monit {
   }
 
 
+  ## TODO hiera/role.
   if $::hostname !~ /-(uno|lion|hcu|aio|lt|vw|vi)\d/ {
 
     $hwraid = 'hwraid'

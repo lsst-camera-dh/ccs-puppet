@@ -1,3 +1,5 @@
+ccs_monit::temp: true
+
 ccs_monit::ping_hosts:
   - 'comcam-db01'
   - 'comcam-dc01'
