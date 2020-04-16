@@ -14,7 +14,7 @@ class ccs_monit {
     path   => '/etc/monitrc',
     match  => '^set daemon',
     line   => 'set daemon  300  # check services at 300 seconds intervals',
-    notify => Service['monit']
+    notify => Service['monit'],
   }
 
 
@@ -31,6 +31,7 @@ class ccs_monit {
       "${title}/${alertfile}.epp",
       {'mailhost' => $mailhost, 'alert' => $alert}
     ),
+    notify  => Service['monit'],
   }
 
 
@@ -38,6 +39,7 @@ class ccs_monit {
   file { "${monitd}/${config}":
     ensure => present,
     source => "puppet:///modules/${title}/${config}",
+    notify => Service['monit'],
   }
 
 
@@ -60,8 +62,9 @@ class ccs_monit {
   $uptime = lookup('ccs_monit::uptime', Boolean, undef, true)
 
   file { "${monitd}/${system}":
-    ensure => present,
+    ensure  => present,
     content => epp("${title}/${system}.epp", {'uptime' => $uptime}),
+    notify  => Service['monit'],
   }
 
 
@@ -87,6 +90,7 @@ class ccs_monit {
   file { "${monitd}/${disk}":
     ensure  => file,
     content => epp("${title}/${disk}.epp", {'disks' => $disks}),
+    notify  => Service['monit'],
   }
 
 
@@ -96,6 +100,7 @@ class ccs_monit {
     file { "${monitd}/${gpfse}":
       ensure => present,
       source => "puppet:///modules/${title}/${gpfse}",
+      notify => Service['monit'],
     }
   }
 
@@ -108,6 +113,7 @@ class ccs_monit {
     file { "${monitd}/${gpfsf}":
       ensure => present,
       source => "puppet:///modules/${title}/${gpfsf}",
+      notify => Service['monit'],
     }
   }
 
@@ -119,6 +125,7 @@ class ccs_monit {
     file { "${monitd}/${hfile}":
       ensure  => file,
       content => epp("${title}/${hfile}.epp", {'hosts' => $hosts}),
+      notify  => Service['monit'],
     }
   }
 
@@ -130,6 +137,7 @@ class ccs_monit {
     file { "${monitd}/${itemp}":
       ensure => present,
       source => "puppet:///modules/${title}/${itemp}",
+      notify => Service['monit'],
     }
 
     $etemp = 'monit_inlet_temp'
@@ -137,6 +145,7 @@ class ccs_monit {
       ensure => present,
       source => "puppet:///modules/${title}/${etemp}",
       mode   => '0755',
+      notify => Service['monit'],
     }
   }
 
@@ -151,6 +160,7 @@ class ccs_monit {
         "${title}/${nfile}.epp",
         {'interface' => $main_interface}
       ),
+      notify  => Service['monit'],
     }
   }
 
@@ -170,6 +180,7 @@ class ccs_monit {
     file { "${monitd}/${hwraid}":
       ensure => present,
       source => "puppet:///modules/${title}/${hwraid}",
+      notify => Service['monit'],
     }
 
     ## Needs the raid utility (eg perccli64) to be installed separately.
