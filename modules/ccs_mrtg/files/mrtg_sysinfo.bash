@@ -405,7 +405,7 @@ function temp-ipmi ()
     local sudo="sudo"
     [ $UID -eq 0 ] && sudo=
     $sudo ipmi-sensors -t temperature --no-header-output \
-	--comma 2> /dev/null | gawk -v FS=',' '\
+          --comma 2> /dev/null | gawk -v FS=',' '\
 {
     if ($2 ~ /Inlet/) inlet=$1
     else if ($2 ~ /Exhaust/) exhaust=$1
@@ -416,7 +416,7 @@ END \
     if (!x) exit 1
     printf("%.0f %.0f\n", inlet, exhaust)
 }' || return 1
-}				# function temp-ipmi
+}               # function temp-ipmi
 
 
 function temp-pci ()

@@ -2,12 +2,12 @@
 module lsst-mrtg 1.0;
 
 require {
-	type unlabeled_t;
-	type default_t;
-	type tmp_t;
-	type var_t;
-	type mrtg_t;
-	class dir read;
+        type unlabeled_t;
+        type default_t;
+        type tmp_t;
+        type var_t;
+        type mrtg_t;
+        class dir read;
 }
 
 #============= mrtg_t ==============

@@ -2,9 +2,9 @@
 
 for rpm in gdm; do
     if rpm -q --quiet $rpm; then
-	installed=true
+        installed=true
     else
-	installed=false
+        installed=false
     fi
     printf "rpm_${rpm}=$installed\n" # string not boolean
 done
