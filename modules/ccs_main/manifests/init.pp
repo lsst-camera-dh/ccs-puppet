@@ -1,6 +1,3 @@
-## TODO
-## mysql module can create database 
-## Local yum repo
 class ccs_main {
 
   class { 'selinux':
@@ -69,11 +66,7 @@ class ccs_main {
     include ccs_graphical
   }
 
-  if $::hostname =~ /lsst-(dc0[1236]|ir2daq01)/ {
-    class {'ccs_network':
-      daq_interface => $facts['daq_interface'],
-    }
-  }
+  include ccs_network
 
   include ccs_autologin
 

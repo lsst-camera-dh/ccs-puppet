@@ -1,17 +1,23 @@
-## TODO interface name may vary - discover/check it?
-## Could check for an interface connected to 192.168.100.1,
-## but unlikely to be specific enough.
-class ccs_network (String $daq_interface) {
+## @summary
+##   Add settings for network interfaces.
+##
+## @param daq_interface
+##   String naming the DAQ network interface (empty if none).
 
-  ## Note: asked not to modify DAQ network interfaces.
-  $interface = "DISABLED-${daq_interface}"
+class ccs_network (String $daq_interface = '') {
 
-  $file = '30-ethtool'
+  unless empty($daq_interface) {
 
-  file { "/etc/NetworkManager/dispatcher.d/${file}":
-    ensure  => file,
-    content => epp("${title}/${file}", {'interface' => $interface}),
-    mode    => '0755',
+    ## Note: asked not to modify DAQ network interfaces.
+    $interface = "DISABLED-${daq_interface}"
+
+    $file = '30-ethtool'
+
+    file { "/etc/NetworkManager/dispatcher.d/${file}":
+      ensure  => file,
+      content => epp("${title}/${file}", {'interface' => $interface}),
+      mode    => '0755',
+    }
   }
 
 }
