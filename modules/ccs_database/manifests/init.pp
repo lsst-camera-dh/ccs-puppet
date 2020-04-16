@@ -11,12 +11,15 @@ class ccs_database (String $ensure = 'nothing') {
 
     ensure_packages(['mariadb-server'])
 
-    ## FIXME use first that exists, else /home/mysql.
-    # $datadir = ['/lsst-ir2db01',
-    #             '/data',
-    #             '/home/mysql'].filter |$value| { find_file($value) }
+    ## Use first mountpoint that exists, else /home/mysql.
+    $datadirs = [
+      '/lsst-ir2db01',
+      '/data',
+      '/home'
+    ].filter |$disk| { $facts['mountpoints'][$disk] }
 
-    $datadir = '/home/mysql'
+    $datadir0 = pick($datadirs[0], '/home')
+    $datadir = "${datadir0}/mysql"
 
     file { $datadir:
       ensure => directory,
@@ -26,7 +29,7 @@ class ccs_database (String $ensure = 'nothing') {
     }
 
 
-    $scratch = $facts['mounted_scratch'] ? {'true' => true, default => false}
+    $scratch = $facts['mountpoints']['/scratch'] ? {undef => false, default => true}
 
     $file = 'zzz-lsst-ccs.cnf'
 
