@@ -41,8 +41,7 @@ class ccs_dirs (Hash $dirs) {
 
 
   ## Make permissions like /tmp.
-  ## TODO improve partitioning scheme.
-  if $facts['mounted_scratch'] == 'true' {
+  if $facts['mountpoints']['/scratch'] {
     file { '/scratch':
       ensure => directory,
       mode   => '1777',
