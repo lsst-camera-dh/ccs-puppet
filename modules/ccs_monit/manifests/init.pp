@@ -65,7 +65,6 @@ class ccs_monit {
   ## Newer ones have /home instead.
   ## TODO loop over mount points instead?
   ## Can also do IO rates.
-  ## NB these must be listed in ccs_facts::mounted.sh
   $disks = {
     'root'    => '/',
     'tmp'     => '/tmp',
@@ -74,20 +73,13 @@ class ccs_monit {
     'opt'     => '/opt',
     'var'     => '/var',
     'scratch' => '/scratch',
-  }
-  $disks2 = $disks.filter|$key,$value| { $facts["mounted_${key}"] == 'true' }
-  ## Yuck.
-  if $::hostname =~ /lsst-ir2db01/ {
-    $disks3 = $disks2 + {'lsst-ir2db01' => '/lsst-ir2db01'}
-  }
-  else {
-    $disks3 = $disks2
-  }
+    'lsst-ir2db01' => '/lsst-ir2db01',
+  }.filter|$key,$value| { $facts['mountpoints'][$value] }
 
   $disk = 'disks'
   file { "${monitd}/${disk}":
     ensure  => file,
-    content => epp("${title}/${disk}.epp", {'disks' => $disks3}),
+    content => epp("${title}/${disk}.epp", {'disks' => $disks}),
   }
 
 
