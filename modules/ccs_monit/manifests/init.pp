@@ -150,7 +150,7 @@ class ccs_monit {
 
   ## TODO try to automatically fix netspeed?
   if $facts['role'] != 'virt' {
-    $main_interface = $facts['main_interface']
+    $main_interface = $ccs_facts::main_interface
     $nfile = 'network'
     file { "${monitd}/${nfile}":
       ensure  => file,

@@ -9,6 +9,8 @@ class ccs_main {
     enable => false,
   }
 
+  include ccs_facts
+
   include ccs_time
 
   include ccs_firewall

@@ -147,11 +147,15 @@ class ccs_mrtg {
   }
 
 
-  $iface_name = $facts['main_interface']
+  $iface_name = $ccs_facts::main_interface
 
-  $iface_ip = pick(
-    $facts['networking']['interfaces'][$iface_name][ip], '127.0.0.1'
-  )
+  $iface_info = $facts['networking']['interfaces'][$iface_name]
+
+  if $iface_info {
+    $iface_ip = pick($iface_info['ip'], '127.0.0.1')
+  } else {
+    $iface_ip = '127.0.0.1'
+  }
 
   ## NB this uses $cfgfile.
   $ikey = "netspeed_${iface_ip}"
