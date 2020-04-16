@@ -79,11 +79,7 @@ class ccs_main {
     include ccs_autologin
   }
 
-  if $facts['role'] == 'database' {
-    class { 'ccs_database':
-      install => true,
-    }
-  }
+  include ccs_database
 
   include ccs_canbus
 
