@@ -1,1 +1,1 @@
-ccs_network::daq_interface: "%{facts.daq_interface}"
+ccs_network::daq_interface: true

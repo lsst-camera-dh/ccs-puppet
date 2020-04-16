@@ -1,4 +1,4 @@
-#ccs_network::daq_interface: "%{facts.daq_interface}"
+#ccs_network::daq_interface: true
 #ccs_autologin::enable: true
 #ccs_database::ensure: 'present'
 #ccs_canbus::ensure: 'present'
