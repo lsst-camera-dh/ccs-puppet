@@ -167,6 +167,33 @@ class ccs_mrtg {
     $iface_max = $iface_max1
   }
 
+
+  if $ccs_facts::daq {
+    $daq_iface_name = $ccs_facts::daq_interface
+
+    ## TODO this duplicates the previous section; abstract it.
+    $daq_iface_info = $facts['networking']['interfaces'][$daq_iface_name]
+
+    if $daq_iface_info {
+      $daq_iface_ip = pick($daq_iface_info['ip'], '127.0.0.1')
+    } else {
+      $daq_iface_ip = '127.0.0.1'
+    }
+
+    $daq_ikey = "netspeed_${daq_iface_ip}"
+    $daq_iface_max1 = pick($facts[$daq_ikey], '0')
+    if $daq_iface_max1 == '0' {
+      $daq_iface_max = '125000000'
+    } else {
+      $daq_iface_max = $daq_iface_max1
+    }
+  } else {
+    $daq_iface_name = ''
+    $daq_iface_ip = ''
+    $daq_iface_max = ''
+  }
+
+
   $mem_max = $facts['memory']['system']['total_bytes']
   $swap_max = $facts['memory']['swap']['total_bytes']
 
@@ -217,6 +244,9 @@ class ccs_mrtg {
         'sda'            => $sda,
         'disks'          => $disks_facts,
         'temp_ipmi'      => $temp_ipmi,
+        'daq_iface_ip'   => $daq_iface_ip,
+        'daq_iface_name' => $daq_iface_name,
+        'daq_iface_max'  => $daq_iface_max,
       }),
   }
 

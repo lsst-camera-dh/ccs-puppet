@@ -1,33 +1,14 @@
 ## @summary
 ##   Add settings for network interfaces.
 ##
-## @param daq_interface
-##   String naming the DAQ network interface; or true to detect it; or
-##   false if none.
+## @param daq_ethtool
+##   Boolean, true if need DAQ ethtool settings.
 
-class ccs_network (Variant[Boolean,String] $daq_interface = false) {
+class ccs_network (Boolean $daq_ethtool = false) {
 
-  if $daq_interface {
-
-    ## Normally the interface is "lsst-daq", but not always (eg lsst-dc02).
-    ## TODO discover it?
-    ## Could check for an interface connected to 192.168.100.1?
-    $idefault = 'p3p1'
-    $imaybe = 'lsst-daq'
-
-    ## lsst-daq if exists, else p3p1.
-    $interface0 = $facts['networking']['interfaces'][$imaybe] ? {
-      undef   => $idefault,
-      default => $imaybe,
-    }
-
-    $interface1 = $daq_interface ? {
-      String  => $daq_interface,
-      default => $interface0 ,
-    }
-
+  if $daq_ethtool {
     ## Note: asked not to modify DAQ network interfaces.
-    $interface = "DISABLED-${interface1}"
+    $interface = "DISABLED-${ccs_facts::daq_interface}"
 
     $file = '30-ethtool'
 

@@ -1,4 +1,4 @@
-<%- | String $mrtg_dir, String $hostname, String $snmp_community, String $iface_ip, String $iface_name, String $iface_max, Integer $mem_max, Integer $swap_max, String $sda, Array $disks, Boolean $temp_ipmi = false | -%>
+<%- | String $mrtg_dir, String $hostname, String $snmp_community, String $iface_ip, String $iface_name, String $iface_max, Integer $mem_max, Integer $swap_max, String $sda, Array $disks, Boolean $temp_ipmi = false, String $daq_iface_ip = '', String $daq_iface_name = '', String $daq_iface_max = ''| -%>
 # -*- mode: conf -*-
 # This file is managed by Puppet; changes may be overwritten
 
@@ -30,6 +30,24 @@ PageTop[ether]: <h1>Traffic Analysis for <%= $iface_ip %> -- <%= $hostname %></h
   </table>
   </div>
 
+<% unless empty($daq_iface_name) { -%>
+Target[ether_daq]: /<%= $daq_iface_ip %>:<%= $snmp_community %>@localhost:
+SetEnv[ether_daq]: MRTG_INT_IP="<%= $daq_iface_ip %>" MRTG_INT_DESCR="<%= $daq_iface_name %>"
+MaxBytes[ether_daq]: <%= $daq_iface_max %>
+Title[ether_daq]: Traffic Analysis for <%= $daq_iface_ip %> -- <%= $hostname %>
+PageTop[ether_daq]: <h1>Traffic Analysis for <%= $daq_iface_ip %> -- <%= $hostname %></h1>
+  <div id="sysdetails">
+  <table>
+   <tr><td>System:</td><td><%= $hostname %></td></tr>
+   <tr><td>Description:</td><td><%= $daq_iface_name %></td></tr>
+   <tr><td>ifType:</td><td>ethernet</td></tr>
+   <tr><td>ifName:</td><td><%= $daq_iface_name %></td></tr>
+   <tr><td>Max Speed:</td><td><%= $daq_iface_max %> bytes/s</td></tr>
+   <tr><td>Ip:</td><td><%= $daq_iface_ip %></td></tr>
+  </table>
+  </div>
+
+<% } -%>
 Target[mem]: `<%= $mrtg_dir %>/mrtg_sysinfo.bash mem`
 Options[mem]: gauge,growright,nobanner,nopercent
 Title[mem]: Memory Usage
