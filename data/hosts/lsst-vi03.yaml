@@ -1,4 +1,5 @@
 #ccs_facts::daq: true
+#ccs_graphical::install: true
 #ccs_network::daq_ethtool: true
 #ccs_autologin::enable: true
 #ccs_database::ensure: 'present'

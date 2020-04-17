@@ -1,2 +1,1 @@
-ccs_power::ensure: 'present'
 ccs_graphical::install: true

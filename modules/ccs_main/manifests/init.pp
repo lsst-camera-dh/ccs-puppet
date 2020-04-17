@@ -62,9 +62,7 @@ class ccs_main {
 
   include ccs_mrtg
 
-  if $facts['role'] =~ /(desktop|hcu)/ {
-    include ccs_graphical
-  }
+  include ccs_graphical
 
   include ccs_network
 
