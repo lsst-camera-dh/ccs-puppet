@@ -1,7 +1,5 @@
 ## The handling of snmp_community is horrible. :(
 
-## FIXME: add daq interface traffic on dc nodes.
-
 class ccs_mrtg {
 
   ensure_packages(['net-snmp', 'mrtg', 'pwgen', 'patch', 'freeipmi'])
