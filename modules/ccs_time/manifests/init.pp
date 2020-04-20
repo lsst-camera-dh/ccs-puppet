@@ -1,13 +1,40 @@
-class ccs_time {
+class ccs_time (Enum['ntp', 'chrony', 'other'] $package = 'chrony') {
+
+  ensure_packages(['chrony', 'ntp'])
 
   include timezone
-  ## TODO: hwclock -w if we changed anything.
 
-  ensure_packages(['chrony'])
+  ## If RTC was originally (before including timezone) using local time.
+  ## Should not be needed, but is?
+  if ($facts['location'] == 'slac') and ($facts['rtc_local'] == 'true') {
+    exec { 'hwclock -w':
+      command => '/usr/sbin/hwclock -w',
+    }
+  }
 
-  service { 'chronyd':
-    ensure => stopped,
-    enable => false,
+
+  case $package {
+    'chrony': {
+      service { 'chronyd':
+        ensure => running,
+        enable => true,
+      }
+      service { 'ntpd':
+        ensure => stopped,
+        enable => false,
+      }
+    }
+    'ntp': {
+      service { 'chronyd':
+        ensure => stopped,
+        enable => false,
+      }
+      service { 'ntpd':
+        ensure => running,
+        enable => true,
+      }
+    }
+    default: { }
   }
 
 }
