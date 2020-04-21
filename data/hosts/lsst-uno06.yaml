@@ -1,1 +1,1 @@
-ccs_filter_changer::ensure: 'present'
+profile::ccs::filter_changer::ensure: 'present'

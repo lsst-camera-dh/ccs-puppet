@@ -1,1 +1,1 @@
-ccs_database::ensure: 'present'
+profile::ccs::database::ensure: 'present'

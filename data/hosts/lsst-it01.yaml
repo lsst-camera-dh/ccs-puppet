@@ -1,10 +1,10 @@
-ccs_nvidia::ensure: 'present'
+profile::ccs::nvidia::ensure: 'present'
 
-ccs_monit::gpfs: true
+profile::ccs::monit::gpfs: true
 
 ## Excluding lions and unos, which often go up and down.
 ## TODO dervice from clustershell config?
-ccs_monit::ping_hosts:
+profile::ccs::monit::ping_hosts:
   - 'lsst-ir2daq01'
   - 'lsst-ir2db01'
   - 'lsst-mcm'

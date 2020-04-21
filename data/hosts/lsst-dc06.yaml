@@ -1,1 +1,1 @@
-ccs_network::daq_ethtool: true
+profile::ccs::network::daq_ethtool: true

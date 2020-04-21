@@ -1,1 +1,1 @@
-ccs_monit::temp: true
+profile::ccs::monit::temp: true

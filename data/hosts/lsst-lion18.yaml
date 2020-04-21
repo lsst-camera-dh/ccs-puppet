@@ -1,1 +1,1 @@
-ccs_canbus::ensure: 'present'
+profile::ccs::canbus::ensure: 'present'

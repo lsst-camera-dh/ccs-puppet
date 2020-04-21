@@ -1,1 +1,1 @@
-ccs_autologin::enable: true
+profile::ccs::autologin::enable: true

@@ -1,11 +1,11 @@
 timezone::timezone: 'UTC'
 timezone::hwutc: true
-ccs_time::package: 'chrony'
+profile::ccs::time::package: 'chrony'
 
 ## FIXME
 pkgarchive: '/root'
 
-ccs_packages::packages:
+profile::ccs::packages::packages:
   - epel-release
   - git
   - rsync
@@ -31,18 +31,18 @@ ccs_packages::packages:
   - firewalld
   - fail2ban
 
-ccs_sudoers:
+profile::ccs::sudoers:
   - gmorris
   - marshall
   - tonyj
   - turri
 
-ccs_users::groups:
+profile::ccs::users::groups:
   'lsstadm':
     ensure: present
     gid: 24000
 
-ccs_users::users:
+profile::ccs::users::users:
   'ccs':
     ensure: present
     uid: 23000
@@ -61,9 +61,9 @@ ccs_users::users:
     managehome: true
 
 ## present or latest
-ccs_git::ensure: 'present'
+profile::ccs::git::ensure: 'present'
 
-ccs_dirs::dirs:
+profile::ccs::dirs::dirs:
   'etc':
     path: '/etc/ccs'
     owner: 'root'
@@ -88,19 +88,19 @@ ccs_dirs::dirs:
     ## FIXME
     mode: '2777'
 
-ccs_etc::dir: "%{lookup('ccs_dirs::dirs.etc.path')}"
+profile::ccs::etc::dir: "%{lookup('ccs_dirs::dirs.etc.path')}"
 
 
-ccs_canbus::module: 'advSocketCAN'
-ccs_canbus::version: '1.0.1.0'
+profile::ccs::canbus::module: 'advSocketCAN'
+profile::ccs::canbus::version: '1.0.1.0'
 
-ccs_vldrive::module: 'versaapi'
-ccs_vldrive::version: '1.5.0'
+profile::ccs::vldrive::module: 'versaapi'
+profile::ccs::vldrive::version: '1.5.0'
 
-ccs_imanager::module: 'imanager'
-ccs_imanager::version: '1.5.0'
+profile::ccs::imanager::module: 'imanager'
+profile::ccs::imanager::version: '1.5.0'
 
 
 ## FIXME
 mailhost: 'localhost'
-ccs_monit::alert: 'root@localhost'
+profile::ccs::monit::alert: 'root@localhost'

@@ -1,1 +1,1 @@
-ccs_imanager::ensure: 'present'
+profile::ccs::imanager::ensure: 'present'

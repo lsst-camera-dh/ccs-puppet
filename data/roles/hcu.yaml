@@ -1,2 +1,2 @@
-ccs_power::ensure: 'present'
-ccs_graphical::install: true
+profile::ccs::power::ensure: 'present'
+profile::ccs::graphical::install: true

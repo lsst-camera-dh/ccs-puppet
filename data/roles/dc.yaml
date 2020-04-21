@@ -1,1 +1,1 @@
-ccs_facts::daq: true
+profile::ccs::facts::daq: true

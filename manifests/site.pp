@@ -1,1 +1,1 @@
-include ccs_main
+include profile::ccs::main

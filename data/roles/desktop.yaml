@@ -1,1 +1,1 @@
-ccs_graphical::install: true
+profile::ccs::graphical::install: true

@@ -1,1 +1,1 @@
-ccs_vldrive::ensure: 'present'
+profile::ccs::vldrive::ensure: 'present'
