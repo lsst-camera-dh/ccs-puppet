@@ -1,6 +1,8 @@
 class profile::ccs::ssh {
 
-  $key = strip(file("${title}/${facts['location']}-root_key.txt"))
+  $ptitle = regsubst($title, '::', '/', 'G')
+
+  $key = strip(file("${ptitle}/${facts['location']}-root_key.txt"))
 
   ## Note that Chef is also managing /root/.ssh/authorized_keys.
   ## It creates this as a symlink to .public/authorized_keys,

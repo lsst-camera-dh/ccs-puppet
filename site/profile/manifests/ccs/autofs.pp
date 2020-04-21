@@ -12,12 +12,14 @@ class profile::ccs::autofs {
   }
 
 
+  $ptitle = regsubst($title, '::', '/', 'G')
+
   ## It would be nicer to only use eg "fs1" (rather than "fs1/g") here,
   ## but it seems as if the server is not set up to allow that.
   ## (Maybe this is an nfs3 issue?)
   file { '/etc/auto.gpfs':
     ensure => file,
-    source => "puppet:///modules/${title}/auto.gpfs",
+    source => "puppet:///modules/${ptitle}/auto.gpfs",
     notify => Service['autofs'],
   }
 
@@ -44,7 +46,7 @@ class profile::ccs::autofs {
 
   file { "/etc/auto.master.d/${file}":
     ensure  => file,
-    content => epp("${title}/${file}.epp", {'options' => $options}),
+    content => epp("${ptitle}/${file}.epp", {'options' => $options}),
     notify  => Service['autofs'],
   }
 

@@ -29,6 +29,8 @@ class profile::ccs::database (String $ensure = 'nothing') {
     }
 
 
+    $ptitle = regsubst($title, '::', '/', 'G')
+
     $scratch = $facts['mountpoints']['/scratch'] ? {undef => false, default => true}
 
     $file = 'zzz-lsst-ccs.cnf'
@@ -36,7 +38,7 @@ class profile::ccs::database (String $ensure = 'nothing') {
     file { "/etc/my.cnf.d/${file}":
       ensure  => file,
       content => epp(
-        "${title}/${file}.epp", {
+        "${ptitle}/${file}.epp", {
           'datadir' => $datadir,
           'scratch' => $scratch
         }),

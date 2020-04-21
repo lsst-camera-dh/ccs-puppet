@@ -2,13 +2,14 @@ class profile::ccs::firewall {
 
   ensure_packages(['firewalld'])
 
+  $ptitle = regsubst($title, '::', '/', 'G')
 
   if $facts['location'] == 'slac' {
     $file = 'trusted.xml'
 
     file { "/etc/firewalld/zones/${file}":
       ensure => file,
-      source => "puppet:///modules/${title}/${file}",
+      source => "puppet:///modules/${ptitle}/${file}",
       notify => Service['firewalld'],
     }
   }

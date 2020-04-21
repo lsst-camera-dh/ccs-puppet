@@ -5,6 +5,8 @@
 ##   String saying whether to install ('present') or remove ('absent') module.
 class profile::ccs::vldrive (String $ensure = 'nothing') {
 
+  $ptitle = regsubst($title, '::', '/', 'G')
+
   if $ensure =~ /(present|absent)/ {
 
     ensure_packages(['xz', 'tar', 'dkms', 'gcc', 'make', 'kernel-devel'])
@@ -56,7 +58,7 @@ class profile::ccs::vldrive (String $ensure = 'nothing') {
 
     file { "/etc/modules-load.d/${modload}":
       ensure => $ensure,
-      source => "puppet:///modules/${title}/${modload}",
+      source => "puppet:///modules/${ptitle}/${modload}",
     }
 
 
@@ -65,7 +67,7 @@ class profile::ccs::vldrive (String $ensure = 'nothing') {
 
     file { "/etc/modprobe.d/${modconf}":
       ensure => $ensure,
-      source => "puppet:///modules/${title}/modprobed-${modconf}",
+      source => "puppet:///modules/${ptitle}/modprobed-${modconf}",
     }
 
 
@@ -108,7 +110,7 @@ class profile::ccs::vldrive (String $ensure = 'nothing') {
 
     file { "/etc/udev/rules.d/${udev}":
       ensure => $ensure,
-      source => "puppet:///modules/${title}/${udev}",
+      source => "puppet:///modules/${ptitle}/${udev}",
       notify => Exec['udevadm vldrive'],
     }
 

@@ -44,17 +44,19 @@ class profile::ccs::jdk11 ( String $ensure = 'nothing' ) {
     }
 
 
+    $ptitle = regsubst($title, '::', '/', 'G')
+
     $jdkcss = '/etc/ccs/jdk11'
 
     file { $jdkcss:
       ensure  => $ensure,
-      content => epp("${title}/jdk11.epp", {'bindir' => "${jdkdest}/bin"}),
+      content => epp("${ptitle}/jdk11.epp", {'bindir' => "${jdkdest}/bin"}),
     }
 
     file { '/etc/ccs/ccs-console.app':
       ensure  => $ensure,
       content => epp(
-        "${title}/ccs-console.epp",
+        "${ptitle}/ccs-console.epp",
         {'libdir' => "${jfxdest}/lib", 'jdkcss' => $jdkcss}
       ),
     }

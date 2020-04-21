@@ -2,6 +2,7 @@ class profile::ccs::fail2ban {
 
   ensure_packages(['fail2ban'])
 
+  $ptitle = regsubst($title, '::', '/', 'G')
 
   if $facts['location'] == 'slac' {
     $files = ['jail.d/10-lsst-ccs.conf', 'paths-overrides.local']
@@ -10,7 +11,7 @@ class profile::ccs::fail2ban {
       $src = basename($file)
       file { "/etc/fail2ban/${file}":
         ensure => file,
-        source => "puppet:///modules/${title}/${src}",
+        source => "puppet:///modules/${ptitle}/${src}",
         notify => Service['fail2ban'],
       }
     }

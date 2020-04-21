@@ -6,6 +6,8 @@
 
 class profile::ccs::network (Boolean $daq_ethtool = false) {
 
+  $ptitle = regsubst($title, '::', '/', 'G')
+
   if $daq_ethtool {
     ## Note: asked not to modify DAQ network interfaces.
     $interface = "DISABLED-${profile::ccs::facts::daq_interface}"
@@ -14,7 +16,7 @@ class profile::ccs::network (Boolean $daq_ethtool = false) {
 
     file { "/etc/NetworkManager/dispatcher.d/${file}":
       ensure  => file,
-      content => epp("${title}/${file}", {'interface' => $interface}),
+      content => epp("${ptitle}/${file}", {'interface' => $interface}),
       mode    => '0755',
     }
   }

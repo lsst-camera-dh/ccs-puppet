@@ -10,11 +10,13 @@ class profile::ccs::kerberos {
   }
 
 
+  $ptitle = regsubst($title, '::', '/', 'G')
+
   $exe = "${dir}/update-k5login"
 
   file { $exe:
     ensure => present,
-    source => "puppet:///modules/${title}/${basename($exe)}",
+    source => "puppet:///modules/${ptitle}/${basename($exe)}",
     owner  => 'ccs',
     group  => 'ccs',
     mode   => '0755',

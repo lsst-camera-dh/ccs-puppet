@@ -52,11 +52,13 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
     }
 
 
+    $ptitle = regsubst($title, '::', '/', 'G')
+
     $conf = 'imanager.conf'
 
     file { "/etc/modules-load.d/${conf}":
       ensure => $ensure,
-      source => "puppet:///modules/${title}/${conf}",
+      source => "puppet:///modules/${ptitle}/${conf}",
     }
 
 
@@ -64,7 +66,7 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
 
     file { $exec:
       ensure => $ensure,
-      source => "puppet:///modules/${title}/${basename($exec)}",
+      source => "puppet:///modules/${ptitle}/${basename($exec)}",
       mode   => '0755',
     }
 
@@ -81,7 +83,7 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
 
     file { "/etc/systemd/system/${service}":
       ensure  => $ensure,
-      content => epp("${title}/${service}.epp", {'exec' => $exec}),
+      content => epp("${ptitle}/${service}.epp", {'exec' => $exec}),
     }
 
 

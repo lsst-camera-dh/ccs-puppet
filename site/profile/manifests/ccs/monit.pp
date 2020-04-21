@@ -23,12 +23,13 @@ class profile::ccs::monit {
   $mailhost = lookup('mailhost', String)
   $alert = lookup('profile::ccs::monit::alert', String)
 
+  $ptitle = regsubst($title, '::', '/', 'G')
 
   $alertfile = 'alert'
   file { "${monitd}/${alertfile}":
     ensure  => file,
     content => epp(
-      "${title}/${alertfile}.epp",
+      "${ptitle}/${alertfile}.epp",
       {'mailhost' => $mailhost, 'alert' => $alert}
     ),
     notify  => Service['monit'],
@@ -38,7 +39,7 @@ class profile::ccs::monit {
   $config = 'config'
   file { "${monitd}/${config}":
     ensure => present,
-    source => "puppet:///modules/${title}/${config}",
+    source => "puppet:///modules/${ptitle}/${config}",
     notify => Service['monit'],
   }
 
@@ -63,7 +64,7 @@ class profile::ccs::monit {
 
   file { "${monitd}/${system}":
     ensure  => present,
-    content => epp("${title}/${system}.epp", {'uptime' => $uptime}),
+    content => epp("${ptitle}/${system}.epp", {'uptime' => $uptime}),
     notify  => Service['monit'],
   }
 
@@ -89,7 +90,7 @@ class profile::ccs::monit {
   $disk = 'disks'
   file { "${monitd}/${disk}":
     ensure  => file,
-    content => epp("${title}/${disk}.epp", {'disks' => $disks}),
+    content => epp("${ptitle}/${disk}.epp", {'disks' => $disks}),
     notify  => Service['monit'],
   }
 
@@ -99,7 +100,7 @@ class profile::ccs::monit {
     $gpfse = 'gpfs-exists'
     file { "${monitd}/${gpfse}":
       ensure => present,
-      source => "puppet:///modules/${title}/${gpfse}",
+      source => "puppet:///modules/${ptitle}/${gpfse}",
       notify => Service['monit'],
     }
   }
@@ -112,7 +113,7 @@ class profile::ccs::monit {
     $gpfsf = 'gpfs'
     file { "${monitd}/${gpfsf}":
       ensure => present,
-      source => "puppet:///modules/${title}/${gpfsf}",
+      source => "puppet:///modules/${ptitle}/${gpfsf}",
       notify => Service['monit'],
     }
   }
@@ -124,7 +125,7 @@ class profile::ccs::monit {
     $hfile = 'hosts'
     file { "${monitd}/${hfile}":
       ensure  => file,
-      content => epp("${title}/${hfile}.epp", {'hosts' => $hosts}),
+      content => epp("${ptitle}/${hfile}.epp", {'hosts' => $hosts}),
       notify  => Service['monit'],
     }
   }
@@ -136,14 +137,14 @@ class profile::ccs::monit {
     $itemp = 'inlet-temp'
     file { "${monitd}/${itemp}":
       ensure => present,
-      source => "puppet:///modules/${title}/${itemp}",
+      source => "puppet:///modules/${ptitle}/${itemp}",
       notify => Service['monit'],
     }
 
     $etemp = 'monit_inlet_temp'
     file { "/usr/local/bin/${etemp}":
       ensure => present,
-      source => "puppet:///modules/${title}/${etemp}",
+      source => "puppet:///modules/${ptitle}/${etemp}",
       mode   => '0755',
       notify => Service['monit'],
     }
@@ -157,7 +158,7 @@ class profile::ccs::monit {
     file { "${monitd}/${nfile}":
       ensure  => file,
       content => epp(
-        "${title}/${nfile}.epp",
+        "${ptitle}/${nfile}.epp",
         {'interface' => $main_interface}
       ),
       notify  => Service['monit'],
@@ -168,7 +169,7 @@ class profile::ccs::monit {
   $netspeed = 'monit_netspeed'
   file { "/usr/local/bin/${netspeed}":
     ensure => present,
-    source => "puppet:///modules/${title}/${netspeed}",
+    source => "puppet:///modules/${ptitle}/${netspeed}",
     mode   => '0755',
   }
 
@@ -187,7 +188,7 @@ class profile::ccs::monit {
     $hwraidf = 'hwraid'
     file { "${monitd}/${hwraidf}":
       ensure => present,
-      source => "puppet:///modules/${title}/${hwraidf}",
+      source => "puppet:///modules/${ptitle}/${hwraidf}",
       notify => Service['monit'],
     }
 
@@ -195,7 +196,7 @@ class profile::ccs::monit {
     $hexe = 'monit_hwraid'
     file { "/usr/local/bin/${hexe}":
       ensure => present,
-      source => "puppet:///modules/${title}/${hexe}",
+      source => "puppet:///modules/${ptitle}/${hexe}",
       mode   => '0755',
     }
   }

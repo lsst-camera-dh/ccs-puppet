@@ -6,12 +6,14 @@
 
 class profile::ccs::etc (String $dir) {
 
+  $ptitle = regsubst($title, '::', '/', 'G')
+
   $files = ['logging.properties', 'ccsGlobal.properties']
 
   $files.each |$file| {
     file { "${dir}/${file}":
       ensure => file,
-      source => "puppet:///modules/${title}/${file}",
+      source => "puppet:///modules/${ptitle}/${file}",
     }
   }
 
@@ -20,7 +22,7 @@ class profile::ccs::etc (String $dir) {
 
   file { "${dir}/${udp}":
     ensure  => file,
-    content => epp("${title}/${udp}", {'hostname' => $trusted['certname']}),
+    content => epp("${ptitle}/${udp}", {'hostname' => $trusted['certname']}),
   }
 
 }

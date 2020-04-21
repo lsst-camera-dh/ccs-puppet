@@ -5,12 +5,14 @@
 ##   String saying whether to install ('present') or remove ('absent').
 class profile::ccs::filter_changer (String $ensure = 'absent') {
 
+  $ptitle = regsubst($title, '::', '/', 'G')
+
   ## Create /dev/{encoder,motor} symlinks for filter changer hcu.
   $file = '99-usb-serial.rules'
 
   file { "/etc/udev/rules.d/${file}":
     ensure => $ensure,
-    source => "puppet:///modules/${title}/${file}",
+    source => "puppet:///modules/${ptitle}/${file}",
     notify => Exec['udevadm filter_changer'],
   }
 

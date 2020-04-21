@@ -6,6 +6,7 @@ class profile::ccs::desktop {
             ensure => directory,
   }
 
+  $ptitle = regsubst($title, '::', '/', 'G')
 
   $files = ['/etc/xdg/menus/applications-merged/lsst.menu',
             '/usr/share/desktop-directories/lsst.directory',
@@ -15,7 +16,7 @@ class profile::ccs::desktop {
   $files.each |String $file| {
     file { $file:
       ensure => present,
-      source => "puppet:///modules/${title}/${basename($file)}",
+      source => "puppet:///modules/${ptitle}/${basename($file)}",
     }
   }
 
@@ -45,7 +46,7 @@ class profile::ccs::desktop {
       file { "/usr/share/applications/lsst.ccs.${app}.${version}.desktop":
         ensure  => file,
         content => epp(
-          "${title}/lsst.ccs.APP.VERSION.desktop.epp",
+          "${ptitle}/lsst.ccs.APP.VERSION.desktop.epp",
           {
             version  => $version,
             app      => $app,

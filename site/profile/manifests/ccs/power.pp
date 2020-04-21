@@ -7,15 +7,17 @@
 ##   Boolean true on quadbox hosts
 class profile::ccs::power (String $ensure = 'absent', Boolean $quadbox = false) {
 
+  $ptitle = regsubst($title, '::', '/', 'G')
+
   file { '/etc/sudoers.d/poweroff':
     ensure => $ensure,
-    source => "puppet:///modules/${title}/sudo-poweroff",
+    source => "puppet:///modules/${ptitle}/sudo-poweroff",
     mode   => '0440',
   }
 
   file { '/usr/local/libexec/poweroff':
     ensure => $ensure,
-    source => "puppet:///modules/${title}/poweroff",
+    source => "puppet:///modules/${ptitle}/poweroff",
     mode   => '0755',
   }
 
@@ -29,7 +31,7 @@ class profile::ccs::power (String $ensure = 'absent', Boolean $quadbox = false) 
   $files.each | String $file | {
     file { "/usr/local/bin/${file}":
       ensure => $ensure,
-      source => "puppet:///modules/${title}/${file}",
+      source => "puppet:///modules/${ptitle}/${file}",
       mode   => '0755',
     }
   }

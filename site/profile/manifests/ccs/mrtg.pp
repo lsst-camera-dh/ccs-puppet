@@ -9,13 +9,15 @@ class profile::ccs::mrtg {
 
   $snmp_conf = '/etc/snmp/snmpd.conf'
 
+  $ptitle = regsubst($title, '::', '/', 'G')
+
 
   ## Yuck. TODO just install the whole file in the normal puppet way.
   $snmp_patch = '/tmp/.snmpd.conf.diff'
   file { $snmp_patch:
     ensure => present,
     mode   => '0600',
-    source => "puppet:///modules/${title}/snmpd.conf.diff",
+    source => "puppet:///modules/${ptitle}/snmpd.conf.diff",
   }
 
   exec { 'snmpd.conf patch':
@@ -82,7 +84,7 @@ class profile::ccs::mrtg {
   $mrtg_module = 'lsst-mrtg'
   selinux::module { $mrtg_module:
     ensure    => 'present',
-    source_te => "puppet:///modules/${title}/${mrtg_module}.te",
+    source_te => "puppet:///modules/${ptitle}/${mrtg_module}.te",
     builder   => 'simple'
   }
 
@@ -126,7 +128,7 @@ class profile::ccs::mrtg {
 
   file { $mrtg_sysinfo:
     ensure => present,
-    source => "puppet:///modules/${title}/${basename($mrtg_sysinfo)}",
+    source => "puppet:///modules/${ptitle}/${basename($mrtg_sysinfo)}",
     mode   => '0755',
     owner  => $mrtg_user,
     group  => $mrtg_group,
@@ -229,7 +231,7 @@ class profile::ccs::mrtg {
     owner   => $mrtg_user,
     notify  => Service['mrtg'],
     content => epp(
-      "${title}/${basename($mrtg_cfg)}",
+      "${ptitle}/${basename($mrtg_cfg)}",
       {
         'mrtg_dir'       => $mrtg_dir,
         'hostname'       => $::hostname,
