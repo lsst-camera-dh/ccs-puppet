@@ -88,7 +88,7 @@ profile::ccs::dirs::dirs:
     ## FIXME
     mode: '2777'
 
-profile::ccs::etc::dir: "%{lookup('ccs_dirs::dirs.etc.path')}"
+profile::ccs::etc::dir: "%{lookup('profile::ccs::dirs::dirs.etc.path')}"
 
 
 profile::ccs::canbus::module: 'advSocketCAN'
