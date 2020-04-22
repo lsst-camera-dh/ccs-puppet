@@ -9,8 +9,7 @@ class profile::ccs::canbus (String $ensure = 'nothing') {
 
   if $ensure =~ /(present|absent)/ {
 
-    ## We still need most of these even if ensure = absent.
-    ensure_packages(['xz', 'tar', 'dkms', 'gcc', 'make', 'kernel-devel'])
+    ensure_packages(['xz', 'tar'])
 
     $module = lookup('profile::ccs::canbus::module')
     $version = lookup('profile::ccs::canbus::version')
@@ -31,28 +30,11 @@ class profile::ccs::canbus (String $ensure = 'nothing') {
     }
 
 
-    ## TODO add a dkms helper script, or check forge.
-    case $ensure {
-      present: {
-        exec { 'dkms install canbus':
-          path      => ['/usr/sbin', '/usr/bin'],
-          command   => @("CMD"/L),
-            sh -c 'dkms add -m ${lmodule} -v ${version} && \
-            dkms build -m ${lmodule} -v ${version} && \
-            dkms install -m ${lmodule} -v ${version}'
-            | CMD
-          unless    => "sh -c 'dkms status | grep -q ^${lmodule}'",
-          subscribe => Archive['/tmp/canbus.tar.xz'],
-        }
-      }
-      absent: {
-        exec { 'dkms remove canbus':
-          path    => ['/usr/sbin', '/usr/bin'],
-          command => "dkms remove -m ${lmodule} -v ${version} --all",
-          onlyif  => "sh -c 'dkms status | grep -q ^${lmodule}'",
-        }
-      }
-      default: { }
+    profile::ccs::dkms { 'canbus':
+      ensure  => $ensure,
+      module  => $lmodule,
+      version => $version,
+      archive => '/tmp/canbus.tar.xz',
     }
 
 

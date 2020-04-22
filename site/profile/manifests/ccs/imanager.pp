@@ -7,7 +7,7 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
 
   if $ensure =~ /(present|absent)/ {
 
-    ensure_packages(['xz', 'tar', 'dkms', 'gcc', 'make', 'kernel-devel'])
+    ensure_packages(['xz', 'tar'])
 
     $module = lookup('profile::ccs::imanager::module')
     $version = lookup('profile::ccs::imanager::version')
@@ -27,28 +27,11 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
     }
 
 
-    ## TODO add a dkms helper script, or check forge.
-    case $ensure {
-      present: {
-        exec { 'dkms install imanager':
-          path      => ['/usr/sbin', '/usr/bin'],
-          command   => @("CMD"/L),
-            sh -c 'dkms add -m ${module} -v ${version} && \
-            dkms build -m ${module} -v ${version} && \
-            dkms install -m ${module} -v ${version}'
-            | CMD
-          unless    => "sh -c \"dkms status | grep -q ^${module}\"",
-          subscribe => Archive['/tmp/imanager.tar.xz'],
-        }
-      }
-      absent: {
-        exec { 'dkms remove imanager':
-          path    => ['/usr/sbin', '/usr/bin'],
-          command => "dkms remove -m ${module} -v ${version} --all",
-          onlyif  => "sh -c 'dkms status | grep -q ^${module}'",
-        }
-      }
-      default: { }
+    profile::ccs::dkms { 'imanager':
+      ensure  => $ensure,
+      module  => $module,
+      version => $version,
+      archive => '/tmp/imanager.tar.xz',
     }
 
 

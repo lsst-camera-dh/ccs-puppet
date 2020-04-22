@@ -9,7 +9,7 @@ class profile::ccs::vldrive (String $ensure = 'nothing') {
 
   if $ensure =~ /(present|absent)/ {
 
-    ensure_packages(['xz', 'tar', 'dkms', 'gcc', 'make', 'kernel-devel'])
+    ensure_packages(['xz', 'tar'])
 
     $module = lookup('profile::ccs::vldrive::module')
     $version = lookup('profile::ccs::vldrive::version')
@@ -29,28 +29,11 @@ class profile::ccs::vldrive (String $ensure = 'nothing') {
     }
 
 
-    ## TODO add a dkms helper script, or check forge.
-    case $ensure {
-      present: {
-        exec { 'dkms install vldrive':
-          path      => ['/usr/sbin', '/usr/bin'],
-          command   => @("CMD"/L),
-            sh -c 'dkms add -m ${module} -v ${version} && \
-            dkms build -m ${module} -v ${version} && \
-            dkms install -m ${module} -v ${version}'
-            | CMD
-          unless    => "sh -c 'dkms status | grep -q ^${module}'",
-          subscribe => Archive['/tmp/vldrive.tar.xz'],
-        }
-      }
-      absent: {
-        exec { 'dkms remove vldrive':
-          path    => ['/usr/sbin', '/usr/bin'],
-          command => "dkms remove -m ${module} -v ${version} --all",
-          onlyif  => "sh -c 'dkms status | grep -q ^${module}'",
-        }
-      }
-      default: { }
+    profile::ccs::dkms { 'vldrive':
+      ensure  => $ensure,
+      module  => $module,
+      version => $version,
+      archive => '/tmp/vldrive.tar.xz',
     }
 
 
