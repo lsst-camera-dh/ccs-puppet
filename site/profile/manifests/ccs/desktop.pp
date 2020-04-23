@@ -1,3 +1,6 @@
+## @summary
+##   Add desktop menu entries for CCS apps.
+
 class profile::ccs::desktop {
 
   file { ['/etc/xdg/menus', '/etc/xdg/menus/applications-merged',
@@ -10,7 +13,7 @@ class profile::ccs::desktop {
 
   $files = ['/etc/xdg/menus/applications-merged/lsst.menu',
             '/usr/share/desktop-directories/lsst.directory',
-            ## FIXME not a great icon.
+            ## TODO not a great icon.
             '/usr/share/icons/lsst_appicon.png']
 
   $files.each |String $file| {
