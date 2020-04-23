@@ -48,7 +48,7 @@ class profile::ccs::graphical (Boolean $install = true) {
 
 
   ## FIXME
-  if $facts['role'] =~ /(desktop|viswork)/ {
+  if $facts['role'] =~ /ccs-(desktop|viswork)/ {
 
     ensure_packages(['libreoffice-base'])
 

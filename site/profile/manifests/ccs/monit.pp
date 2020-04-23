@@ -152,7 +152,7 @@ class profile::ccs::monit {
 
 
   ## TODO try to automatically fix netspeed?
-  if $facts['role'] != 'virt' {
+  if $facts['role'] != 'ccs-virt' {
     $main_interface = $profile::ccs::facts::main_interface
     $nfile = 'network'
     file { "${monitd}/${nfile}":

@@ -6,19 +6,19 @@ Facter.add(:role) do
     hostname=Facter.value(:hostname)
     case hostname
     when /-vw\d/
-      'viswork'
+      'ccs-viswork'
     when /-mcm/
-      'mcm'
+      'ccs-mcm'
     when /-(it|lt|aio)\d/
-      'desktop'
+      'ccs-desktop'
     when /-(uno|lion|hcu)\d/
-      'hcu'
+      'ccs-hcu'
     when /-db\d/
-      'database'
+      'ccs-database'
     when /-dc\d/
-      'dc'
+      'ccs-dc'
     when /-vi\d/
-      'virt'
+      'ccs-virt'
     end
   end
 end
