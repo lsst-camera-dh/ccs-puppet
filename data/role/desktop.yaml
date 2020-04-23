@@ -1,1 +1,2 @@
-profile::ccs::graphical::install: true
+classes:
+  - profile::ccs::graphical

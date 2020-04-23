@@ -1,10 +1,11 @@
 ## @summary
 ##   Settings for hosts that should run in graphical mode.
+##   Note: needs pkgarchive
 ##
 ## @param install
 ##   Boolean, false means do nothing.
 
-class profile::ccs::graphical (Boolean $install = false) {
+class profile::ccs::graphical (Boolean $install = true) {
 
   if $install {
 
@@ -46,6 +47,7 @@ class profile::ccs::graphical (Boolean $install = false) {
   }
 
 
+  ## FIXME
   if $facts['role'] =~ /(desktop|viswork)/ {
 
     ensure_packages(['libreoffice-base'])

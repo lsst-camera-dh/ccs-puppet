@@ -1,2 +1,3 @@
 classes:
   - profile::ccs::autologin
+  - profile::ccs::graphical

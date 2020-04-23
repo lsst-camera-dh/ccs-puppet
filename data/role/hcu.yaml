@@ -1,4 +1,5 @@
 classes:
   - profile::ccs::hcu
-
-profile::ccs::graphical::install: true
+  ## Ultimately, next item should not be present, but people
+  ## are currently using HCUs in graphical mode.
+  - profile::ccs::graphical

@@ -2,7 +2,9 @@
 #  - profile::ccs::hcu
 #  - profile::ccs::database
 #  - profile::ccs::nvidia
-#  - profile::ccs:jdk11
+#  - profile::ccs::jdk11
+#  - profile::ccs::graphical
+#  - profile::ccs::autologin
 #profile::ccs::power::quadbox: true
 #profile::ccs::canbus::ensure: 'present'
 #profile::ccs::imanager::ensure: 'present'
@@ -10,7 +12,6 @@
 #profile::ccs::filter_changer::ensure: 'present'
 
 #profile::ccs::facts::daq: true
-#profile::ccs::graphical::install: true
 #profile::ccs::network::daq_ethtool: true
 profile::ccs::monit::uptime: false
 #profile::ccs::monit::gpfs: true

@@ -21,7 +21,5 @@ class profile::ccs::common {
   include profile::ccs::mrtg
 
   ### Remaining items are host-specific.
-  include profile::ccs::graphical # needs pkgarchive
-
   include profile::ccs::network
 }
