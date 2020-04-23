@@ -1,1 +1,2 @@
-profile::ccs::database::ensure: 'present'
+classes:
+  - profile::ccs::database

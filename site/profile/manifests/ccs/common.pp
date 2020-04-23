@@ -25,6 +25,9 @@ class profile::ccs::common {
 
   include profile::ccs::jdk8
 
+  ## These will be replaced by some other monitoring.
+  include profile::ccs::monit
+  include profile::ccs::mrtg
 
   ### Remaining items are host-specific.
 
@@ -36,14 +39,9 @@ class profile::ccs::common {
 
   include profile::ccs::autologin
 
-  include profile::ccs::database
-
   ## For high-resolution displays.
   include profile::ccs::jdk11
   include profile::ccs::nvidia
 
-  ## These will be replaced by some other monitoring.
-  include profile::ccs::monit
-  include profile::ccs::mrtg
 
 }

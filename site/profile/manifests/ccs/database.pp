@@ -5,7 +5,7 @@
 ##   String saying whether to install ('present') or stop ('stopped').
 ##
 ## TODO https://forge.puppet.com/puppetlabs/mysql
-class profile::ccs::database (String $ensure = 'nothing') {
+class profile::ccs::database (String $ensure = 'present') {
 
   if $ensure =~ /(present|stopped)/ {
 
