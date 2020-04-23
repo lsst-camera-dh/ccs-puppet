@@ -6,7 +6,7 @@ class profile::ccs::packages ( Array[String] $packages ) {
   ## Maybe this belongs in profile::ccs::graphical.
   $pkgarchive = lookup('pkgarchive', String)
 
-  if $facts['role'] == 'desktop' {
+  if $facts['role'] =~ /(desktop|viswork)/ {
     ensure_packages(['libreoffice-base'])
 
     ## FIXME use a local yum repository.

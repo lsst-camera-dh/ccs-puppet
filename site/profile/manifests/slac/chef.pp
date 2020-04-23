@@ -12,7 +12,7 @@ class profile::slac::chef {
   }
 
 
-  if $facts['role'] =~ /(desktop|virt)/ {
+  if $facts['role'] =~ /(desktop|viswork|virt)/ {
 
     #notify { "yum ${facts['chef_normal']['chef_yum_should']}": }
     unless $facts['chef_normal']['chef_yum_should'] == 'update everything' {
