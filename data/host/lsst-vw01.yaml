@@ -1,3 +1,2 @@
-profile::ccs::autologin::enable: true
 profile::ccs::jdk11::ensure: 'present'
 profile::ccs::nvidia::ensure: 'present'

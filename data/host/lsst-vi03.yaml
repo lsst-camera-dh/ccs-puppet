@@ -10,7 +10,6 @@
 #profile::ccs::facts::daq: true
 #profile::ccs::graphical::install: true
 #profile::ccs::network::daq_ethtool: true
-#profile::ccs::autologin::enable: true
 #profile::ccs::jdk11::ensure: 'present'
 #profile::ccs::nvidia::ensure: 'present'
 profile::ccs::monit::uptime: false

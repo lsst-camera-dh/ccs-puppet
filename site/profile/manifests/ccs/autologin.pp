@@ -4,7 +4,7 @@
 ## @param enable
 ##   Boolean saying whether to enable or disable autologin.
 
-class profile::ccs::autologin (Boolean $enable = false) {
+class profile::ccs::autologin (Boolean $enable = true) {
 
   if $enable {
     ensure_packages(['gdm'])
