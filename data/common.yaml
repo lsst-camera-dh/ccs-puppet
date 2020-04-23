@@ -1,6 +1,6 @@
 timezone::timezone: 'UTC'
 timezone::hwutc: true
-profile::ccs::time::package: 'chrony'
+#profile::slac::time::package: 'chrony'
 
 ## FIXME
 pkgarchive: '/root'

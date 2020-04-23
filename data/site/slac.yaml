@@ -1,7 +1,7 @@
 ccsdb: 'ir2dbprod'
 
 timezone::timezone: 'America/Los_Angeles'
-profile::ccs::time::package: 'ntp'
+profile::slac::time::package: 'ntp'
 
 ## Stop the default, 0550, fighting with chef.
 sudo::config_dir_mode: '0755'
