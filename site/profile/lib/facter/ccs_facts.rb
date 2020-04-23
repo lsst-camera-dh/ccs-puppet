@@ -5,7 +5,11 @@ Facter.add(:role) do
   setcode do
     hostname=Facter.value(:hostname)
     case hostname
-    when /-(it|lt|aio|vw)\d/
+    when /-vw\d/
+      'viswork'
+    when /-mcm/
+      'mcm'
+    when /-(it|lt|aio)\d/
       'desktop'
     when /-(uno|lion|hcu)\d/
       'hcu'
