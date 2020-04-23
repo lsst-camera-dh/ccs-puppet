@@ -13,7 +13,7 @@ hierarchy:
   - name: "Host-specific data"
     path: "hosts/%{::hostname}.yaml"
   - name: "Site-specific data"
-    path: "sites/%{::location}.yaml"
+    path: "site/%{::site}.yaml"
   - name: "Role-specific data"
     path: "roles/%{::role}.yaml"
   - name: "Other YAML hierarchy levels"

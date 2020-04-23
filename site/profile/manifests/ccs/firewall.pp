@@ -4,7 +4,7 @@ class profile::ccs::firewall {
 
   $ptitle = regsubst($title, '::', '/', 'G')
 
-  if $facts['location'] == 'slac' {
+  if $facts['site'] == 'slac' {
     $file = 'trusted.xml'
 
     file { "/etc/firewalld/zones/${file}":

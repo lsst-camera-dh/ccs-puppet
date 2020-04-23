@@ -25,7 +25,7 @@ class profile::ccs::sudo {
   $group = 'lsst-ccs'
 
   $content1 = "%${group} ALL = (ccs) ALL"
-  if $facts['location'] == 'slac' {
+  if $facts['site'] == 'slac' {
     $content2 = "\n%${group} ALL = (dh) ALL"
   } else {
     $content2 = ''

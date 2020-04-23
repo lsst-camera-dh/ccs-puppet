@@ -23,7 +23,7 @@ class profile::ccs::main {
 
   include profile::ccs::users
 
-  if $facts['location'] == 'slac' {
+  if $facts['site'] == 'slac' {
 
     include profile::ccs::chef
 

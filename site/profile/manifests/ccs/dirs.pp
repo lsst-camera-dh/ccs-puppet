@@ -20,7 +20,7 @@ class profile::ccs::dirs (Hash $dirs) {
   }
 
 
-  if $facts['location'] == 'slac' {
+  if $facts['site'] == 'slac' {
 
     file { '/lnfs':
       ensure => directory

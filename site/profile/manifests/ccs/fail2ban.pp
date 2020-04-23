@@ -4,7 +4,7 @@ class profile::ccs::fail2ban {
 
   $ptitle = regsubst($title, '::', '/', 'G')
 
-  if $facts['location'] == 'slac' {
+  if $facts['site'] == 'slac' {
     $files = ['jail.d/10-lsst-ccs.conf', 'paths-overrides.local']
 
     $files.each |$file| {

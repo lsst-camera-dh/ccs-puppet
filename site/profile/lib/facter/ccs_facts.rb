@@ -19,20 +19,18 @@ Facter.add(:role) do
   end
 end
 
-Facter.add(:location) do
+Facter.add(:site) do
   setcode do
     network=Facter.value(:network)
     case network
     when /^134\.79\./
       'slac'
     when /^(140\.252|10\.0\.103)\./
-      'tucson'
+      'tu'
+    when '139.229.150.0'
+      'ls'
     when '139.229.174.0'
-      'chile'
-    # when '139.229.150.0'
-    #   'base'
-    # when '139.229.174.0'
-    #   'summit'
+      'cp'
     else
       'unknown'
     end
