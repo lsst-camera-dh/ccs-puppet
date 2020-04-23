@@ -27,7 +27,7 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
     }
 
 
-    profile::ccs::dkms { 'imanager':
+    dkms { 'imanager':
       ensure  => $ensure,
       module  => $module,
       version => $version,

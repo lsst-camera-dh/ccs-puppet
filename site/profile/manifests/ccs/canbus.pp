@@ -30,7 +30,7 @@ class profile::ccs::canbus (String $ensure = 'nothing') {
     }
 
 
-    profile::ccs::dkms { 'canbus':
+    dkms { 'canbus':
       ensure  => $ensure,
       module  => $lmodule,
       version => $version,

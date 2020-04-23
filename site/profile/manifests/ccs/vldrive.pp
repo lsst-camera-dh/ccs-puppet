@@ -29,7 +29,7 @@ class profile::ccs::vldrive (String $ensure = 'nothing') {
     }
 
 
-    profile::ccs::dkms { 'vldrive':
+    dkms { 'vldrive':
       ensure  => $ensure,
       module  => $module,
       version => $version,

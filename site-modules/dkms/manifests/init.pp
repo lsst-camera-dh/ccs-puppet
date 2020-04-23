@@ -1,6 +1,4 @@
-## FIXME this is not a profile.
-
-define profile::ccs::dkms (
+define dkms (
   Enum['present', 'absent'] $ensure,
   String $module,
   String $version,
