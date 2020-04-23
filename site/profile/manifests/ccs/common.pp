@@ -38,13 +38,6 @@ class profile::ccs::common {
 
   include profile::ccs::database
 
-  ## HCU-specific.
-  include profile::ccs::canbus
-  include profile::ccs::vldrive
-  include profile::ccs::imanager
-  include profile::ccs::filter_changer
-  include profile::ccs::power
-
   ## For high-resolution displays.
   include profile::ccs::jdk11
   include profile::ccs::nvidia

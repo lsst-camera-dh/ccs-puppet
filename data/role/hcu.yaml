@@ -1,2 +1,5 @@
+classes:
+  - profile::ccs::hcu
+
 profile::ccs::power::ensure: 'present'
 profile::ccs::graphical::install: true
