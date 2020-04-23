@@ -1,4 +1,4 @@
-class profile::ccs::ssh {
+class profile::slac::ssh {
 
   $ptitle = regsubst($title, '::', '/', 'G')
 

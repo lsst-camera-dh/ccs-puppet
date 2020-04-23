@@ -1,4 +1,4 @@
-class profile::ccs::grub {
+class profile::slac::grub {
 
   ## TODO Augeas?
   exec { 'Prevent console spam from common Dell mice':

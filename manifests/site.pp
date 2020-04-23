@@ -1,1 +1,1 @@
-include profile::ccs::main
+include profile::ccs::common

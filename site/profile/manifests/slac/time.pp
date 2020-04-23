@@ -1,4 +1,4 @@
-class profile::ccs::time (Enum['ntp', 'chrony', 'other'] $package = 'chrony') {
+class profile::slac::time (Enum['ntp', 'chrony', 'other'] $package = 'chrony') {
 
   ensure_packages(['chrony', 'ntp'])
 

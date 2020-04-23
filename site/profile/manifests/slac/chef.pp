@@ -1,4 +1,4 @@
-class profile::ccs::chef {
+class profile::slac::chef {
 
   $fhost = $trusted['certname']
 

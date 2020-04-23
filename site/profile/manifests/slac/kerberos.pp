@@ -1,4 +1,4 @@
-class profile::ccs::kerberos {
+class profile::slac::kerberos {
 
   ## TODO do not assume the location of the home directory.
   $dir = '/home/ccs/crontabs'

@@ -1,4 +1,4 @@
-class profile::ccs::root {
+class profile::slac::root {
 
   file_line { 'Enlarge bash history file':
     path  => '/root/.bashrc',

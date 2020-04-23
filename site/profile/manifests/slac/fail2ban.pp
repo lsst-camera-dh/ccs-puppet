@@ -1,4 +1,4 @@
-class profile::ccs::fail2ban {
+class profile::slac::fail2ban {
 
   ensure_packages(['fail2ban'])
 

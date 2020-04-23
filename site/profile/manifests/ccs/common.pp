@@ -1,40 +1,15 @@
-class profile::ccs::main {
+## @summary
+##   Common settings for all CCS hosts.
 
-  class { 'selinux':
-    mode => 'permissive',
-  }
+class profile::ccs::common {
 
-  service {['initial-setup-graphical', 'initial-setup-text']:
-    ensure => 'stopped',
-    enable => false,
+  if $facts['site'] == 'slac' {
+    include profile::slac::common
   }
 
   include profile::ccs::facts
 
-  include profile::ccs::time
-
-  include profile::ccs::firewall
-
-  include profile::ccs::fail2ban
-
-  include profile::ccs::home
-
-  include profile::ccs::root
-
   include profile::ccs::users
-
-  if $facts['site'] == 'slac' {
-
-    include profile::ccs::chef
-
-    if $facts['native_gpfs'] != 'true' {
-      include profile::ccs::autofs        # mounts pkgarchive
-    }
-
-    include profile::ccs::kerberos
-    include profile::ccs::grub
-    include profile::ccs::ssh
-  }
 
   include profile::ccs::packages          # needs pkgarchive
 
@@ -56,11 +31,10 @@ class profile::ccs::main {
 
   include profile::ccs::jdk8
 
+
+  ### Remaining items are host-specific.
+
   include profile::ccs::desktop
-
-  include profile::ccs::monit
-
-  include profile::ccs::mrtg
 
   include profile::ccs::graphical
 
@@ -70,18 +44,19 @@ class profile::ccs::main {
 
   include profile::ccs::database
 
+  ## HCU-specific.
   include profile::ccs::canbus
-
   include profile::ccs::vldrive
-
   include profile::ccs::imanager
-
   include profile::ccs::filter_changer
-
   include profile::ccs::power
 
+  ## For high-resolution displays.
   include profile::ccs::jdk11
-
   include profile::ccs::nvidia
+
+  ## These will be replaced by some other monitoring.
+  include profile::ccs::monit
+  include profile::ccs::mrtg
 
 }

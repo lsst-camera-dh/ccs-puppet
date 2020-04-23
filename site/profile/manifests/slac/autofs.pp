@@ -1,4 +1,4 @@
-class profile::ccs::autofs {
+class profile::slac::autofs {
 
   ensure_packages(['autofs', 'nfs-utils'])
 

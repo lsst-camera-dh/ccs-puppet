@@ -1,4 +1,4 @@
-class profile::ccs::home {
+class profile::slac::home {
 
   ## Change the default for home directories.
   ## TODO seems like all users should be in the same group though,

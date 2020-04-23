@@ -1,4 +1,4 @@
-class profile::ccs::firewall {
+class profile::slac::firewall {
 
   ensure_packages(['firewalld'])
 
