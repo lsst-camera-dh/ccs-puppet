@@ -20,6 +20,4 @@ class profile::ccs::common {
   include profile::ccs::monit
   include profile::ccs::mrtg
 
-  ### Remaining items are host-specific.
-  include profile::ccs::network
 }

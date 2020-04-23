@@ -1,2 +1,4 @@
+classes:
+  - profile::ccs::daq
+
 profile::ccs::facts::daq: true
-profile::ccs::network::daq_ethtool: true
