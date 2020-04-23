@@ -1,4 +1,5 @@
-ccsdb: 'ir2dbprod'
+classes:
+  - profile::slac::common
 
 timezone::timezone: 'America/Los_Angeles'
 profile::slac::time::package: 'ntp'
@@ -13,3 +14,5 @@ mailhost: 'smtpunix.slac.stanford.edu'
 
 ## cam-ir2-computing-alerts
 profile::ccs::monit::alert: 'k2p7u7n6e7u4r2r7@lsstc.slack.com'
+
+ccsdb: 'ir2dbprod'

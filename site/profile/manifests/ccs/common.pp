@@ -3,10 +3,6 @@
 
 class profile::ccs::common {
 
-  if $facts['site'] == 'slac' {
-    include profile::slac::common
-  }
-
   include profile::ccs::facts
 
   include profile::ccs::users
