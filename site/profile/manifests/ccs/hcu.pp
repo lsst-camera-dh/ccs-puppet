@@ -1,6 +1,7 @@
 class profile::ccs::hcu {
 
-  include profile::ccs::power
+  class { 'profile::ccs::power': ensure => present }
+
   include profile::ccs::canbus
   include profile::ccs::vldrive
   include profile::ccs::imanager
