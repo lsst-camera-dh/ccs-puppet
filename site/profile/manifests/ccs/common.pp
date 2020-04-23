@@ -11,8 +11,6 @@ class profile::ccs::common {
 
   include profile::ccs::users
 
-  include profile::ccs::packages          # needs pkgarchive
-
   include profile::ccs::clustershell
 
   include profile::ccs::dirs
@@ -34,7 +32,7 @@ class profile::ccs::common {
 
   ### Remaining items are host-specific.
 
-  include profile::ccs::desktop
+  include profile::ccs::desktop # needs pkgarchive
 
   include profile::ccs::graphical
 

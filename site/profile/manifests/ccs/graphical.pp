@@ -45,4 +45,20 @@ class profile::ccs::graphical (Boolean $install = false) {
 
   }
 
+
+  if $facts['role'] =~ /(desktop|viswork)/ {
+
+    ensure_packages(['libreoffice-base'])
+
+    $pkgarchive = lookup('pkgarchive', String)
+
+    ## FIXME use a local yum repository.
+    exec { 'Install zoom':
+      path    => ['/usr/bin'],
+      unless  => 'rpm -q zoom',
+      command => "sh -c \"rpm -U ${pkgarchive}/zoom*.rpm\"",
+    }
+  }
+
+
 }

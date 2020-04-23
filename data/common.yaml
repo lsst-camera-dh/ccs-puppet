@@ -5,7 +5,7 @@ timezone::hwutc: true
 ## FIXME
 pkgarchive: '/root'
 
-profile::ccs::packages::packages:
+packages:
   - epel-release
   - git
   - rsync
