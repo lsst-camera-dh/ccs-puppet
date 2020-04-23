@@ -5,6 +5,9 @@ timezone::hwutc: true
 ## FIXME
 pkgarchive: '/root'
 
+classes:
+  - profile::ccs::common
+
 packages:
   - epel-release
   - git
