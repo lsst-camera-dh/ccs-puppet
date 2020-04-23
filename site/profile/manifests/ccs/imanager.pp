@@ -70,12 +70,7 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
     }
 
 
-    ## FIXME
-    exec { 'groupadd gpio imanager':
-      path    => ['/usr/sbin', '/usr/bin'],
-      command => 'groupadd gpio',
-      unless  => 'getent group gpio',
-    }
+    ensure_resources('group', {'gpio' => {'ensure' => 'present'}})
 
     exec { 'usermod ccs imanager':
       path    => ['/usr/sbin', '/usr/bin'],

@@ -74,12 +74,7 @@ class profile::ccs::vldrive (String $ensure = 'nothing') {
     }
 
 
-    ## FIXME
-    exec { 'groupadd gpio vldrive':
-      path    => ['/usr/sbin', '/usr/bin'],
-      command => 'groupadd gpio',
-      unless  => 'getent group gpio',
-    }
+    ensure_resources('group', {'gpio' => {'ensure' => 'present'}})
 
     exec { 'usermod ccs vldrive':
       path    => ['/usr/sbin', '/usr/bin'],
