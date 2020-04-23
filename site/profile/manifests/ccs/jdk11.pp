@@ -3,7 +3,7 @@
 ##
 ## @param ensure
 ##   String saying whether to install ('present') or remove ('absent').
-class profile::ccs::jdk11 ( String $ensure = 'nothing' ) {
+class profile::ccs::jdk11 ( String $ensure = 'present' ) {
 
   if $ensure =~ /(present|absent)/ {
 

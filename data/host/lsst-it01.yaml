@@ -1,4 +1,5 @@
-profile::ccs::nvidia::ensure: 'present'
+classes:  
+  - profile::ccs::nvidia
 
 profile::ccs::monit::gpfs: true
 

@@ -1,2 +1,3 @@
-profile::ccs::jdk11::ensure: 'present'
-profile::ccs::nvidia::ensure: 'present'
+classes:
+  - profile::ccs::jdk11
+  - profile::ccs::nvidia

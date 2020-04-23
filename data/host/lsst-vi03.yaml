@@ -1,6 +1,8 @@
 #classes:
 #  - profile::ccs::hcu
 #  - profile::ccs::database
+#  - profile::ccs::nvidia
+#  - profile::ccs:jdk11
 #profile::ccs::power::quadbox: true
 #profile::ccs::canbus::ensure: 'present'
 #profile::ccs::imanager::ensure: 'present'
@@ -10,8 +12,6 @@
 #profile::ccs::facts::daq: true
 #profile::ccs::graphical::install: true
 #profile::ccs::network::daq_ethtool: true
-#profile::ccs::jdk11::ensure: 'present'
-#profile::ccs::nvidia::ensure: 'present'
 profile::ccs::monit::uptime: false
 #profile::ccs::monit::gpfs: true
 #profile::ccs::monit::hwraid: true

@@ -37,9 +37,4 @@ class profile::ccs::common {
 
   include profile::ccs::network
 
-  ## For high-resolution displays.
-  include profile::ccs::jdk11
-  include profile::ccs::nvidia
-
-
 }

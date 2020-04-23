@@ -5,7 +5,7 @@
 ##   String saying whether to install ('present') or remove ('absent') module.
 ##
 ## TODO actually install the driver if possible.
-class profile::ccs::nvidia (String $ensure = 'nothing') {
+class profile::ccs::nvidia (String $ensure = 'present') {
 
   $ptitle = regsubst($title, '::', '/', 'G')
 
