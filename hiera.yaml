@@ -9,13 +9,13 @@ defaults:
   # data_hash: yaml_data
 hierarchy:
   - name: "Per-node data (yaml version)"
-    path: "nodes/%{::trusted.certname}.yaml"
+    path: "node/%{::trusted.certname}.yaml"
   - name: "Host-specific data"
-    path: "hosts/%{::hostname}.yaml"
+    path: "host/%{::hostname}.yaml"
   - name: "Site-specific data"
     path: "site/%{::site}.yaml"
   - name: "Role-specific data"
-    path: "roles/%{::role}.yaml"
+    path: "role/%{::role}.yaml"
   - name: "Other YAML hierarchy levels"
     paths:
       - "common.yaml"
