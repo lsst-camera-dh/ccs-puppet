@@ -1,1 +1,1 @@
-ccs_hcu::vldrive::ensure: 'present'
+ccs_hcu::vldrive: true

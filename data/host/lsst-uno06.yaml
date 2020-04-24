@@ -1,1 +1,1 @@
-ccs_hcu::filter_changer::ensure: 'present'
+ccs_hcu::filter_changer: true

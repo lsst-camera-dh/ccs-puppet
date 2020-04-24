@@ -6,11 +6,11 @@
 #  - profile::ccs::graphical
 #  - profile::ccs::autologin
 #  - profile::ccs::daq
-#ccs_hcu::power::quadbox: true
-#ccs_hcu::canbus::ensure: 'present'
-#ccs_hcu::imanager::ensure: 'present'
-#ccs_hcu::vldrive::ensure: 'present'
-#ccs_hcu::filter_changer::ensure: 'present'
+#ccs_hcu::quadbox: true
+#ccs_hcu::canbus: true
+#ccs_hcu::imanager: true
+#ccs_hcu::vldrive: true
+#ccs_hcu::filter_changer: true
 
 #profile::ccs::facts::daq: true
 

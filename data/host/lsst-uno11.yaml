@@ -1,1 +1,1 @@
-ccs_hcu::imanager::ensure: 'present'
+ccs_hcu::imanager: true
