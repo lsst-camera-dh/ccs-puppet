@@ -19,14 +19,4 @@ class profile::ccs::dirs (Hash $dirs) {
     target => $dirs['opt']['path'],
   }
 
-
-  ## Make permissions like /tmp.
-  if $facts['mountpoints']['/scratch'] {
-    file { '/scratch':
-      ensure => directory,
-      mode   => '1777',
-    }
-  }
-
-
 }

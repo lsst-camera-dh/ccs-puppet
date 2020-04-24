@@ -9,6 +9,14 @@ class profile::slac::common {
     enable => false,
   }
 
+  ## Make permissions like /tmp.
+  if $facts['mountpoints']['/scratch'] {
+    file { '/scratch':
+      ensure => directory,
+      mode   => '1777',
+    }
+  }
+
   include profile::slac::time
 
   include profile::slac::firewall
