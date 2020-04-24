@@ -16,6 +16,8 @@ class ccs_software {
     dir => $dirs['ccsadm']['path'],
   }
 
+  include ccs_software::desktop
+
   include ccs_software::scripts
 
 }

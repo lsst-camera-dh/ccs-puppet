@@ -1,7 +1,7 @@
 ## @summary
 ##   Add desktop menu entries for CCS apps.
 
-class profile::ccs::desktop {
+class ccs_software::desktop {
 
   file { ['/etc/xdg/menus', '/etc/xdg/menus/applications-merged',
           '/usr/share/desktop-directories',
@@ -9,7 +9,7 @@ class profile::ccs::desktop {
             ensure => directory,
   }
 
-  $ptitle = regsubst($title, '::', '/', 'G')
+  $ptitle = regsubst($title, '::.*', '', 'G')
 
   $files = ['/etc/xdg/menus/applications-merged/lsst.menu',
             '/usr/share/desktop-directories/lsst.directory',

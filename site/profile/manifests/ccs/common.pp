@@ -13,7 +13,6 @@ class profile::ccs::common {
   include profile::ccs::sudo
   include profile::ccs::sysctl
   include profile::ccs::jdk8
-  include profile::ccs::desktop
 
   ## These will be replaced by some other alerting/monitoring system.
   include profile::ccs::monit
