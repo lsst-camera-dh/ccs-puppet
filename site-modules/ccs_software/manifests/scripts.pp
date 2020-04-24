@@ -1,6 +1,6 @@
-class profile::ccs::scripts {
+class ccs_software::scripts {
 
-  $ptitle = regsubst($title, '::', '/', 'G')
+  $ptitle = regsubst($title, '::.*', '', 'G')
 
   ## FIXME do not assume the home directory location.
   file { '/home/ccs/scripts':

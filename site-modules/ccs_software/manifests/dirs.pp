@@ -4,7 +4,7 @@
 ## @param dirs
 ##   Hash, with each value a hash of file attributes
 
-class profile::ccs::dirs (Hash $dirs) {
+class ccs_software::dirs (Hash $dirs) {
 
   $dirs.each | String $dir, Hash $attrs | {
     file { $dir:

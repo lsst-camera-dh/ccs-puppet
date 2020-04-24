@@ -4,9 +4,9 @@
 ## @param dir
 ##   String giving the location of the /etc/ccs directory.
 
-class profile::ccs::etc (String $dir) {
+class ccs_software::etc (String $dir) {
 
-  $ptitle = regsubst($title, '::', '/', 'G')
+  $ptitle = regsubst($title, '::.*', '', 'G')
 
   $files = ['logging.properties', 'ccsGlobal.properties']
 

@@ -1,11 +1,20 @@
-class profile::ccs::git (Enum['present', 'latest'] $ensure = 'present') {
+## @summary
+##   Install CCS release and dev-package-lists from git.
+##
+## @param dir
+##   Directory to install to (normally /opt/lsst/ccsadm).
+##
+## @param ensure
+##   'present' (default) or 'latest'
+
+class ccs_software::git (
+  String $dir,
+  Enum['present', 'latest'] $ensure = 'present',
+) {
 
   $base = 'https://github.com/lsst-camera-dh'
 
   $repos = ['release', 'dev-package-lists']
-
-  $dirs = lookup('profile::ccs::dirs::dirs', Hash)
-  $dir = $dirs['ccsadm']['path']
 
   $repos.each | String $repo | {
     vcsrepo { "${dir}/${repo}":

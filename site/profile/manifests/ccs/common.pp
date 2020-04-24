@@ -6,11 +6,10 @@ class profile::ccs::common {
   include profile::ccs::facts
   include profile::ccs::users
   include profile::ccs::clustershell
-  include profile::ccs::dirs
-  include profile::ccs::etc
-  include profile::ccs::git
+
+  include ccs_software
+
   include profile::ccs::profile_d
-  include profile::ccs::scripts
   include profile::ccs::sudo
   include profile::ccs::sysctl
   include profile::ccs::jdk8
