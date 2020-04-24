@@ -1,4 +1,4 @@
-class profile::ccs::monit {
+class ccs_monit {
 
   ensure_packages(['monit', 'freeipmi'])
 
@@ -21,15 +21,13 @@ class profile::ccs::monit {
   $monitd = '/etc/monit.d'
   ## TODO add another email address in case slack is down.
   $mailhost = lookup('mailhost', String)
-  $alert = lookup('profile::ccs::monit::alert', String)
-
-  $ptitle = regsubst($title, '::', '/', 'G')
+  $alert = lookup('ccs_monit::alert', String)
 
   $alertfile = 'alert'
   file { "${monitd}/${alertfile}":
     ensure  => file,
     content => epp(
-      "${ptitle}/${alertfile}.epp",
+      "${title}/${alertfile}.epp",
       {'mailhost' => $mailhost, 'alert' => $alert}
     ),
     notify  => Service['monit'],
@@ -39,7 +37,7 @@ class profile::ccs::monit {
   $config = 'config'
   file { "${monitd}/${config}":
     ensure => present,
-    source => "puppet:///modules/${ptitle}/${config}",
+    source => "puppet:///modules/${title}/${config}",
     notify => Service['monit'],
   }
 
@@ -60,11 +58,11 @@ class profile::ccs::monit {
 
   $system = 'system'
 
-  $uptime = lookup('profile::ccs::monit::uptime', Boolean, undef, true)
+  $uptime = lookup('ccs_monit::uptime', Boolean, undef, true)
 
   file { "${monitd}/${system}":
     ensure  => present,
-    content => epp("${ptitle}/${system}.epp", {'uptime' => $uptime}),
+    content => epp("${title}/${system}.epp", {'uptime' => $uptime}),
     notify  => Service['monit'],
   }
 
@@ -90,7 +88,7 @@ class profile::ccs::monit {
   $disk = 'disks'
   file { "${monitd}/${disk}":
     ensure  => file,
-    content => epp("${ptitle}/${disk}.epp", {'disks' => $disks}),
+    content => epp("${title}/${disk}.epp", {'disks' => $disks}),
     notify  => Service['monit'],
   }
 
@@ -100,51 +98,51 @@ class profile::ccs::monit {
     $gpfse = 'gpfs-exists'
     file { "${monitd}/${gpfse}":
       ensure => present,
-      source => "puppet:///modules/${ptitle}/${gpfse}",
+      source => "puppet:///modules/${title}/${gpfse}",
       notify => Service['monit'],
     }
   }
 
 
-  $gpfs = lookup('profile::ccs::monit::gpfs', Boolean, undef, false)
+  $gpfs = lookup('ccs_monit::gpfs', Boolean, undef, false)
 
   ## Check gpfs capacity.
   if $gpfs {
     $gpfsf = 'gpfs'
     file { "${monitd}/${gpfsf}":
       ensure => present,
-      source => "puppet:///modules/${ptitle}/${gpfsf}",
+      source => "puppet:///modules/${title}/${gpfsf}",
       notify => Service['monit'],
     }
   }
 
 
-  $hosts = lookup('profile::ccs::monit::ping_hosts', Array[String], undef, [])
+  $hosts = lookup('ccs_monit::ping_hosts', Array[String], undef, [])
 
   unless empty($hosts) {
     $hfile = 'hosts'
     file { "${monitd}/${hfile}":
       ensure  => file,
-      content => epp("${ptitle}/${hfile}.epp", {'hosts' => $hosts}),
+      content => epp("${title}/${hfile}.epp", {'hosts' => $hosts}),
       notify  => Service['monit'],
     }
   }
 
 
-  $temp = lookup('profile::ccs::monit::temp', Boolean, undef, false)
+  $temp = lookup('ccs_monit::temp', Boolean, undef, false)
 
   if $temp {
     $itemp = 'inlet-temp'
     file { "${monitd}/${itemp}":
       ensure => present,
-      source => "puppet:///modules/${ptitle}/${itemp}",
+      source => "puppet:///modules/${title}/${itemp}",
       notify => Service['monit'],
     }
 
     $etemp = 'monit_inlet_temp'
     file { "/usr/local/bin/${etemp}":
       ensure => present,
-      source => "puppet:///modules/${ptitle}/${etemp}",
+      source => "puppet:///modules/${title}/${etemp}",
       mode   => '0755',
       notify => Service['monit'],
     }
@@ -158,7 +156,7 @@ class profile::ccs::monit {
     file { "${monitd}/${nfile}":
       ensure  => file,
       content => epp(
-        "${ptitle}/${nfile}.epp",
+        "${title}/${nfile}.epp",
         {'interface' => $main_interface}
       ),
       notify  => Service['monit'],
@@ -169,19 +167,19 @@ class profile::ccs::monit {
   $netspeed = 'monit_netspeed'
   file { "/usr/local/bin/${netspeed}":
     ensure => present,
-    source => "puppet:///modules/${ptitle}/${netspeed}",
+    source => "puppet:///modules/${title}/${netspeed}",
     mode   => '0755',
   }
 
 
-  $hwraid = lookup('profile::ccs::monit::hwraid', Boolean, undef, true)
+  $hwraid = lookup('ccs_monit::hwraid', Boolean, undef, true)
 
   if $hwraid {
 
     $hwraidf = 'hwraid'
     file { "${monitd}/${hwraidf}":
       ensure => present,
-      source => "puppet:///modules/${ptitle}/${hwraidf}",
+      source => "puppet:///modules/${title}/${hwraidf}",
       notify => Service['monit'],
     }
 
@@ -189,7 +187,7 @@ class profile::ccs::monit {
     $hexe = 'monit_hwraid'
     file { "/usr/local/bin/${hexe}":
       ensure => present,
-      source => "puppet:///modules/${ptitle}/${hexe}",
+      source => "puppet:///modules/${title}/${hexe}",
       mode   => '0755',
     }
   }

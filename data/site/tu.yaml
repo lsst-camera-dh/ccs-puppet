@@ -3,4 +3,4 @@ ccsdb: 'comcamdbprod'
 mailhost: 'mail.lsst.org'
 
 ## comcam-alerts
-profile::ccs::monit::alert: 'x7z0x9c0t2k4r1n1@lsstc.slack.com'
+ccs_monit::alert: 'x7z0x9c0t2k4r1n1@lsstc.slack.com'

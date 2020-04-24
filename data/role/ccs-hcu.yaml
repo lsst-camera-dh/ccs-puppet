@@ -4,4 +4,4 @@ classes:
   ## are currently using HCUs in graphical mode.
   - profile::ccs::graphical
 
-profile::ccs::monit::hwraid: false
+ccs_monit::hwraid: false

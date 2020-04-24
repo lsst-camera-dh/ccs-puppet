@@ -1,11 +1,10 @@
 classes:  
   - profile::ccs::nvidia
 
-profile::ccs::monit::gpfs: true
-
+ccs_monit::gpfs: true
 ## Excluding lions and unos, which often go up and down.
 ## TODO dervice from clustershell config?
-profile::ccs::monit::ping_hosts:
+ccs_monit::ping_hosts:
   - 'lsst-ir2daq01'
   - 'lsst-ir2db01'
   - 'lsst-mcm'

@@ -104,4 +104,4 @@ profile::ccs::imanager::version: '1.5.0'
 
 ## FIXME
 mailhost: 'localhost'
-profile::ccs::monit::alert: 'root@localhost'
+ccs_monit::alert: 'root@localhost'

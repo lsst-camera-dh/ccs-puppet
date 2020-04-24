@@ -13,10 +13,11 @@
 #profile::ccs::filter_changer::ensure: 'present'
 
 #profile::ccs::facts::daq: true
-profile::ccs::monit::uptime: false
-#profile::ccs::monit::gpfs: true
-#profile::ccs::monit::hwraid: true
-#profile::ccs::monit::temp: true
-#profile::ccs::monit::ping_hosts:
+
+ccs_monit::uptime: false
+#ccs_monit::gpfs: true
+#ccs_monit::hwraid: true
+#ccs_monit::temp: true
+#ccs_monit::ping_hosts:
 #  - 'lsst-vi01'
 #  - 'lsst-vi02'
