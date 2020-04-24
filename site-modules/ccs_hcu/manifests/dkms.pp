@@ -1,4 +1,4 @@
-define dkms (
+define ccs_hcu::dkms (
   Enum['present', 'absent'] $ensure,
   String $module,
   String $version,

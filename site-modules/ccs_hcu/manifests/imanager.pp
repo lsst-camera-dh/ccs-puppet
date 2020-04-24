@@ -27,7 +27,7 @@ class ccs_hcu::imanager (String $ensure = 'nothing') {
     }
 
 
-    dkms { 'imanager':
+    ccs_hcu::dkms { 'imanager':
       ensure  => $ensure,
       module  => $module,
       version => $version,

@@ -29,7 +29,7 @@ class ccs_hcu::vldrive (String $ensure = 'nothing') {
     }
 
 
-    dkms { 'vldrive':
+    ccs_hcu::dkms { 'vldrive':
       ensure  => $ensure,
       module  => $module,
       version => $version,

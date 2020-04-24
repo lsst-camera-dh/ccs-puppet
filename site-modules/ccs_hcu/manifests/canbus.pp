@@ -30,7 +30,7 @@ class ccs_hcu::canbus (String $ensure = 'nothing') {
     }
 
 
-    dkms { 'canbus':
+    ccs_hcu::dkms { 'canbus':
       ensure  => $ensure,
       module  => $lmodule,
       version => $version,
