@@ -1,9 +1,9 @@
-timezone::timezone: 'UTC'
+timezone::timezone: "UTC"
 timezone::hwutc: true
-#profile::slac::time::package: 'chrony'
+#profile::slac::time::package: "chrony"
 
 ## FIXME
-pkgarchive: '/root'
+pkgarchive: "/root"
 
 classes:
   - profile::ccs::common
@@ -41,67 +41,67 @@ profile::ccs::sudoers:
   - turri
 
 profile::ccs::users::groups:
-  'lsstadm':
+  "lsstadm":
     ensure: present
     gid: 24000
 
 profile::ccs::users::users:
-  'ccs':
+  "ccs":
     ensure: present
     uid: 23000
     groups:
-      - 'dialout'
-      - 'lsstadm'
-    comment: 'CCS Operator Account'
+      - "dialout"
+      - "lsstadm"
+    comment: "CCS Operator Account"
     managehome: true
-  'dh':
+  "dh":
     ensure: present
     uid: 23001
     groups:
-      - 'dialout'
-      - 'lsstadm'
-    comment: 'LSST Data Handling Account'
+      - "dialout"
+      - "lsstadm"
+    comment: "LSST Data Handling Account"
     managehome: true
 
 ## present or latest
-profile::ccs::git::ensure: 'present'
+profile::ccs::git::ensure: "present"
 
 ccs_software::dirs:
-  'etc':
-    path: '/etc/ccs'
-    owner: 'root'
-    group: 'ccs'
-    mode: '2775'
-  'opt':
-    path: '/opt/lsst'
-  'ccs':
-    path: '/opt/lsst/ccs'
-    owner: 'ccs'
-    group: 'ccs'
-    mode: '0755'
-  'ccsadm':
-    path: '/opt/lsst/ccsadm'
-    owner: 'ccs'
-    group: 'ccs'
-    mode: '0755'
-  'log':
-    path: '/var/log/ccs'
-    owner: 'root'
-    group: 'ccs'
+  "etc":
+    path: "/etc/ccs"
+    owner: "root"
+    group: "ccs"
+    mode: "2775"
+  "opt":
+    path: "/opt/lsst"
+  "ccs":
+    path: "/opt/lsst/ccs"
+    owner: "ccs"
+    group: "ccs"
+    mode: "0755"
+  "ccsadm":
+    path: "/opt/lsst/ccsadm"
+    owner: "ccs"
+    group: "ccs"
+    mode: "0755"
+  "log":
+    path: "/var/log/ccs"
+    owner: "root"
+    group: "ccs"
     ## FIXME
-    mode: '2777'
+    mode: "2777"
 
 
-ccs_hcu::canbus::module: 'advSocketCAN'
-ccs_hcu::canbus::version: '1.0.1.0'
+ccs_hcu::canbus::module: "advSocketCAN"
+ccs_hcu::canbus::version: "1.0.1.0"
 
-ccs_hcu::vldrive::module: 'versaapi'
-ccs_hcu::vldrive::version: '1.5.0'
+ccs_hcu::vldrive::module: "versaapi"
+ccs_hcu::vldrive::version: "1.5.0"
 
-ccs_hcu::imanager::module: 'imanager'
-ccs_hcu::imanager::version: '1.5.0'
+ccs_hcu::imanager::module: "imanager"
+ccs_hcu::imanager::version: "1.5.0"
 
 
 ## FIXME
-mailhost: 'localhost'
-ccs_monit::alert: 'root@localhost'
+mailhost: "localhost"
+ccs_monit::alert: "root@localhost"

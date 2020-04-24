@@ -19,5 +19,5 @@ ccs_monit::uptime: false
 #ccs_monit::hwraid: true
 #ccs_monit::temp: true
 #ccs_monit::ping_hosts:
-#  - 'lsst-vi01'
-#  - 'lsst-vi02'
+#  - "lsst-vi01"
+#  - "lsst-vi02"

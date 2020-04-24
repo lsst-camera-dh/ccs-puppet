@@ -1,6 +1,6 @@
-ccsdb: 'comcamdbprod'
+ccsdb: "comcamdbprod"
 
-mailhost: 'mail.lsst.org'
+mailhost: "mail.lsst.org"
 
 ## comcam-alerts
-ccs_monit::alert: 'x7z0x9c0t2k4r1n1@lsstc.slack.com'
+ccs_monit::alert: "x7z0x9c0t2k4r1n1@lsstc.slack.com"
