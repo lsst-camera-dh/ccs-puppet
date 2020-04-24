@@ -1,2 +1,4 @@
 classes:
   - profile::ccs::graphical
+
+profile::ccs::monit::hwraid: false

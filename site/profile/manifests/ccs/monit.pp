@@ -174,14 +174,7 @@ class profile::ccs::monit {
   }
 
 
-  $hwraid_default = $facts['role'] ? {
-    'desktop' => false,
-    'hcu'     => false,
-    'virt'    => false,
-    default   => true,
-  }
-
-  $hwraid = lookup('profile::ccs::monit::hwraid', Boolean, undef, $hwraid_default)
+  $hwraid = lookup('profile::ccs::monit::hwraid', Boolean, undef, true)
 
   if $hwraid {
 
