@@ -1,45 +1,17 @@
-## FIXME fails if pre-existing files have mode != 0440
+## @summary
+##  Install a cron.hourly script that allows the ccs user to user
+##  sudo to control ccs services.
+##
+## Maybe replace this with puppet?
+## Would need a custom fact that finds the ccs services,
+## which is a large part of what the ccs-sudoers-services script does.
+## So probably not worth splitting out the part that writes the
+## sudoers file.
 
 class profile::ccs::sudo {
 
-  class { 'sudo':
-    ## Leave non-managed files in /etc/sudoers.d/ alone:
-    purge               => false,
-    # Leave /etc/sudoers alone:
-    config_file_replace => false,
-    validate_single     => true,
-    #  delete_on_error     => false,
-  }
-
-
-  $sudoers = lookup('profile::ccs::sudoers',Array[String], undef, [])
-
-  $sudoers.each |String $user| {
-    sudo::conf { $user:
-      priority => 50,
-      content  => "${user} ALL=ALL",
-    }
-  }
-
-
-  $group = 'lsst-ccs'
-
-  $content1 = "%${group} ALL = (ccs) ALL"
-  if $facts['site'] == 'slac' {
-    $content2 = "\n%${group} ALL = (dh) ALL"
-  } else {
-    $content2 = ''
-  }
-
-  sudo::conf { "group-${group}":
-    priority => 10,
-    content  => "${content1}${content2}",
-  }
-
-
   $ptitle = regsubst($title, '::', '/', 'G')
 
-  ## TODO replace this with puppet.
   $file = 'ccs-sudoers-services'
 
   file { "/etc/cron.hourly/${file}":
