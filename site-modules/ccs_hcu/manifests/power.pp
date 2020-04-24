@@ -5,9 +5,9 @@
 ##   String saying whether to install ('present') or remove ('absent').
 ## @param quadbox
 ##   Boolean true on quadbox hosts
-class profile::ccs::power (String $ensure = 'absent', Boolean $quadbox = false) {
+class ccs_hcu::power (String $ensure = 'absent', Boolean $quadbox = false) {
 
-  $ptitle = regsubst($title, '::', '/', 'G')
+  $ptitle = regsubst($title, '::.*', '', 'G')
 
   file { '/etc/sudoers.d/poweroff':
     ensure => $ensure,

@@ -92,14 +92,14 @@ ccs_software::dirs:
     mode: '2777'
 
 
-profile::ccs::canbus::module: 'advSocketCAN'
-profile::ccs::canbus::version: '1.0.1.0'
+ccs_hcu::canbus::module: 'advSocketCAN'
+ccs_hcu::canbus::version: '1.0.1.0'
 
-profile::ccs::vldrive::module: 'versaapi'
-profile::ccs::vldrive::version: '1.5.0'
+ccs_hcu::vldrive::module: 'versaapi'
+ccs_hcu::vldrive::version: '1.5.0'
 
-profile::ccs::imanager::module: 'imanager'
-profile::ccs::imanager::version: '1.5.0'
+ccs_hcu::imanager::module: 'imanager'
+ccs_hcu::imanager::version: '1.5.0'
 
 
 ## FIXME

@@ -1,23 +1,26 @@
 ## @summary
-##   Add (or remove) the iManager module.
+##   Add (or remove) the lion canbus module.
 ##
 ## @param ensure
 ##   String saying whether to install ('present') or remove ('absent') module.
-class profile::ccs::imanager (String $ensure = 'nothing') {
+class ccs_hcu::canbus (String $ensure = 'nothing') {
+
+  $ptitle = regsubst($title, '::.*', '', 'G')
 
   if $ensure =~ /(present|absent)/ {
 
     ensure_packages(['xz', 'tar'])
 
-    $module = lookup('profile::ccs::imanager::module')
-    $version = lookup('profile::ccs::imanager::version')
+    $module = lookup('ccs_hcu::canbus::module')
+    $version = lookup('ccs_hcu::canbus::version')
     $pkgarchive = lookup('pkgarchive', String)
-    ## Patched version with dkms.conf and fixed Makefile.
-    $src = "${module}-${version}_dkms.tar.xz"
-    $dest = "${module}-${version}"
+    ## Patched version with dkms.conf and fixed driver/Makefile.
+    $src = "${module}_V${version}_dkms.tar.xz"
+    $lmodule = "${downcase($module)}"
+    $dest = "${lmodule}-${version}"
 
     ## Ensure => absent does not delete the extracted file.
-    archive { '/tmp/imanager.tar.xz':
+    archive { '/tmp/canbus.tar.xz':
       ensure       => present,
       extract      => true,
       extract_path => '/usr/src',
@@ -27,17 +30,15 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
     }
 
 
-    dkms { 'imanager':
+    dkms { 'canbus':
       ensure  => $ensure,
-      module  => $module,
+      module  => $lmodule,
       version => $version,
-      archive => '/tmp/imanager.tar.xz',
+      archive => '/tmp/canbus.tar.xz',
     }
 
 
-    $ptitle = regsubst($title, '::', '/', 'G')
-
-    $conf = 'imanager.conf'
+    $conf = 'canbus.conf'
 
     file { "/etc/modules-load.d/${conf}":
       ensure => $ensure,
@@ -45,7 +46,7 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
     }
 
 
-    $exec = '/usr/local/libexec/imanager-init'
+    $exec = '/usr/local/libexec/canbus-init'
 
     file { $exec:
       ensure => $ensure,
@@ -55,14 +56,14 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
 
 
     if $ensure == absent {
-      service { 'imanager':
+      service { 'canbus':
         ensure => stopped,
         enable => false,
       }
     }
 
 
-    $service = 'imanager.service'
+    $service = 'canbus.service'
 
     file { "/etc/systemd/system/${service}":
       ensure  => $ensure,
@@ -70,18 +71,9 @@ class profile::ccs::imanager (String $ensure = 'nothing') {
     }
 
 
-    ensure_resources('group', {'gpio' => {'ensure' => 'present'}})
-
-    exec { 'usermod ccs imanager':
-      path    => ['/usr/sbin', '/usr/bin'],
-      command => 'usermod -a -G gpio ccs',
-      unless  => 'sh -c "groups ccs | grep -q gpio"',
-    }
-
-
     if $ensure == present {
-      ## $exec fails if there is no imanager interface.
-      service { 'imanager':
+      ## $exec fails if there is no canbus interface.
+      service { 'canbus':
         ensure => running,
         enable => true,
       }

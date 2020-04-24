@@ -3,9 +3,9 @@
 ##
 ## @param ensure
 ##   String saying whether to install ('present') or remove ('absent').
-class profile::ccs::filter_changer (String $ensure = 'absent') {
+class ccs_hcu::filter_changer (String $ensure = 'absent') {
 
-  $ptitle = regsubst($title, '::', '/', 'G')
+  $ptitle = regsubst($title, '::.*', '', 'G')
 
   ## Create /dev/{encoder,motor} symlinks for filter changer hcu.
   $file = '99-usb-serial.rules'

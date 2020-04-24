@@ -3,16 +3,16 @@
 ##
 ## @param ensure
 ##   String saying whether to install ('present') or remove ('absent') module.
-class profile::ccs::vldrive (String $ensure = 'nothing') {
+class ccs_hcu::vldrive (String $ensure = 'nothing') {
 
-  $ptitle = regsubst($title, '::', '/', 'G')
+  $ptitle = regsubst($title, '::.*', '', 'G')
 
   if $ensure =~ /(present|absent)/ {
 
     ensure_packages(['xz', 'tar'])
 
-    $module = lookup('profile::ccs::vldrive::module')
-    $version = lookup('profile::ccs::vldrive::version')
+    $module = lookup('ccs_hcu::vldrive::module')
+    $version = lookup('ccs_hcu::vldrive::version')
     $pkgarchive = lookup('pkgarchive', String)
     ## Patched version with dkms.conf and dkms_build.sh script.
     $src = "${module}-${version}_dkms.tar.xz"
