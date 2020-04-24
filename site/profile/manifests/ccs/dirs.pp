@@ -20,26 +20,6 @@ class profile::ccs::dirs (Hash $dirs) {
   }
 
 
-  if $facts['site'] == 'slac' {
-
-    file { '/lnfs':
-      ensure => directory
-    }
-
-    file { '/lnfs/lsst':
-      ensure => 'link',
-      target => '/gpfs/slac/lsst/fs2/u1',
-    }
-
-    ['dh', 'data'].each |$item| {
-      file { "/lsst/${item}":
-        ensure => 'link',
-        target => "/lnfs/lsst/${item}",
-      }
-    }
-  }
-
-
   ## Make permissions like /tmp.
   if $facts['mountpoints']['/scratch'] {
     file { '/scratch':

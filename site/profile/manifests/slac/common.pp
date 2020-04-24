@@ -25,6 +25,8 @@ class profile::slac::common {
     include profile::slac::autofs        # mounts pkgarchive
   }
 
+  include profile::slac::dirs
+
   include profile::slac::kerberos
   include profile::slac::grub
   include profile::slac::ssh
