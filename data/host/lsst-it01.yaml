@@ -1,5 +1,5 @@
 classes:  
-  - profile::ccs::nvidia
+  - "profile::ccs::nvidia"
 
 ccs_monit::gpfs: true
 ## Excluding lions and unos, which often go up and down.

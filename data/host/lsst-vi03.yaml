@@ -1,11 +1,11 @@
 #classes:
-#  - ccs_hcu
-#  - profile::ccs::database
-#  - profile::ccs::nvidia
-#  - profile::ccs::jdk11
-#  - profile::ccs::graphical
-#  - profile::ccs::autologin
-#  - profile::ccs::daq
+#  - "ccs_hcu"
+#  - "profile::ccs::database"
+#  - "profile::ccs::nvidia"
+#  - "profile::ccs::jdk11"
+#  - "profile::ccs::graphical"
+#  - "profile::ccs::autologin"
+#  - "profile::ccs::daq"
 #ccs_hcu::quadbox: true
 #ccs_hcu::canbus: true
 #ccs_hcu::imanager: true

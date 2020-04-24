@@ -1,5 +1,5 @@
 classes:
-  - profile::slac::common
+  - "profile::slac::common"
 
 timezone::timezone: "America/Los_Angeles"
 profile::slac::time::package: "ntp"

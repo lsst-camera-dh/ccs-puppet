@@ -1,4 +1,4 @@
 classes:
-  - profile::ccs::daq
+  - "profile::ccs::daq"
 
 profile::ccs::facts::daq: true

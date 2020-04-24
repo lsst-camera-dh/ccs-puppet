@@ -1,7 +1,7 @@
 classes:
-  - ccs_hcu
+  - "ccs_hcu"
   ## Ultimately, next item should not be present, but people
   ## are currently using HCUs in graphical mode.
-  - profile::ccs::graphical
+  - "profile::ccs::graphical"
 
 ccs_monit::hwraid: false
