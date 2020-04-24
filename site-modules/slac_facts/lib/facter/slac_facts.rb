@@ -1,6 +1,8 @@
+## Only needed at SLAC, where we don't have Foreman to provide
+## the 'site' and 'role' facts.
+
 require 'facter'
 
-## With a unique match, could use node instead.
 Facter.add(:role) do
   setcode do
     hostname=Facter.value(:hostname)
