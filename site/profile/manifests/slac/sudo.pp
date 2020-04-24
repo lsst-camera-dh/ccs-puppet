@@ -1,4 +1,8 @@
-class profile::slac::sudo {
+## @summary
+## @param users
+##   Optional array of users to have sudo ALL privs.
+
+class profile::slac::sudo (Array[String] $users = []) {
 
   ## NB fails if pre-existing files have mode != 0440
   class { 'sudo':
@@ -11,9 +15,7 @@ class profile::slac::sudo {
   }
 
 
-  $sudoers = lookup('profile::slac::sudoers',Array[String], undef, [])
-
-  $sudoers.each |String $user| {
+  $users.each |String $user| {
     sudo::conf { $user:
       priority => 50,
       content  => "${user} ALL=ALL",

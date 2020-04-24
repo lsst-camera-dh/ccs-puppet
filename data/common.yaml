@@ -34,12 +34,6 @@ packages:
   - "firewalld"
   - "fail2ban"
 
-profile::ccs::sudoers:
-  - "gmorris"
-  - "marshall"
-  - "tonyj"
-  - "turri"
-
 profile::ccs::users::groups:
   "lsstadm":
     ensure: present

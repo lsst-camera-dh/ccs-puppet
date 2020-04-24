@@ -7,6 +7,12 @@ profile::slac::time::package: "ntp"
 ## Stop the default, 0550, fighting with chef.
 sudo::config_dir_mode: "0755"
 
+profile::slac::sudo::users:
+  - "gmorris"
+  - "marshall"
+  - "tonyj"
+  - "turri"
+
 ## Note that we need to mount gpfs before we can use this.
 pkgarchive: "/lnfs/lsst/pkgarchive"
 
