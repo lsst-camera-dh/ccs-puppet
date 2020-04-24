@@ -5,7 +5,7 @@
 ##   String saying whether to install ('present') or stop ('stopped').
 ##
 ## TODO https://forge.puppet.com/puppetlabs/mysql
-class profile::ccs::database (String $ensure = 'present') {
+class ccs_database (String $ensure = 'present') {
 
   if $ensure =~ /(present|stopped)/ {
 
@@ -29,8 +29,6 @@ class profile::ccs::database (String $ensure = 'present') {
     }
 
 
-    $ptitle = regsubst($title, '::', '/', 'G')
-
     $scratch = $facts['mountpoints']['/scratch'] ? {undef => false, default => true}
 
     $file = 'zzz-lsst-ccs.cnf'
@@ -38,7 +36,7 @@ class profile::ccs::database (String $ensure = 'present') {
     file { "/etc/my.cnf.d/${file}":
       ensure  => file,
       content => epp(
-        "${ptitle}/${file}.epp", {
+        "${title}/${file}.epp", {
           'datadir' => $datadir,
           'scratch' => $scratch
         }),

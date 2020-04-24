@@ -1,6 +1,6 @@
 #classes:
 #  - "ccs_hcu"
-#  - "profile::ccs::database"
+#  - "ccs_database"
 #  - "profile::ccs::nvidia"
 #  - "profile::ccs::jdk11"
 #  - "profile::ccs::graphical"
