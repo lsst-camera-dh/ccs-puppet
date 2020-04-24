@@ -1,4 +1,4 @@
-class profile::ccs::jdk8 {
+class ccs_software::jdk8 {
 
   $pkgarchive = lookup('pkgarchive', String)
 
@@ -11,7 +11,7 @@ class profile::ccs::jdk8 {
 
   ## FIXME use a local yum repository.
   exec { 'Install jdk8':
-    path    => [ '/usr/bin' ],
+    path    => ['/usr/bin'],
     unless  => "rpm -q --quiet ${javapkg}",
     command => "rpm -i ${jdkrpm}",
   }

@@ -18,6 +18,8 @@ class ccs_software {
 
   include ccs_software::desktop
 
+  include ccs_software::jdk8
+
   include ccs_software::scripts
 
 }
