@@ -1,11 +1,17 @@
 ## @summary
 ##   Install sql database service.
 ##
+## @param database
+##   String giving name of database to init.
 ## @param ensure
 ##   String saying whether to install ('present') or stop ('stopped').
 ##
+## TODO implement the database init
 ## TODO https://forge.puppet.com/puppetlabs/mysql
-class ccs_database (String $ensure = 'present') {
+class ccs_database (
+  Optional[String] $database,
+  String $ensure = 'present',
+) {
 
   if $ensure =~ /(present|stopped)/ {
 
