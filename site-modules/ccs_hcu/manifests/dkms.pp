@@ -6,7 +6,7 @@ define ccs_hcu::dkms (
 ) {
 
   ## We still need most of these even if ensure = absent.
-  ensure_packages(['dkms', 'gcc', 'make', 'kernel-devel'])
+  ensure_packages(['dkms', 'gcc', 'make', 'kernel-devel', 'kernel-headers'])
 
   case $ensure {
     present: {
