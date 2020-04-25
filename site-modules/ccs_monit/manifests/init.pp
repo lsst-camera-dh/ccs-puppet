@@ -1,4 +1,17 @@
-class ccs_monit {
+## @summary
+##   Install and configure monit.
+##
+## @param mailhost
+##   String specifying smtp server
+## @param alert
+##   String giving email address to receive alerts
+
+## TODO: allow for multiple alert addresses.
+
+class ccs_monit (
+  String $mailhost = 'localhost',
+  String $alert = 'root@localhost',
+) {
 
   ensure_packages(['monit', 'freeipmi'])
 
@@ -19,9 +32,6 @@ class ccs_monit {
 
 
   $monitd = '/etc/monit.d'
-  ## TODO add another email address in case slack is down.
-  $mailhost = lookup('mailhost', String)
-  $alert = lookup('ccs_monit::alert', String)
 
   $alertfile = 'alert'
   file { "${monitd}/${alertfile}":

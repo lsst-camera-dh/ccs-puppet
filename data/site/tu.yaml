@@ -1,6 +1,6 @@
 ccsdb: "comcamdbprod"
 
-mailhost: "mail.lsst.org"
-
+ccs_monit::mailhost: "mail.lsst.org"
+## FIXME should be cluster-specific, not site-specific.
 ## comcam-alerts
 ccs_monit::alert: "x7z0x9c0t2k4r1n1@lsstc.slack.com"
