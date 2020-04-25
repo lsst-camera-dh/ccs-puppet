@@ -1,6 +1,3 @@
-## FIXME
-pkgarchive: "/root"
-
 classes:
   - "profile::ccs::common"
 
@@ -81,6 +78,8 @@ ccs_software::dirs:
     ## FIXME
     mode: "2777"
 
+## FIXME
+ccs_pkgarchive: "/root"
 
 ccs_hcu::canbus::module: "advSocketCAN"
 ccs_hcu::canbus::version: "1.0.1.0"

@@ -1,9 +1,9 @@
 class ccs_software::jdk8 {
 
-  $pkgarchive = lookup('pkgarchive', String)
+  $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
 
   ## TODO hiera
-  $jdkrpm = "${pkgarchive}/jdk-8u112-linux-x64.rpm"
+  $jdkrpm = "${ccs_pkgarchive}/jdk-8u112-linux-x64.rpm"
   ## FIXME: rpm -qi -p ${jdkrpm} | gawk '/^Version/ {print $3}'
   $javaver = '1.8.0_112'
   ## FIXME: rpm -q -p $jdkrpm

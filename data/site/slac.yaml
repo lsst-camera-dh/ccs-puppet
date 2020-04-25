@@ -17,7 +17,7 @@ profile::slac::sudo::users:
   - "turri"
 
 ## Note that we need to mount gpfs before we can use this.
-pkgarchive: "/lnfs/lsst/pkgarchive"
+ccs_pkgarchive: "/lnfs/lsst/pkgarchive"
 
 ccs_monit::mailhost: "smtpunix.slac.stanford.edu"
 ccs_monit::alert:

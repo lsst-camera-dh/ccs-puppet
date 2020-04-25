@@ -11,7 +11,7 @@ class ccs_hcu::imanager (String $ensure = 'nothing') {
 
     $module = lookup('ccs_hcu::imanager::module')
     $version = lookup('ccs_hcu::imanager::version')
-    $pkgarchive = lookup('pkgarchive', String)
+    $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
     ## Patched version with dkms.conf and fixed Makefile.
     $src = "${module}-${version}_dkms.tar.xz"
     $dest = "${module}-${version}"
@@ -21,7 +21,7 @@ class ccs_hcu::imanager (String $ensure = 'nothing') {
       ensure       => present,
       extract      => true,
       extract_path => '/usr/src',
-      source       => "${pkgarchive}/${src}",
+      source       => "${ccs_pkgarchive}/${src}",
       creates      => "/usr/src/${dest}",
       cleanup      => true,
     }

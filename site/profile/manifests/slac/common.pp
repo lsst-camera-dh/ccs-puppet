@@ -30,7 +30,7 @@ class profile::slac::common {
   include profile::slac::chef
 
   if $facts['native_gpfs'] != 'true' {
-    include profile::slac::autofs        # mounts pkgarchive
+    include profile::slac::autofs        # mounts ccs_pkgarchive
   }
 
   include profile::slac::dirs

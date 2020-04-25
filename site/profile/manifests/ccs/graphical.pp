@@ -1,6 +1,6 @@
 ## @summary
 ##   Settings for hosts that should run in graphical mode.
-##   Note: needs pkgarchive
+##   Note: needs ccs_pkgarchive
 ##
 ## @param install
 ##   Boolean, false means do nothing.
@@ -56,13 +56,13 @@ class profile::ccs::graphical (
 
     ensure_packages(['libreoffice-base'])
 
-    $pkgarchive = lookup('pkgarchive', String)
+    $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
 
     ## FIXME use a local yum repository.
     exec { 'Install zoom':
       path    => ['/usr/bin'],
       unless  => 'rpm -q zoom',
-      command => "sh -c \"rpm -U ${pkgarchive}/zoom*.rpm\"",
+      command => "sh -c \"rpm -U ${ccs_pkgarchive}/zoom*.rpm\"",
     }
   }
 

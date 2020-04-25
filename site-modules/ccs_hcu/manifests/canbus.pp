@@ -13,7 +13,7 @@ class ccs_hcu::canbus (String $ensure = 'nothing') {
 
     $module = lookup('ccs_hcu::canbus::module')
     $version = lookup('ccs_hcu::canbus::version')
-    $pkgarchive = lookup('pkgarchive', String)
+    $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
     ## Patched version with dkms.conf and fixed driver/Makefile.
     $src = "${module}_V${version}_dkms.tar.xz"
     $lmodule = "${downcase($module)}"
@@ -24,7 +24,7 @@ class ccs_hcu::canbus (String $ensure = 'nothing') {
       ensure       => present,
       extract      => true,
       extract_path => '/usr/src',
-      source       => "${pkgarchive}/${src}",
+      source       => "${ccs_pkgarchive}/${src}",
       creates      => "/usr/src/${dest}",
       cleanup      => true,
     }

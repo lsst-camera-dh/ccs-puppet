@@ -13,7 +13,7 @@ class ccs_hcu::vldrive (String $ensure = 'nothing') {
 
     $module = lookup('ccs_hcu::vldrive::module')
     $version = lookup('ccs_hcu::vldrive::version')
-    $pkgarchive = lookup('pkgarchive', String)
+    $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
     ## Patched version with dkms.conf and dkms_build.sh script.
     $src = "${module}-${version}_dkms.tar.xz"
     $dest = "${module}-${version}"
@@ -23,7 +23,7 @@ class ccs_hcu::vldrive (String $ensure = 'nothing') {
       ensure       => present,
       extract      => true,
       extract_path => '/usr/src',
-      source       => "${pkgarchive}/${src}",
+      source       => "${ccs_pkgarchive}/${src}",
       creates      => "/usr/src/${dest}",
       cleanup      => true,
     }

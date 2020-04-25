@@ -9,7 +9,7 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
 
     ensure_packages(['gzip', 'tar', 'unzip'])
 
-    $pkgarchive = lookup('pkgarchive', String)
+    $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
 
     $jvmdir = '/usr/lib/jvm'      # somewhere in /usr/local better?
     $jdkver = '11.0.2'
@@ -21,7 +21,7 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
       ensure       => present,
       extract      => true,
       extract_path => $jvmdir,
-      source       => "${pkgarchive}/${jdktar}",
+      source       => "${ccs_pkgarchive}/${jdktar}",
       creates      => $jdkdest,
       cleanup      => true,
     }
@@ -38,7 +38,7 @@ class profile::ccs::jdk11 ( String $ensure = 'present' ) {
       ensure       => present,
       extract      => true,
       extract_path => $jvmdir,
-      source       => "${pkgarchive}/${jfxzip}",
+      source       => "${ccs_pkgarchive}/${jfxzip}",
       creates      => $jfxdest,
       cleanup      => true,
     }
