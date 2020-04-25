@@ -13,7 +13,7 @@ fi
 case $community in
     ""|public)
         ## coreutils.
-        community=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 22 | head -n 1)
+        community=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 22 | head -n 1)
     ;;
 esac
 
