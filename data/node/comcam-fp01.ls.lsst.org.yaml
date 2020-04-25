@@ -1,3 +1,4 @@
+---
 ccs_monit::temp: true
 
 ccs_monit::ping_hosts:

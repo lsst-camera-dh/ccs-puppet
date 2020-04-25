@@ -1,2 +1,3 @@
+---
 ## FIXME should be cluster-specific, not site-specific.
 ccs_database::database: "ccsdbprod"

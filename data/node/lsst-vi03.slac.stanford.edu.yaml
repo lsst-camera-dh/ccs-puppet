@@ -1,26 +1,27 @@
-#classes:
-#  - "ccs_hcu"
-#  - "ccs_database"
-#  - "profile::ccs::nvidia"
-#  - "profile::ccs::jdk11"
-#  - "profile::ccs::graphical"
-#  - "profile::ccs::autologin"
-#  - "profile::ccs::daq"
-#ccs_hcu::quadbox: true
-#ccs_hcu::canbus: true
-#ccs_hcu::imanager: true
-#ccs_hcu::vldrive: true
-#ccs_hcu::filter_changer: true
+---
+# classes:
+#   - "ccs_hcu"
+#   - "ccs_database"
+#   - "profile::ccs::nvidia"
+#   - "profile::ccs::jdk11"
+#   - "profile::ccs::graphical"
+#   - "profile::ccs::autologin"
+#   - "profile::ccs::daq"
+# ccs_hcu::quadbox: true
+# ccs_hcu::canbus: true
+# ccs_hcu::imanager: true
+# ccs_hcu::vldrive: true
+# ccs_hcu::filter_changer: true
 
-#profile::ccs::graphical::officeapps: true
+# profile::ccs::graphical::officeapps: true
 
-#profile::ccs::facts::daq: true
+# profile::ccs::facts::daq: true
 
 ccs_monit::uptime: false
-#ccs_monit::gpfs: true
-#ccs_monit::hwraid: true
-#ccs_monit::network: true
-#ccs_monit::temp: true
-#ccs_monit::ping_hosts:
-#  - "lsst-vi01"
-#  - "lsst-vi02"
+# ccs_monit::gpfs: true
+# ccs_monit::hwraid: true
+# ccs_monit::network: true
+# ccs_monit::temp: true
+# ccs_monit::ping_hosts:
+#   - "lsst-vi01"
+#   - "lsst-vi02"

@@ -1,4 +1,5 @@
-classes:  
+---
+classes:
   - "profile::ccs::nvidia"
 
 ccs_monit::gpfs: true

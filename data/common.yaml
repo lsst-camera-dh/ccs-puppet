@@ -1,3 +1,4 @@
+---
 classes:
   - "profile::ccs::common"
 
@@ -18,12 +19,12 @@ packages:
 
 profile::ccs::users::groups:
   "lsstadm":
-    ensure: present
+    ensure: "present"
     gid: 24000
 
 profile::ccs::users::users:
   "ccs":
-    ensure: present
+    ensure: "present"
     uid: 23000
     groups:
       - "dialout"
@@ -31,7 +32,7 @@ profile::ccs::users::users:
     comment: "CCS Operator Account"
     managehome: true
   "dh":
-    ensure: present
+    ensure: "present"
     uid: 23001
     groups:
       - "dialout"
