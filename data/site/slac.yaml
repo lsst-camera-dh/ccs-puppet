@@ -1,8 +1,11 @@
 classes:
   - "profile::slac::common"
 
+#timezone::timezone: "UTC"
 timezone::timezone: "America/Los_Angeles"
+timezone::hwutc: true
 profile::slac::time::package: "ntp"
+#profile::slac::time::package: "chrony"
 
 ## Stop the default, 0550, fighting with chef.
 sudo::config_dir_mode: "0755"

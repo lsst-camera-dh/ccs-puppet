@@ -1,7 +1,3 @@
-timezone::timezone: "UTC"
-timezone::hwutc: true
-#profile::slac::time::package: "chrony"
-
 ## FIXME
 pkgarchive: "/root"
 
