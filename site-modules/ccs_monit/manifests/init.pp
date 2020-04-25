@@ -150,7 +150,10 @@ class ccs_monit {
 
 
   ## TODO try to automatically fix netspeed?
-  if $facts['role'] != 'ccs-virt' {
+  ## Hiera disables this on virt hosts.
+  $network = lookup('ccs_monit::network', Boolean, undef, true)
+
+  if $network {
     $main_interface = $profile::ccs::facts::main_interface
     $nfile = 'network'
     file { "${monitd}/${nfile}":

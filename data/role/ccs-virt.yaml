@@ -1,1 +1,2 @@
 ccs_monit::hwraid: false
+ccs_monit::network: false
