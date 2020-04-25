@@ -12,7 +12,6 @@ packages:
   - "attr"
   - "parallel"
   - "gcc"
-  - "usbutils"
   ## TODO only on "development" nodes.
   - "maven"
   - "devtoolset-8"
