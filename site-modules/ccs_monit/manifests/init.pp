@@ -4,13 +4,11 @@
 ## @param mailhost
 ##   String specifying smtp server
 ## @param alert
-##   String giving email address to receive alerts
-
-## TODO: allow for multiple alert addresses.
+##   String giving email address to receive alerts; or an array of strings.
 
 class ccs_monit (
   String $mailhost = 'localhost',
-  String $alert = 'root@localhost',
+  Variant[String,Array[String]] $alert = 'root@localhost',
 ) {
 
   ensure_packages(['monit', 'freeipmi'])
@@ -33,12 +31,18 @@ class ccs_monit (
 
   $monitd = '/etc/monit.d'
 
+  if $alert =~ String {
+    $alerts = [$alert]
+  } else {
+    $alerts = $alert
+  }
+
   $alertfile = 'alert'
   file { "${monitd}/${alertfile}":
     ensure  => file,
     content => epp(
       "${title}/${alertfile}.epp",
-      {'mailhost' => $mailhost, 'alert' => $alert}
+      {'mailhost' => $mailhost, 'alerts' => $alerts}
     ),
     notify  => Service['monit'],
   }
