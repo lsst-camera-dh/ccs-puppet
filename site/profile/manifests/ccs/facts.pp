@@ -17,6 +17,8 @@ class profile::ccs::facts (Variant[Boolean,String] $daq = false) {
   $main_interface = pick($iface, 'eth0')
 
 
+  ## It makes life much easier if instead of doing this we ensure the
+  ## interface is 'lsst-daq'.  TODO this section to be removed.
   if $daq {
 
     ## Normally the interface is "lsst-daq", but not always (eg lsst-dc02).
