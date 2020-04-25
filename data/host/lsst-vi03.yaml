@@ -12,6 +12,8 @@
 #ccs_hcu::vldrive: true
 #ccs_hcu::filter_changer: true
 
+#profile::ccs::graphical::officeapps: true
+
 #profile::ccs::facts::daq: true
 
 ccs_monit::uptime: false

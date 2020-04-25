@@ -4,8 +4,13 @@
 ##
 ## @param install
 ##   Boolean, false means do nothing.
+## @param officeapps
+##   Boolean, true means install libreoffice etc.
 
-class profile::ccs::graphical (Boolean $install = true) {
+class profile::ccs::graphical (
+  Boolean $install = true,
+  Boolean $officeapps = false,
+) {
 
   if $install {
 
@@ -47,8 +52,7 @@ class profile::ccs::graphical (Boolean $install = true) {
   }
 
 
-  ## FIXME
-  if $facts['role'] =~ /ccs-(desktop|viswork)/ {
+  if $officeapps {
 
     ensure_packages(['libreoffice-base'])
 
