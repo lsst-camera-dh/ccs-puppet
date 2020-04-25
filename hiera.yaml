@@ -10,8 +10,6 @@ defaults:
 hierarchy:
   - name: "Per-node data (yaml version)"
     path: "node/%{::trusted.certname}.yaml"
-  - name: "Host-specific data"
-    path: "host/%{::hostname}.yaml"
   - name: "Site-specific data"
     path: "site/%{::site}.yaml"
   - name: "Role-specific data"
