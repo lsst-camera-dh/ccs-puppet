@@ -43,3 +43,16 @@ Facter.add(:site) do
   end
 end
 
+Facter.add(:cluster) do
+  setcode do
+    hostname=Facter.value(:fqdn)
+    case hostname
+    when /^comcam/
+      'comcam-ccs'
+    when /slac\.stanford\.edu$/
+      'slac-ccs'
+    else
+      'unknown'
+    end
+  end
+end
