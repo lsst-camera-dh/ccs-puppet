@@ -2,6 +2,9 @@
 classes:
   - "profile::slac::common"
 
+packages:
+  - "sysstat"
+
 # timezone::timezone: "UTC"
 timezone::timezone: "America/Los_Angeles"
 timezone::hwutc: true

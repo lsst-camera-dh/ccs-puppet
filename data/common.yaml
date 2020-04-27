@@ -9,7 +9,6 @@ packages:
   - "emacs"
   - "nano"
   - "screen"
-  - "sysstat"
   - "attr"
   - "parallel"
   - "gcc"
