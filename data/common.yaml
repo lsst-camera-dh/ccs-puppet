@@ -1,7 +1,4 @@
 ---
-classes:
-  - "profile::ccs::common"
-
 packages:
   - "epel-release"
   - "git"
