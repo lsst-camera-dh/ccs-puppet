@@ -11,6 +11,16 @@ timezone::hwutc: true
 profile::slac::time::package: "ntp"
 # profile::slac::time::package: "chrony"
 
+profile::ccs::users::users:
+  "dh":
+    ensure: "present"
+    uid: 23001
+    groups:
+      - "dialout"
+      - "lsstadm"
+    comment: "LSST Data Handling Account"
+    managehome: true
+
 ## Stop the default, 0550, fighting with chef.
 sudo::config_dir_mode: "0755"
 
