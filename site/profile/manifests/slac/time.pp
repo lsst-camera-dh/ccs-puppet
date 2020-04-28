@@ -6,7 +6,7 @@ class profile::slac::time (Enum['ntp', 'chrony', 'other'] $package = 'chrony') {
 
   ## If RTC was originally (before including timezone) using local time.
   ## Should not be needed, but is?
-  if ($facts['site'] == 'slac') and ($facts['rtc_local'] == 'true') {
+  if ($::site == 'slac') and ($facts['rtc_local'] == 'true') {
     exec { 'hwclock -w':
       command => '/usr/sbin/hwclock -w',
     }

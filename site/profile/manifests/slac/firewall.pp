@@ -4,7 +4,7 @@ class profile::slac::firewall {
 
   $ptitle = regsubst($title, '::', '/', 'G')
 
-  if $facts['site'] == 'slac' {
+  if $::site == 'slac' {
     $file = 'trusted.xml'
 
     file { "/etc/firewalld/zones/${file}":

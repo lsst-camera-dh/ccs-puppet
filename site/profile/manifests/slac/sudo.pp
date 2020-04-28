@@ -26,7 +26,7 @@ class profile::slac::sudo (Array[String] $users = []) {
   $group = 'lsst-ccs'
 
   $content1 = "%${group} ALL = (ccs) ALL"
-  if $facts['site'] == 'slac' {
+  if $::site == 'slac' {
     $content2 = "\n%${group} ALL = (dh) ALL"
   } else {
     $content2 = ''

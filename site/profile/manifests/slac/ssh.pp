@@ -2,7 +2,7 @@ class profile::slac::ssh {
 
   $ptitle = regsubst($title, '::', '/', 'G')
 
-  $key = strip(file("${ptitle}/${facts['site']}-root_key.txt"))
+  $key = strip(file("${ptitle}/${::site}-root_key.txt"))
 
   ## Note that Chef is also managing /root/.ssh/authorized_keys.
   ## It creates this as a symlink to .public/authorized_keys,
