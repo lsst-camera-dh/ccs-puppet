@@ -62,31 +62,32 @@ class ccs_mrtg {
 
 
   ## SELinux
+  ## This assumes the selinux class has been loaded.
+  if $facts['os']['selinux']['enabled'] {
 
-  ## Not perfect, but to quieten AVCs.
-  $contexts = {
-    "${mrtg_dir}(/.*)?" => 'mrtg_var_lib_t',
-    regsubst($mrtg_cfg, /\./, '\.')     => 'mrtg_etc_t',
-    regsubst($mrtg_lock, /\./, '\.')    => 'mrtg_lock_t',
-    regsubst($mrtg_log, /\./, '\.')     => 'mrtg_log_t',
-    regsubst($mrtg_pid, /\./, '\.')     => 'mrtg_var_run_t',
-    regsubst($mrtg_sysinfo, /\./, '\.') => 'bin_t',
-  }
-  $contexts.each|$key, $value| {
-    selinux::fcontext { $key:
-      seltype => $value,
+    ## Not perfect, but to quieten AVCs.
+    $contexts = {
+      "${mrtg_dir}(/.*)?" => 'mrtg_var_lib_t',
+      regsubst($mrtg_cfg, /\./, '\.')     => 'mrtg_etc_t',
+      regsubst($mrtg_lock, /\./, '\.')    => 'mrtg_lock_t',
+      regsubst($mrtg_log, /\./, '\.')     => 'mrtg_log_t',
+      regsubst($mrtg_pid, /\./, '\.')     => 'mrtg_var_run_t',
+      regsubst($mrtg_sysinfo, /\./, '\.') => 'bin_t',
     }
-  }
+    $contexts.each|$key, $value| {
+      selinux::fcontext { $key:
+        seltype => $value,
+      }
+    }
 
-  ## To prevent complaints about monitoring free space in /tmp and /var
-  $mrtg_module = 'lsst-mrtg'
-  selinux::module { $mrtg_module:
-    ensure    => 'present',
-    source_te => "puppet:///modules/${title}/${mrtg_module}.te",
-    builder   => 'simple'
-  }
-
-  ## end SELinux
+    ## To prevent complaints about monitoring free space in /tmp and /var
+    $mrtg_module = 'lsst-mrtg'
+    selinux::module { $mrtg_module:
+      ensure    => 'present',
+      source_te => "puppet:///modules/${title}/${mrtg_module}.te",
+      builder   => 'simple'
+    }
+  }                             # SELinux
 
 
   ## TODO better to just install the whole thing.
@@ -265,8 +266,10 @@ class ccs_mrtg {
   }
 
 
-  selinux::exec_restorecon { $mrtg_dir:
-    recurse => true,
+  if $facts['os']['selinux']['enabled'] {
+    selinux::exec_restorecon { $mrtg_dir:
+      recurse => true,
+    }
   }
 
 
