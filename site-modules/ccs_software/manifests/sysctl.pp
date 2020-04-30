@@ -2,7 +2,7 @@ class ccs_software::sysctl {
 
   $ptitle = regsubst($title, '::.*', '', 'G')
 
-  $file = '99-lsst-ccs.conf'
+  $file = '99-lsst-daq-ccs.conf'
 
   file { "/etc/sysctl.d/${file}":
     ensure => present,
