@@ -6,6 +6,12 @@
 
 class ccs_software::etc (String $dir) {
 
+  ## FIXME use hiera.
+  $attributes = {
+    'owner' => 'ccsadm',
+    'group' => 'ccsadm',
+  }
+
   $ptitle = regsubst($title, '::.*', '', 'G')
 
   $files = ['logging.properties', 'ccsGlobal.properties']
@@ -14,6 +20,7 @@ class ccs_software::etc (String $dir) {
     file { "${dir}/${file}":
       ensure => file,
       source => "puppet:///modules/${ptitle}/${file}",
+      *      => $attributes,
     }
   }
 
@@ -23,6 +30,7 @@ class ccs_software::etc (String $dir) {
   file { "${dir}/${udp}":
     ensure  => file,
     content => epp("${ptitle}/${udp}", {'hostname' => $trusted['certname']}),
+    *       => $attributes,
   }
 
 }
