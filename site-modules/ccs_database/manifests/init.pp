@@ -3,66 +3,58 @@
 ##
 ## @param database
 ##   String giving name of database to init.
-## @param ensure
-##   String saying whether to install ('present') or stop ('stopped').
-##
-## TODO implement the database init
-## TODO https://forge.puppet.com/puppetlabs/mysql
+## @param password
+##   String giving database password
+
 class ccs_database (
   Optional[String] $database,
-  String $ensure = 'present',
+  Optional[String] $password = '',
 ) {
 
-  if $ensure =~ /(present|stopped)/ {
+  ## Use first mountpoint that exists, else /home/mysql.
+  $datadirs = [
+    '/lsst-ir2db01',
+    '/data',
+    '/home'
+  ].filter |$disk| { $facts['mountpoints'][$disk] }
 
-    ensure_packages(['mariadb-server'])
+  $datadir0 = pick($datadirs[0], '/home')
+  $datadir = "${datadir0}/mysql"
+  $socket = "${datadir}/mysql.sock"
 
-    ## Use first mountpoint that exists, else /home/mysql.
-    $datadirs = [
-      '/lsst-ir2db01',
-      '/data',
-      '/home'
-    ].filter |$disk| { $facts['mountpoints'][$disk] }
-
-    $datadir0 = pick($datadirs[0], '/home')
-    $datadir = "${datadir0}/mysql"
-
-    file { $datadir:
-      ensure => directory,
-      owner  => 'mysql',
-      group  => 'mysql',
-      mode   => '0755',
-    }
-
-
-    $scratch = $facts['mountpoints']['/scratch'] ? {undef => false, default => true}
-
-    $file = 'zzz-lsst-ccs.cnf'
-
-    file { "/etc/my.cnf.d/${file}":
-      ensure  => file,
-      content => epp(
-        "${title}/${file}.epp", {
-          'datadir' => $datadir,
-          'scratch' => $scratch
-        }),
-    }
-
-    case $ensure {
-      present: {
-        $running = 'running'
-        $enable = true
-      }
-      default: {
-        $running = 'stopped'
-        $enable = false
-      }
-    }
-
-    service { 'mariadb':
-      ensure => $running,
-      enable => $enable,
-    }
-
+  file { $datadir:
+    ensure => directory,
+    owner  => 'mysql',
+    group  => 'mysql',
+    mode   => '0755',
   }
+
+
+  $options = {
+    'mysqld' => {
+      'datadir'                 => $datadir,
+      'socket'                  => $socket,
+      'innodb_buffer_pool_size' => '1G',
+      'tmpdir'                  => $facts['mountpoints']['/scratch'] ? {
+        undef   => undef,
+        default => '/scratch/mysqltmp',
+      },
+    },
+    'client' => {
+      'socket' => $socket,
+    },
+  }
+
+  class {'::mysql::server':
+#    package_name            => 'mariadb-server',
+#    service_name            => 'mariadb',
+    package_ensure          => 'present',
+    config_file             => '/etc/my.cnf.d/zzz-lsst-ccs.cnf',
+    remove_default_accounts => false,
+    restart                 => false,
+    service_enabled         => true,
+    service_manage          => true,
+    options                 => $options,
+  }
+
 }
