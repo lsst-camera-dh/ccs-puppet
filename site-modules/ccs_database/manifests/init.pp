@@ -11,7 +11,7 @@ class ccs_database (
   Optional[String] $password = '',
 ) {
 
-  ## Use first mountpoint that exists, else /home/mysql.
+  ## Use first mountpoint that exists, else /home/mysql. TODO hiera?
   $datadirs = [
     '/lsst-ir2db01',
     '/data',
@@ -50,11 +50,38 @@ class ccs_database (
 #    service_name            => 'mariadb',
     package_ensure          => 'present',
     config_file             => '/etc/my.cnf.d/zzz-lsst-ccs.cnf',
-    remove_default_accounts => false,
+    ## Remove some dubious defaults, eg: anonymous user, test database.
+    remove_default_accounts => true,
     restart                 => false,
     service_enabled         => true,
     service_manage          => true,
     options                 => $options,
+  }
+
+
+
+  if empty($password) {
+    ## This only happens at slac. Elsewhere, we use private hiera.
+    $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
+    ## Note this reads the file on the master, which is ok.
+    ## FIXME this required file to be world-readable, why?
+    $db_password = strip(file("${ccs_pkgarchive}/ccsdbpasswd"))
+  } else {
+    $db_password = $password
+  }
+
+
+  if $database and $db_password {
+    ## Create empty db called (eg) comcamdbprod;
+    ## add ccs account with all privs on that db;
+    ## TODO: localdb -u to create tables?
+    mysql::db { $database:
+      user     => 'ccs',
+      password => $db_password,
+      ## TODO when doing this by hand, we used both ccs@% and ccs@localhost.
+      host     => '%',
+      grant    => 'ALL',
+    }
   }
 
 }
