@@ -19,7 +19,7 @@ class ccs_hcu::vldrive (String $ensure = 'nothing') {
     $dest = "${module}-${version}"
 
     ## Ensure => absent does not delete the extracted file.
-    archive { '/tmp/vldrive.tar.xz':
+    archive { '/var/tmp/vldrive.tar.xz':
       ensure       => present,
       extract      => true,
       extract_path => '/usr/src',
@@ -33,7 +33,7 @@ class ccs_hcu::vldrive (String $ensure = 'nothing') {
       ensure  => $ensure,
       module  => $module,
       version => $version,
-      archive => '/tmp/vldrive.tar.xz',
+      archive => '/var/tmp/vldrive.tar.xz',
     }
 
 

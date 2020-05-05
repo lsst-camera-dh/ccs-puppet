@@ -17,7 +17,7 @@ class ccs_hcu::imanager (String $ensure = 'nothing') {
     $dest = "${module}-${version}"
 
     ## Ensure => absent does not delete the extracted file.
-    archive { '/tmp/imanager.tar.xz':
+    archive { '/var/tmp/imanager.tar.xz':
       ensure       => present,
       extract      => true,
       extract_path => '/usr/src',
@@ -31,7 +31,7 @@ class ccs_hcu::imanager (String $ensure = 'nothing') {
       ensure  => $ensure,
       module  => $module,
       version => $version,
-      archive => '/tmp/imanager.tar.xz',
+      archive => '/var/tmp/imanager.tar.xz',
     }
 
 

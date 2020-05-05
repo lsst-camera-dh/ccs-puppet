@@ -20,7 +20,7 @@ class ccs_hcu::canbus (String $ensure = 'nothing') {
     $dest = "${lmodule}-${version}"
 
     ## Ensure => absent does not delete the extracted file.
-    archive { '/tmp/canbus.tar.xz':
+    archive { '/var/tmp/canbus.tar.xz':
       ensure       => present,
       extract      => true,
       extract_path => '/usr/src',
@@ -34,7 +34,7 @@ class ccs_hcu::canbus (String $ensure = 'nothing') {
       ensure  => $ensure,
       module  => $lmodule,
       version => $version,
-      archive => '/tmp/canbus.tar.xz',
+      archive => '/var/tmp/canbus.tar.xz',
     }
 
 
