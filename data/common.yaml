@@ -63,5 +63,5 @@ ccs_software::dirs:
     ## FIXME
     mode: "2777"
 
-## FIXME
-ccs_pkgarchive: "/root"
+## Temporary, until nexus works.
+ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"

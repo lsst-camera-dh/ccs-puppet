@@ -222,9 +222,18 @@ class ccs_monit (
   ## it consults /etc/monitrc, and install just the binary by hand.
   $exe = 'monit'
   $ccs_pkgarchive = lookup('ccs_pkgarchive',String)
-  file { "/usr/local/bin/${exe}":
+
+  $exefile = "/var/tmp/${exe}"
+
+  archive { $exefile:
     ensure => present,
     source => "${ccs_pkgarchive}/${exe}",
+  }
+
+  ## archive does not support mode.
+  file { "/usr/local/bin/${exe}":
+    ensure => present,
+    source => $exefile,
     mode   => '0755',
   }
 

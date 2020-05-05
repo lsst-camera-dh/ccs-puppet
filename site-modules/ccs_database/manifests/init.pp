@@ -62,10 +62,10 @@ class ccs_database (
 
   if empty($password) {
     ## This only happens at slac. Elsewhere, we use private hiera.
-    $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
+    $ccs_dbarchive = lookup('ccs_dbarchive', String)
     ## Note this reads the file on the master, which is ok.
     ## FIXME this required file to be world-readable, why?
-    $db_password = strip(file("${ccs_pkgarchive}/ccsdbpasswd"))
+    $db_password = strip(file("${ccs_dbarchive}/ccsdbpasswd"))
   } else {
     $db_password = $password
   }

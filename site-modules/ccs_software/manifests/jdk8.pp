@@ -3,17 +3,25 @@ class ccs_software::jdk8 {
   $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
 
   ## TODO hiera
-  $jdkrpm = "${ccs_pkgarchive}/jdk-8u112-linux-x64.rpm"
+  $jdkrpm = 'jdk-8u112-linux-x64.rpm'
   ## FIXME: rpm -qi -p ${jdkrpm} | gawk '/^Version/ {print $3}'
   $javaver = '1.8.0_112'
   ## FIXME: rpm -q -p $jdkrpm
   $javapkg = 'jdk1.8.0_112-1.8.0_112-fcs.x86_64'
 
+  $jdkfile = "/var/tmp/${jdkrpm}"
+
+  archive { $jdkfile:
+    ensure => present,
+    source => "${ccs_pkgarchive}/${jdkrpm}",
+  }
+
   ## FIXME use a local yum repository.
   exec { 'Install jdk8':
-    path    => ['/usr/bin'],
-    unless  => "rpm -q --quiet ${javapkg}",
-    command => "rpm -i ${jdkrpm}",
+    path      => ['/usr/bin'],
+    unless    => "rpm -q --quiet ${javapkg}",
+    command   => "rpm -i ${jdkfile}",
+    subscribe => Archive[$jdkfile],
   }
 
 
