@@ -189,6 +189,7 @@ class ccs_monit (
   }
 
 
+  $ccs_pkgarchive = lookup('ccs_pkgarchive',String)
   $hwraid = lookup('ccs_monit::hwraid', Boolean, undef, true)
 
   if $hwraid {
@@ -200,7 +201,19 @@ class ccs_monit (
       notify => Service['monit'],
     }
 
-    ## Needs the raid utility (eg perccli64) to be installed separately.
+    $perc = 'perccli64'
+    $percfile = "/var/tmp/${perc}"
+    archive { $percfile:
+      ensure => present,
+      source => "${ccs_pkgarchive}/${perc}",
+    }
+    file { "/usr/local/bin/${perc}":
+      ensure => present,
+      source => $percfile,
+      mode   => '0755',
+    }
+
+    ## Needs the raid utility (eg perccli64) to be installed.
     $hexe = 'monit_hwraid'
     file { "/usr/local/bin/${hexe}":
       ensure => present,
@@ -221,8 +234,6 @@ class ccs_monit (
   ## Note that we configure this monit with --prefix=/usr so that
   ## it consults /etc/monitrc, and install just the binary by hand.
   $exe = 'monit'
-  $ccs_pkgarchive = lookup('ccs_pkgarchive',String)
-
   $exefile = "/var/tmp/${exe}"
 
   archive { $exefile:
