@@ -11,6 +11,7 @@ packages:
   - "gcc"
   ## TODO only on "development" nodes.
   - "maven"
+  - "centos-release-scl"
   - "devtoolset-8"
 
 profile::ccs::users::groups:
