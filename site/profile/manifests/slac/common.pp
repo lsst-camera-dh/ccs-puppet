@@ -23,8 +23,6 @@ class profile::slac::common {
 
   include profile::slac::fail2ban
 
-  include profile::slac::home
-
   include profile::slac::root
 
   include profile::slac::chef
