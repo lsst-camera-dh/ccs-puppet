@@ -17,7 +17,7 @@ Facter.add(:role) do
       'ccs-hcu'
     when /-db\d/
       'ccs-database'
-    when /-dc\d/
+    when /-(dc|fp)\d/
       'ccs-dc'
     when /-vi\d/
       'ccs-virt'
