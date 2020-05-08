@@ -1,36 +1,42 @@
-class ccs_software::jdk8 {
+## @summary
+##   Install the ccs jdk8 rpm
+##
+## @param rpm
+##   String giving the rpm file name
+## @param package
+##   String naming the package installed by the rpm; eg jdk1.8.
+##   In older rpms, this had a version suffix, eg: jdk1.8.0_112
+## @param dir
+##   String giving the install directory in /usr/java; eg jdk1.8.0_251-amd64.
+##   The -amd64 suffix is a semi-recent addition, eg
+##   https://bugs.openjdk.java.net/browse/JDK-8202320
+##   The ever-changing world of java rpms:
+##   https://bugs.openjdk.java.net/browse/JDK-8202528
+##   TODO this seems like something we should derive.
+
+class ccs_software::jdk8 (
+  String $rpm,
+  String $package,
+  String $dir,
+) {
 
   $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
 
-  ## FIXME hiera
-  $jdkrpm = 'jdk-8u251-linux-x64.rpm'
-  ## The name of the package installed by the rpm.
-  ## In older rpms, this had a version suffix, eg: jdk1.8.0_112
-  $javaname = 'jdk1.8'
-  ## The rpm installs to /usr/java/${javadir}
-  ## The -amd64 suffix is a semi-recent addition, eg
-  ## https://bugs.openjdk.java.net/browse/JDK-8202320
-  ## The ever-changing world of java rpms:
-  ## https://bugs.openjdk.java.net/browse/JDK-8202528
-  ## TODO this seems like something we should derive.
-  $javadir = 'jdk1.8.0_251-amd64'
-
-  ## TODO https://forge.puppet.com/puppetlabs/java  ?
-
-  $jdkfile = "/var/tmp/${jdkrpm}"
+  $jdkfile = "/var/tmp/${rpm}"
 
   archive { $jdkfile:
     ensure => present,
-    source => "${ccs_pkgarchive}/${jdkrpm}",
+    source => "${ccs_pkgarchive}/${rpm}",
   }
 
+  ## TODO https://forge.puppet.com/puppetlabs/java  ?
   ## TODO use a local yum repository?
   ##
   ## Note that (older) jdk8 rpms have the version in the name,
   ## eg "jdk1.8.0_112" rather than "jdk1.8", so that one can
   ## end up with multiple copies installed.
   ## https://bugs.openjdk.java.net/browse/JDK-8055864
-  package { $javaname:
+  package { $package:
     ensure   => 'latest',
     provider => 'rpm',
     source   => $jdkfile,
@@ -42,7 +48,7 @@ class ccs_software::jdk8 {
 
   $cmds.each |$cmd| {
     $src = "/usr/bin/${cmd}"
-    $dest = "/usr/java/${javadir}/bin/${cmd}"
+    $dest = "/usr/java/${dir}/bin/${cmd}"
     exec {"java alternative for ${cmd}":
       path    => ['/usr/sbin', '/usr/bin'],
       ## The alternatives system seems to be flimsy.

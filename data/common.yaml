@@ -64,5 +64,9 @@ ccs_software::dirs:
     ## FIXME
     mode: "2777"
 
+ccs_software::jdk8::rpm: 'jdk-8u251-linux-x64.rpm'
+ccs_software::jdk8::package: 'jdk1.8'
+ccs_software::jdk8::dir: 'jdk1.8.0_251-amd64'
+
 ## Temporary, until nexus works.
 ccs_pkgarchive: "http://www.slac.stanford.edu/~gmorris/lsst/pkgarchive"
