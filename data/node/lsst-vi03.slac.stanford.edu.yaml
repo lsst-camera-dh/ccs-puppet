@@ -2,16 +2,22 @@
 # classes:
 #   - "ccs_hcu"
 #   - "ccs_database"
+#   - "ccs_sal"
 #   - "profile::ccs::nvidia"
 #   - "profile::ccs::jdk11"
 #   - "profile::ccs::graphical"
 #   - "profile::ccs::autologin"
 #   - "profile::ccs::daq"
+
 # ccs_hcu::quadbox: true
 # ccs_hcu::canbus: true
 # ccs_hcu::imanager: true
 # ccs_hcu::vldrive: true
 # ccs_hcu::filter_changer: true
+
+# ccs_sal::address: "139.229.147.15"
+# ccs_sal::dds_domain: "base"
+# ccs_sal::instrument: "comcam"
 
 # profile::ccs::graphical::officeapps: true
 

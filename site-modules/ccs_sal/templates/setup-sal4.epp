@@ -1,0 +1,9 @@
+<%- | String $domain, String $home | -%>
+# This file is managed by Puppet; changes may be overwritten.
+export LSST_DDS_DOMAIN=<%= $domain %>
+export OSPL_HOME=<%= $home %>
+source $OSPL_HOME/release.com
+export JAVA_HOME=/usr/java/default/
+export LD_LIBRARY_PATH=/opt/lsst/ts_sal/lib:$LD_LIBRARY_PATH
+export LD_PRELOAD=${JAVA_HOME}/jre/lib/amd64/libjsig.so
+export OSPL_URI=file:///etc/ccs/ospl.xml
