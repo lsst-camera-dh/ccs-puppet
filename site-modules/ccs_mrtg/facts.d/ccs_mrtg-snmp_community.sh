@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Return the community from snmpd.conf, else generate one.
 
@@ -13,7 +13,8 @@ fi
 case $community in
     ""|public)
         ## coreutils.
-        community=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 22 | head -n 1)
+        c=$(dd bs=21 count=1 if=/dev/urandom 2> /dev/null | base64 | tr -d '+/')
+        community=${c:0:22}
     ;;
 esac
 
