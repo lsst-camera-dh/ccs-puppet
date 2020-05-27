@@ -20,7 +20,8 @@ class ccs_software {
 
   include ccs_software::jdk8
 
-  include ccs_software::sysctl
+  ## LSST does this via a profile:ccs, so moved to profile::slac.
+  #include ccs_software::sysctl
 
   include ccs_software::scripts
 

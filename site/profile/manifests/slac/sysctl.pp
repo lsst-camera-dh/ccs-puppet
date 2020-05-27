@@ -1,6 +1,6 @@
-class ccs_software::sysctl {
+class profile::slac::sysctl {
 
-  $ptitle = regsubst($title, '::.*', '', 'G')
+  $ptitle = regsubst($title, '::', '/', 'G')
 
   $file = '99-lsst-daq-ccs.conf'
 

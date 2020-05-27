@@ -37,5 +37,7 @@ class profile::slac::common {
   include profile::slac::grub
   include profile::slac::ssh
 
+  include profile::slac::sysctl
+
   include profile::slac::sudo
 }
