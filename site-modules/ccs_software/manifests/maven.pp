@@ -4,7 +4,7 @@
 ## @param version
 ##   String giving version to install.
 ## @param dest
-##   String giving directory to install to.
+##   String giving directory to install to (parent must exist).
 
 class ccs_software::maven (
   String $version = '3.6.3',
@@ -16,6 +16,10 @@ class ccs_software::maven (
   $tar = "apache-maven-${version}-bin.tar.gz"
 
   $dir = "${dest}/apache-maven-${version}"
+
+  file { $dest:
+    ensure => directory,
+  }
 
   archive { "/var/tmp/${tar}":
     ensure       => present,
