@@ -21,7 +21,7 @@ class ccs_hcu::canbus (String $ensure = 'nothing') {
 
     ## Ensure => absent does not delete the extracted file.
     archive { '/var/tmp/canbus.tar.xz':
-      ensure       => present,
+      ensure       => $ensure,
       extract      => true,
       extract_path => '/usr/src',
       source       => "${ccs_pkgarchive}/${src}",

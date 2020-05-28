@@ -20,7 +20,7 @@ class ccs_hcu::vldrive (String $ensure = 'nothing') {
 
     ## Ensure => absent does not delete the extracted file.
     archive { '/var/tmp/vldrive.tar.xz':
-      ensure       => present,
+      ensure       => $ensure,
       extract      => true,
       extract_path => '/usr/src',
       source       => "${ccs_pkgarchive}/${src}",
@@ -56,9 +56,15 @@ class ccs_hcu::vldrive (String $ensure = 'nothing') {
 
     $lib = 'libVL_OSALib.1.5.0.so'
 
+    $lib_source = $ensure ? {
+      present => "/usr/src/${dest}/vl_${lib}",
+      default => '/usr/local/lib',
+    }
+
+    ## If source does not exist, we get an error even if ensure is absent.
     file { "/usr/local/lib/${lib}":
       ensure => $ensure,
-      source => "/usr/src/${dest}/vl_${lib}",
+      source => $lib_source,
       mode   => '0755',
     }
 
@@ -74,12 +80,15 @@ class ccs_hcu::vldrive (String $ensure = 'nothing') {
     }
 
 
-    ensure_resources('group', {'gpio' => {'ensure' => 'present'}})
+    if $ensure == present {
+      ensure_resources('group', {'gpio' => {'ensure' => 'present'}})
 
-    exec { 'usermod ccs vldrive':
-      path    => ['/usr/sbin', '/usr/bin'],
-      command => 'usermod -a -G gpio ccs',
-      unless  => 'sh -c "groups ccs | grep -q gpio"',
+      exec { 'usermod ccs vldrive':
+        path    => ['/usr/sbin', '/usr/bin'],
+        command => 'usermod -a -G gpio ccs',
+        unless  => 'sh -c "groups ccs | grep -q gpio"',
+        require => Group['gpio'],
+      }
     }
 
 

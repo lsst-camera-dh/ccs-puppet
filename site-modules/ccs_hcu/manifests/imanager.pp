@@ -18,7 +18,7 @@ class ccs_hcu::imanager (String $ensure = 'nothing') {
 
     ## Ensure => absent does not delete the extracted file.
     archive { '/var/tmp/imanager.tar.xz':
-      ensure       => present,
+      ensure       => $ensure,
       extract      => true,
       extract_path => '/usr/src',
       source       => "${ccs_pkgarchive}/${src}",
@@ -70,12 +70,15 @@ class ccs_hcu::imanager (String $ensure = 'nothing') {
     }
 
 
-    ensure_resources('group', {'gpio' => {'ensure' => 'present'}})
+    if $ensure == present {
+      ensure_resources('group', {'gpio' => {'ensure' => 'present'}})
 
-    exec { 'usermod ccs imanager':
-      path    => ['/usr/sbin', '/usr/bin'],
-      command => 'usermod -a -G gpio ccs',
-      unless  => 'sh -c "groups ccs | grep -q gpio"',
+      exec { 'usermod ccs imanager':
+        path    => ['/usr/sbin', '/usr/bin'],
+        command => 'usermod -a -G gpio ccs',
+        unless  => 'sh -c "groups ccs | grep -q gpio"',
+        require => Group['gpio'],
+      }
     }
 
 
