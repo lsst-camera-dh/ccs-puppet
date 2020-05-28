@@ -31,10 +31,7 @@ class ccs_software::maven (
   }
 
 
-  $ptitle = regsubst($title, '::', '/', 'G')
-  $file = 'ccs-maven.sh'
-
-  file { "/etc/profile.d/${file}":
+  file { '/etc/profile.d/ccs-maven.sh':
     ensure  => present,
     content => "PATH=${dir}/bin:\$PATH\n",
   }
