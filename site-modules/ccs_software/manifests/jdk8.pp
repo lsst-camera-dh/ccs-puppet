@@ -13,11 +13,15 @@
 ##   The ever-changing world of java rpms:
 ##   https://bugs.openjdk.java.net/browse/JDK-8202528
 ##   TODO this seems like something we should derive.
+## @param version
+##   String giving the version to install (default 'latest').
+##   Use this to force a specific version (eg to downgrade).
 
 class ccs_software::jdk8 (
   String $rpm,
   String $package,
   String $dir,
+  String $version = 'latest',
 ) {
 
   $ccs_pkgarchive = lookup('ccs_pkgarchive', String)
@@ -37,7 +41,7 @@ class ccs_software::jdk8 (
   ## end up with multiple copies installed.
   ## https://bugs.openjdk.java.net/browse/JDK-8055864
   package { $package:
-    ensure   => 'latest',
+    ensure   => $version,
     provider => 'rpm',
     source   => $jdkfile,
   }
