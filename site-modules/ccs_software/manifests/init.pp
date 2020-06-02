@@ -27,4 +27,6 @@ class ccs_software {
 
   include ccs_software::scripts
 
+  include ccs_software::log
+
 }
