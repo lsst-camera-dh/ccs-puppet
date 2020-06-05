@@ -50,7 +50,7 @@ class ccs_sal::etc {
     $file = "${dir}/ocs-${thing}-${instrument}.app"
     file { $file:
       ensure  => present,
-      content => "system.pre-execute=${salfile}",
+      content => "system.pre-execute=${salfile}\n",
       *       => $attributes,
     }
   }
