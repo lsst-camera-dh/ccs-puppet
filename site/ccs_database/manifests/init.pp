@@ -81,6 +81,11 @@ class ccs_database (
       ## TODO when doing this by hand, we used both ccs@% and ccs@localhost.
       host     => '%',
       grant    => 'ALL',
+      ## Module defaults to 'utf8', 'utf8_general_ci'.
+      ## It will modify an existing database.
+      ## There does not seem to be a way to specify "use server default".
+      charset  => 'latin1',
+      collate  => 'latin1_swedish_ci',
     }
   }
 
