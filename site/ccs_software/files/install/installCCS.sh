@@ -18,7 +18,7 @@ CCS_INSTALL_DIR="/lsst/ccs/"$(date +%Y%m%d)
 # What should be done in this case? Remove the directory or run the update script?
 if [ -d "$CCS_INSTALL_DIR" ]; then
   echo "Installation directory $CCS_INSTALL_DIR already exists. Exiting."
-  exit
+  exit 1
 fi
 
 VERIFY_USER=$("$BASEDIR/verifyUser.sh" ccs)
@@ -31,18 +31,18 @@ then
     cd $DEV_PACKAGE_DIR || exit
     if ! gitPull=$(git pull); then
 	echo "Something went wrong when updating $DEV_PACKAGE_DIR: $?: $gitPull"
-	exit
+	exit 1
     fi
     gitStatus=$(git status)
     if [[ $gitStatus != *"nothing to commit, working directory clean"* ]]; then
 	echo Directory $DEV_PACKAGE_DIR is not up to date. Exiting.
-	exit
+	exit 1
     fi
 
     # Check that the install script exists. If not abort.
     if [ ! -f "$RELEASE_INSTALL_SCRIPT" ]; then
 	echo "The release package install script is not available at $RELEASE_INSTALL_SCRIPT"
-	exit
+	exit 1
     fi
 
     echo "Performing new installation of CCS software in $CCS_INSTALL_DIR"
@@ -53,8 +53,12 @@ then
 	NODE_NAME=${IN%%.*}
     fi
 
-    $RELEASE_INSTALL_SCRIPT --ccs_inst_dir "$CCS_INSTALL_DIR" "$DEV_PACKAGE_DIR/$ENVIRONMENT/$NODE_NAME/ccsApplications.txt"
+    $RELEASE_INSTALL_SCRIPT --ccs_inst_dir "$CCS_INSTALL_DIR" \
+      "$DEV_PACKAGE_DIR/$ENVIRONMENT/$NODE_NAME/ccsApplications.txt" || exit 1
 
 else
     echo "$VERIFY_USER"
+    exit 1
 fi
+
+exit 0
