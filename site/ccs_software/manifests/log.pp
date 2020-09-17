@@ -13,4 +13,15 @@ class ccs_software::log {
     mode    => '0755',
   }
 
+
+  $ccslog = 'ccslog'
+
+  file { "/usr/local/bin/${ccslog}":
+    ensure => present,
+    source => "puppet:///modules/${ptitle}/${ccslog}",
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
 }
