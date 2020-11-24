@@ -16,12 +16,13 @@
 class ccs_sal (
   Hash[String,String,2] $rpms,
   String $address = '127.0.0.1',
-  String $ospl_home = '/opt/OpenSpliceDDS/V6.9.0/HDE/x86_64.linux',
-  String $dds_domain = 'base',
+  String $ospl_home = '/opt/OpenSpliceDDS/V6.10.4/HDE/x86_64.linux',
+  String $dds_domain = 'summit',
   String $instrument = 'comcam',
 ) {
 
   include ccs_sal::rpms
   include ccs_sal::etc
+  include ccs_sal::service
 
 }

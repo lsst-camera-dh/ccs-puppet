@@ -15,8 +15,8 @@
 # ccs_hcu::vldrive: true
 # ccs_hcu::filter_changer: true
 
-# ccs_sal::address: "139.229.147.15"
-# ccs_sal::dds_domain: "base"
+# ccs_sal::address: "comcam-mcm-dds.cp.lsst.org"
+# ccs_sal::dds_domain: "summit"
 # ccs_sal::instrument: "comcam"
 
 # profile::ccs::graphical::officeapps: true

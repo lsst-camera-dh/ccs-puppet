@@ -11,7 +11,7 @@ class ccs_sal::etc {
 
   $ptitle = regsubst($title, '::.*', '', 'G')
 
-  $salfile = 'setup-sal4'
+  $salfile = 'setup-sal5'
 
   file { "${dir}/${salfile}":
     ensure  => file,
@@ -24,7 +24,7 @@ class ccs_sal::etc {
   }
 
 
-  $osplfile = 'ospl.xml'
+  $osplfile = 'ospl5.xml'
 
   ## Note that this will not pick up any changes in the distribution file.
   ## You would have to force it by eg deleting the destination file.
@@ -33,11 +33,20 @@ class ccs_sal::etc {
     command => @("CMD"/L),
       sh -c "sed 's|^\( *<NetworkInterfaceAddress>\).*|\
       \1${ccs_sal::address}</NetworkInterfaceAddress>|' \
-      ${ccs_sal::ospl_home}/etc/config/${osplfile} > \
+      ${ccs_sal::ospl_home}/etc/config/ospl.xml > \
       ${dir}/${osplfile}"
       | CMD
     unless  => "grep -q ${ccs_sal::address} ${dir}/${osplfile}",
     user    => $attributes['owner'],
+  }
+
+
+  $qosfile = 'QoS5.xml'
+
+  file { "${dir}/${qosfile}":
+    ensure => file,
+    source => "puppet:///modules/${ptitle}/${qosfile}",
+    *      => $attributes,
   }
 
 
