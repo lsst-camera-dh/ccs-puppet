@@ -21,7 +21,7 @@ trap "rm -f $tempfile 2> /dev/null" EXIT
 ## Any user can get basic information from "status", but adding
 ## it here allows more detailed output (from the journal).
 ## Perhaps we should add "status -l".
-actions="start stop restart status"
+actions="start stop restart status reset-failed"
 
 function find_services ()
 {
